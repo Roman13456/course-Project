@@ -1,0 +1,612 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+header {
+  position: absolute;
+  padding: 20px 0;
+  background-color: white;
+}
+
+header .centralContainer {
+  max-width: 1240px;
+  margin: auto;
+}
+
+header .logo {
+  display: inline-block;
+}
+
+header .logo.hide {
+  display: none;
+}
+
+header #catalogBtn {
+  text-align: left;
+  width: 100%;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FFFFFF;
+  padding: 10px 14px 10px 10px;
+  background: #00C2FF;
+  border: 1px solid #00C2FF;
+  border-radius: 6px;
+  margin-right: 18px;
+}
+
+header #catalogBtn img {
+  margin-right: 10px;
+}
+
+header .busket {
+  border: none;
+  background: transparent;
+  padding: 10px;
+}
+
+header .busket:hover {
+  background: #E7F9FF;
+}
+
+header .busket.on {
+  background: #AAE9FD;
+  border-radius: 6px;
+}
+
+header .busket.on:hover {
+  background: #AAE9FD;
+}
+
+header .busket img {
+  margin-right: 4px;
+}
+
+header .busket p {
+  padding: 2px;
+  width: 19px;
+  height: 19px;
+  background: #00FFD1;
+  border-radius: 34px;
+  margin-bottom: 0;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #000000;
+}
+
+header .busket p.hide {
+  display: none;
+}
+
+header div.inputSearch {
+  max-width: 846px;
+  width: 100%;
+}
+
+header div.inputSearch .menuHover {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 20px 200px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 20px 200px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  top: 58px;
+  padding: 10px;
+  display: none;
+  width: 365px;
+  height: 315px;
+}
+
+header div.inputSearch .menuHover.busketMenu {
+  padding-left: 0;
+  padding-right: 0;
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  header div.inputSearch .menuHover.busketMenu {
+    height: auto;
+  }
+}
+
+header div.inputSearch .menuHover ul {
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-bottom: 21px;
+}
+
+header div.inputSearch .menuHover ul::after {
+  content: "";
+  position: absolute;
+  background: #ECECEC;
+  height: 1px;
+  position: absolute;
+  width: 100%;
+  bottom: -10px;
+}
+
+header div.inputSearch .menuHover ul li {
+  padding: 0;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:first-child img {
+  border-radius: 3px;
+  margin-right: 10px;
+  width: 61px;
+  height: 61px;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:first-child p {
+  text-align: left;
+  max-width: 170px;
+  width: 100%;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) p {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) button {
+  padding: 0;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) img {
+  width: 24px;
+  height: 24px;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) img:hover {
+  background: #D6F5FF;
+  border-radius: 24px;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) div.counter {
+  width: 68px;
+  height: 24px;
+  background: #FAFAFA;
+  border-radius: 24px;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) div:last-child p {
+  margin-right: 10px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: right;
+  color: #00BF9D;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) div:last-child button img {
+  width: 24px;
+  height: 24px;
+}
+
+header div.inputSearch .menuHover ul li .wrapper:nth-child(2) div:last-child button img:hover {
+  background: #FFE6D8;
+  border-radius: 24px;
+}
+
+header div.inputSearch .menuHover .payBtn {
+  display: block;
+  margin-left: 12px;
+  margin-right: 12px;
+  background: #00C2FF;
+  border: 1px solid #00C2FF;
+  padding: 12px;
+  text-align: center;
+  border-radius: 6px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  text-align: center;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+header div.inputSearch .menuHover .total {
+  text-align: right;
+  padding-right: 46px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: right;
+  color: #00BF9D;
+}
+
+@media (max-width: 767px) {
+  header div.inputSearch .menuHover {
+    width: 100vw;
+    height: 100vh;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 5;
+  }
+}
+
+header div.inputSearch .menuHover .menu {
+  margin-bottom: 15px;
+}
+
+header div.inputSearch .menuHover .menu img {
+  width: 100%;
+}
+
+header div.inputSearch .menuHover .menu div div {
+  height: 60px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 15px;
+}
+
+header div.inputSearch .menuHover .menu div div:last-child {
+  margin-bottom: 0;
+}
+
+header div.inputSearch .menuHover .menu div p {
+  text-align: center;
+  width: 100%;
+}
+
+header div.inputSearch .menuHover .menu div a {
+  line-height: 60px !important;
+  display: inline-block;
+  height: 60px;
+  width: 100%;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 37px;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+header div.inputSearch .menuHover .menu .fashion {
+  background: url(../images/fashion.jpg) no-repeat center;
+  background-size: cover;
+}
+
+header div.inputSearch .menuHover .menu .accessories {
+  background: url(../images/Accessories.jpg) no-repeat center;
+  background-size: cover;
+}
+
+header div.inputSearch .menuHover .menu .gadgets {
+  background: url(../images/gadgets.jpg) no-repeat center;
+  background-size: cover;
+}
+
+header div.inputSearch .menuHover div.list a {
+  text-decoration: none;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #00C2FF !important;
+  margin-bottom: 10px;
+}
+
+header div.inputSearch .menuHover div.list p {
+  margin-bottom: 0;
+}
+
+header div.inputSearch #catalogBtn {
+  max-width: 135px;
+}
+
+header div.inputSearch div button {
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+}
+
+header div.inputSearch input {
+  max-width: 693px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 13px 10px;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1px solid #ECECEC;
+  border-radius: 6px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #BABABA;
+}
+
+.onSale {
+  padding-top: 40px;
+}
+
+.onSale .row div {
+  padding-bottom: 40px;
+}
+
+.onSale:nth-child(4)::after {
+  content: "";
+  background: #ECECEC;
+  height: 1px;
+  position: absolute;
+  width: calc(100% - 24px);
+}
+
+.onSale .saleIndicator {
+  top: 10px;
+  left: 22px;
+  padding: 6px;
+  gap: 10px;
+  background: #00FFD1;
+  border-radius: 4px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.onSale p {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #00BF9D;
+  margin-bottom: 0;
+}
+
+.onSale p:first-child {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 40px;
+}
+
+.onSale p span {
+  padding-left: 10px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-text-decoration-line: line-through;
+          text-decoration-line: line-through;
+  color: #BABABA;
+}
+
+.onSale a {
+  padding-left: 0;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  text-decoration: none;
+  padding-bottom: 10px;
+}
+
+.onSale a:first-child img {
+  width: 100%;
+}
+
+.categories {
+  padding-top: 40px;
+}
+
+.categories img {
+  width: 100%;
+}
+
+.categories div div {
+  height: 200px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 15px;
+}
+
+.categories div div:last-child {
+  margin-bottom: 0;
+}
+
+.categories div p {
+  text-align: center;
+  width: 100%;
+}
+
+.categories div a {
+  line-height: 200px !important;
+  display: inline-block;
+  height: 200px;
+  width: 100%;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 37px;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.categories .fashion {
+  background: url(../images/fashion.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.categories .accessories {
+  background: url(../images/Accessories.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.categories .gadgets {
+  background: url(../images/gadgets.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.saleBanner {
+  height: 100vh;
+  padding: 25vh 0 50px;
+  background: #DAFFF8;
+}
+
+.saleBanner .saleBannerContent {
+  max-width: 1080px;
+  margin: auto;
+}
+
+.saleBanner .saleBannerContent a {
+  text-decoration: none;
+  background: #00C2FF;
+  border: 1px solid #00C2FF;
+  border-radius: 6px;
+  padding: 13px 14px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.saleBanner .saleBannerContent div:first-child h3 {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 37px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.saleBanner .saleBannerContent div:first-child p:nth-child(3) {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+  margin-bottom: 33px;
+}
+
+.saleBanner .saleBannerContent div:first-child p:first-child {
+  padding: 6px;
+  display: inline-block;
+  background: #00FFD1;
+  border-radius: 4px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #FAFAFA;
+}
+
+footer div.list div {
+  margin-bottom: 20px;
+}
+
+footer div.list a {
+  text-decoration: none;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #00C2FF !important;
+  margin-right: 20px;
+}
+
+footer div.list a:last-child {
+  margin-right: 0;
+}
+
+@media (max-width: 767px) {
+  footer div.list {
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+  }
+  footer div.list div {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  footer p {
+    text-align: center;
+  }
+}
+
+footer img {
+  width: auto !important;
+}
+
+@media (max-width: 767px) {
+  footer img {
+    margin: 0 auto 15px;
+  }
+}
+/*# sourceMappingURL=style.css.map */
