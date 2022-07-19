@@ -74,23 +74,21 @@
         <p class="container-xl mb-0">Home / Products / Clothing /</p>
     </div>
     <section class="productPage">
-        <div class="container-xl">
+        <div class="container-xl position-relative productPageConatiner">
             <div class="row product">
                 <div class="col-12 col-lg-6 d-flex flex-wrap">
                     <div class="imgGallery d-flex order-1 order-md-0 flex-md-column">
                         <img class="active" src="images/girlT-shirt.jpg" alt="girl T-shirt">
                         <img src="images/PrintedBlazer.jpg" alt="printed blazer">
                     </div>
-                    <img class="mainImage" src="images/girlT-shirt.jpg" alt="girl T-shirt">
+                    <img class="mainImage" src="#" alt="girl T-shirt">
                 </div>
                 <div class="col-12 col-lg-6 productDescription position-relative">
                     <p class="saleIndicator position-absolute">SALE</p>
                     <h3>Girls T-shirt</h3>
-                    <p class="productCode">SKU: 345643643</p>
-                    <div class="rating">
+                    <!-- <div class="rating">
                         <img src="/images/Rating.svg" alt="4 star rating">
-                    </div>
-                    <p class="price">$50<span>$70</span></p>
+                    </div> -->
                     <div class="position-relative description">
                         <p>Inceptos porta orci ac varius nostra arcu eu scelerisque placerat, turpis dui accumsan sociis et hendrerit luctus himenaeos lobortis.</p>
                     </div>
@@ -118,7 +116,9 @@
                             </div>
                         </div>
                         <div class="chooseOptions d-flex align-items-center justify-content-between col-12 col-md-5 col-lg-7 col-xxl-5 col-xl-6">
-                            <input required name="quantity" class="quantity mb-0" value="1">
+                            <div class="input_controls success">
+                                <input name="quantity" class="quantity mb-0" value="1">
+                            </div>
                             <button type="submit">Add to cart</button>
                         </div>
                         
@@ -183,6 +183,7 @@
     <section class="onSale">
         <div class="container-xl">
             <div class="row">
+                <p>Related products</p>
                 <div class="col-6 col-lg-4 col-xxl-3 position-relative">
                     <a href="#" class=" d-block">
                         <img src="images/PrintedBlazer.jpg" alt="printed blazer">
@@ -234,7 +235,7 @@
         </div>
     </footer>
     <script src="js/header.js"></script>
-    <script src="js/productPage.js"></script>
+    <script type="module" src="js/productPage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>

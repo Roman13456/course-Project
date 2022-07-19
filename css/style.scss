@@ -2,7 +2,9 @@
 $mainFont: "Montserrat";
 $mainFontWeight: 500;
 $mainFontSize: 18px;
-
+form input{
+    border-color:#ECECEC;
+}
 * {
     // padding: 0;
     // margin: 0;
@@ -392,7 +394,9 @@ header {
 
 .onSale {
     padding-top: 40px;
-
+    img{
+        border-radius: 6px;
+    }
     .row {
         div {
             padding-bottom: 40px;
@@ -622,7 +626,16 @@ header {
 
 .productPage {
     padding: 40px 0;
-
+    .productPageConatiner{
+        &::after {
+            content: "";
+            background: #ececec;
+            height: 1px;
+            position: absolute;
+            width: calc(100% - 24px);
+            bottom: -41px;
+        }
+    }
     .product {
         margin-bottom: 40px;
 
@@ -661,17 +674,23 @@ header {
                     font-size: 18px;
                     line-height: 22px;
                 }
-
-                .quantity {
-                    max-width: 90px;
-                    width: 100%;
-                    margin-right: 20px;
-                    color: #000000;
-                    padding: 10px;
-                    background: #FFFFFF;
-                    border: 1px solid #ECECEC;
-                    @include inputAndButtonStyles;
+                .input_controls.error input{
+                    border-color: red;
                 }
+                div{
+                    margin-right: 20px;
+                    .quantity {
+                        max-width: 90px;
+                        width: 100%;
+                        
+                        color: #000000;
+                        padding: 10px;
+                        background: #FFFFFF;
+                        border: 1px solid #ECECEC;
+                        @include inputAndButtonStyles;
+                    }
+                }
+                
 
                 button {
                     text-align: center;
@@ -769,7 +788,7 @@ header {
             h3 {
                 font-family: $mainFont;
                 font-style: normal;
-                font-weight: $mainFontSize;
+                font-weight: $mainFontWeight;
                 font-size: 30px;
                 line-height: 37px;
                 color: #000000;
@@ -817,7 +836,7 @@ header {
 
         .mainImage {
             width: calc(100% - 80px);
-
+            border-radius: 6px;
             @media (max-width:767px) {
                 width: 100%;
                 margin-bottom: 15px;

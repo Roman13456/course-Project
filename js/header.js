@@ -21,34 +21,38 @@ function calcGeneralPrice(){
 calcGeneralPrice()
 busketMenu.addEventListener("click", function (e) {
     const target = e.target;
-    const parent = target.closest("li");
-    const id = +parent.getAttribute("data-id");
-    const index = userChosenProducts.findIndex((e) => e.id === id);
-    if (target.classList.contains("removeItem")) {
-        parent.remove();
-        userChosenProducts.splice(index, 1);
-        updateStorage();
-        calcGeneralPrice()
-    }
-    if (target.classList.contains("addition")) {
-        let quantity = parent.querySelector(".counter p").innerHTML
-        quantity++
-        parent.querySelector(".counter p").innerHTML = quantity
-        userChosenProducts[index].quantity = quantity
-        userChosenProducts[index].price = userChosenProducts[index].priceForItem*quantity
-        parent.querySelector(".price").innerHTML = `$${userChosenProducts[index].price}`
-        updateStorage()
-        calcGeneralPrice()
-    }
-    if (target.classList.contains("deduction")) {
-        let quantity = parent.querySelector(".counter p").innerHTML
-        quantity--
-        parent.querySelector(".counter p").innerHTML = quantity
-        userChosenProducts[index].quantity = quantity
-        userChosenProducts[index].price = userChosenProducts[index].priceForItem*quantity
-        parent.querySelector(".price").innerHTML = `$${userChosenProducts[index].price}`
-        updateStorage()
-        calcGeneralPrice()
+    if(target.classList.contains("addition") || target.classList.contains("removeItem") || target.classList.contains("deduction")){
+        const parent = target.closest("li");
+        const id = parent.getAttribute("data-id");
+        const index = userChosenProducts.findIndex((e) => e.id === id);
+        if (target.classList.contains("removeItem")) {
+            parent.remove();
+            userChosenProducts.splice(index, 1);
+            updateStorage();
+            calcGeneralPrice()
+        }
+        if (target.classList.contains("addition")) {
+            let quantity = parent.querySelector(".counter p").innerHTML
+            quantity++
+            parent.querySelector(".counter p").innerHTML = quantity
+            userChosenProducts[index].quantity = quantity
+            userChosenProducts[index].price = userChosenProducts[index].priceForItem*quantity
+            parent.querySelector(".price").innerHTML = `$${userChosenProducts[index].price}`
+            updateStorage()
+            calcGeneralPrice()
+        }
+        if (target.classList.contains("deduction")) {
+            if(+parent.querySelector(".counter p").innerHTML!==1){
+                let quantity = parent.querySelector(".counter p").innerHTML
+                quantity--
+                parent.querySelector(".counter p").innerHTML = quantity
+                userChosenProducts[index].quantity = quantity
+                userChosenProducts[index].price = userChosenProducts[index].priceForItem*quantity
+                parent.querySelector(".price").innerHTML = `$${userChosenProducts[index].price}`
+                updateStorage()
+                calcGeneralPrice()
+            }
+        }
     }
 });
 function updateStorage() {
@@ -63,12 +67,16 @@ function getFromStorage() {
     }
 }
 function createChosenProductFromStorage(element) {
+    const productArray = JSON.parse(localStorage.getItem("productArray"))
+    const index = productArray.findIndex((e)=> {
+        return e.id === element.id})
+    console.log(index)
     busketMenu.querySelector("ul").insertAdjacentHTML(
         "beforeend",
         `
     <li data-id='${element.id}' class="col-12 d-flex align-items-center justify-content-between">
         <div class="wrapper align-items-center d-flex">
-            <img src="images/Blazer.jpg">
+            <img src="${productArray[index].imgSource}">
             <p class="mb-0">${element.productName}</p>
         </div>
         <div class="wrapper d-flex align-items-center">
