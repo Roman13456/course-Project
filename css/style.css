@@ -1073,11 +1073,51 @@ header div.inputSearch input {
   margin-bottom: 10px;
 }
 
-.onSale div .sortPanel .colorOption, .onSale div .sortPanel .sizeOption, .onSale div .sortPanel .priceOption {
+.onSale div .sortPanel .priceOption .sortByPricePanel {
+  width: 100%;
+  height: 16px;
+  margin-bottom: 10px;
+}
+
+.onSale div .sortPanel .priceOption .sortByPricePanel .shaft {
+  top: 6px;
+  width: 100%;
+  background: #D6F5FF;
+  border-radius: 6px;
+  height: 4px;
+}
+
+.onSale div .sortPanel .priceOption .sortByPricePanel .fill {
+  top: 6px;
+  width: 100%;
+  height: 4px;
+  background: #00C2FF;
+  margin-left: 0;
+  margin-right: 0;
+  border-radius: 6px;
+}
+
+.onSale div .sortPanel .priceOption .sortByPricePanel .fill .dot {
+  top: -12px;
+}
+
+.onSale div .sortPanel .priceOption .sortByPricePanel .fill .dot:first-child {
+  left: 0;
+}
+
+.onSale div .sortPanel .priceOption .sortByPricePanel .fill .dot:last-child {
+  right: 0;
+}
+
+.onSale div .sortPanel .colorOption,
+.onSale div .sortPanel .sizeOption,
+.onSale div .sortPanel .priceOption {
   padding-bottom: 41px;
 }
 
-.onSale div .sortPanel .colorOption::after, .onSale div .sortPanel .sizeOption::after, .onSale div .sortPanel .priceOption::after {
+.onSale div .sortPanel .colorOption::after,
+.onSale div .sortPanel .sizeOption::after,
+.onSale div .sortPanel .priceOption::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -1086,16 +1126,22 @@ header div.inputSearch input {
   bottom: 20px;
 }
 
-.onSale div .sortPanel .colorOption div, .onSale div .sortPanel .sizeOption div, .onSale div .sortPanel .priceOption div {
+.onSale div .sortPanel .colorOption div,
+.onSale div .sortPanel .sizeOption div,
+.onSale div .sortPanel .priceOption div {
   padding-bottom: 0;
   margin-bottom: 5px;
 }
 
-.onSale div .sortPanel .colorOption div:last-child, .onSale div .sortPanel .sizeOption div:last-child, .onSale div .sortPanel .priceOption div:last-child {
+.onSale div .sortPanel .colorOption div:last-child,
+.onSale div .sortPanel .sizeOption div:last-child,
+.onSale div .sortPanel .priceOption div:last-child {
   margin-bottom: 0;
 }
 
-.onSale div .sortPanel .colorOption div p, .onSale div .sortPanel .sizeOption div p, .onSale div .sortPanel .priceOption div p {
+.onSale div .sortPanel .colorOption div p,
+.onSale div .sortPanel .sizeOption div p,
+.onSale div .sortPanel .priceOption div p {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -1106,7 +1152,9 @@ header div.inputSearch input {
   margin-bottom: 0;
 }
 
-.onSale div .sortPanel .colorOption div .sortByPricePanel, .onSale div .sortPanel .sizeOption div .sortByPricePanel, .onSale div .sortPanel .priceOption div .sortByPricePanel {
+.onSale div .sortPanel .colorOption div .sortByPricePanel,
+.onSale div .sortPanel .sizeOption div .sortByPricePanel,
+.onSale div .sortPanel .priceOption div .sortByPricePanel {
   margin-bottom: 10px;
   padding: 0;
 }
@@ -1121,6 +1169,13 @@ header div.inputSearch input {
 
 .onSale div .sortPanel .minAndMaxPrice {
   margin-bottom: 41px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 4px);
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
 }
 
 footer {

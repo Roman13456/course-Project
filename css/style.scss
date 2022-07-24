@@ -1085,13 +1085,14 @@ header {
 
     }
 }
-.onSale{
-    div{
+
+.onSale {
+    div {
         .sortPanel {
             padding: 20px;
             background: #FAFAFA;
             border-radius: 6px;
-        
+
             h5 {
                 font-family: $mainFont;
                 font-style: normal;
@@ -1103,8 +1104,59 @@ header {
                 color: #000000;
                 margin-bottom: 10px;
             }
-            .colorOption,.sizeOption,.priceOption{
-                &::after{
+
+            .priceOption {
+                .sortByPricePanel {
+                    // padding-top: 16px;
+                    // padding-bottom: 10px;
+                    width: 100%;
+                    height: 16px;
+                    margin-bottom: 10px;
+
+                    .shaft {
+                        top: 6px;
+                        width: 100%;
+                        background: #D6F5FF;
+                        border-radius: 6px;
+                        height: 4px;
+                    }
+
+                    // .center{
+                    //     inset: 0;
+                    //     margin: auto;
+                    // }
+                    .fill {
+                        top: 6px;
+                        width: 100%;
+                        height: 4px;
+                        background: #00C2FF;
+                        margin-left: 0;
+                        margin-right: 0;
+                        border-radius: 6px;
+
+                        .dot {
+                            top: -12px;
+
+                            &:first-child {
+                                left: 0;
+                            }
+
+                            &:last-child {
+                                right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .colorOption,
+            .sizeOption,
+            .priceOption {
+                input {
+                    // display: none;
+                }
+
+                &::after {
                     content: "";
                     position: absolute;
                     width: 100%;
@@ -1112,13 +1164,17 @@ header {
                     background: #ececec;
                     bottom: 20px;
                 }
+
                 padding-bottom: 41px;
-                div{
-                    &:last-child{
+
+                div {
+                    &:last-child {
                         margin-bottom: 0;
                     }
+
                     padding-bottom: 0;
                     margin-bottom: 5px;
+
                     p {
                         font-family: $mainFont;
                         font-style: normal;
@@ -1129,24 +1185,36 @@ header {
                         color: #000000;
                         margin-bottom: 0;
                     }
+
                     .sortByPricePanel {
                         margin-bottom: 10px;
                         padding: 0;
                     }
                 }
             }
-            .sizeOption{
+
+            .sizeOption {
                 padding-bottom: 0;
-                &::after{
+
+                &::after {
                     display: none;
                 }
             }
+
             .minAndMaxPrice {
                 margin-bottom: 41px;
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: calc(#{$mainFontSize} - 4px);
+                line-height: 17px;
+                text-align: center;
+                color: #000000;
             }
         }
     }
 }
+
 footer {
     padding-top: 20px;
     padding-bottom: 20px;
