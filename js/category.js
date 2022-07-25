@@ -50,7 +50,7 @@ function widthElement(element, coord, order) {
             } else {
                 maxPriceCoef = (coord - start) / (width)
             }
-            marginRight = width + start - coord
+            marginRight = (width + start - coord)*100/width
             dot2Loc = coord - 40
         }
     } else {
@@ -60,7 +60,7 @@ function widthElement(element, coord, order) {
             } else {
                 minPriceCoef = (coord - start) / (width)
             }
-            marginLeft = coord - start
+            marginLeft = (coord - start)*100/width
             dot1Loc = coord + 40
         }
     }
@@ -70,15 +70,11 @@ function widthElement(element, coord, order) {
     if (marginLeft < 0) {
         marginLeft = 0
     }
-
-    // marginLeft = coord - start
-    newWidth = width - marginLeft - marginRight
-    // console.log(`${marginRight}`)
-    element.style.maxWidth = `${newWidth}px`
-    element.style.marginRight = `${marginRight}px`
-    element.style.marginLeft = `${marginLeft}px`
+    newWidth = 100 - marginLeft - marginRight
+    element.style.maxWidth = `${newWidth}%`
+    element.style.marginRight = `${marginRight}%`
+    element.style.marginLeft = `${marginLeft}%`
 }
-// console.log(start,width)
 let color = ""
 let colorArr = []
 let size = ""
@@ -200,7 +196,7 @@ dots[1].addEventListener("drag", function (e) {
     minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
 })
 dots[1].addEventListener("dragend", () => {
-    price = `e.price < '${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}'`
+    price = `+e.price < +${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf("<")!==-1) {
             priceArr[index] = price
@@ -218,7 +214,7 @@ dots[1].addEventListener("dragend", () => {
     sortAndSetPrice()
 })
 dots[0].addEventListener("dragend",()=>{
-    price = `e.price > '${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}'`
+    price = `+e.price > +${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf(">")!==-1) {
             priceArr[index] = price
@@ -317,6 +313,19 @@ function clearPage(removalLoc, loc) {
     loc.insertAdjacentHTML("afterbegin", `<div class="forRemoval row"></div>`)
 }
 
+
+
+
+
+
+
+
+
+const mobileSortBurger = document.querySelector(".mobileSortMenu")
+const sortMenu = document.querySelector(".background")
+mobileSortBurger.addEventListener("click",function(){
+    sortMenu.classList.toggle("visible")
+})
 
 
 

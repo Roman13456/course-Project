@@ -591,6 +591,12 @@ header div.inputSearch input {
   padding: 108px 12px 20px;
 }
 
+@media (max-width: 767px) {
+  .path {
+    padding-top: 156px;
+  }
+}
+
 .path p {
   font-family: "Montserrat";
   font-style: normal;
@@ -1055,10 +1061,48 @@ header div.inputSearch input {
   color: #000000;
 }
 
-.onSale div .sortPanel {
+.onSale div .mobileMenuHolder {
+  padding-bottom: 0;
+}
+
+.onSale div .mobileMenuHolder .mobileSortMenu {
+  display: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  text-align: left;
+  background: #D6F5FF;
+  border: 1px solid #D6F5FF;
+  border-radius: 6px;
+}
+
+@media (max-width: 1023px) {
+  .onSale div .mobileMenuHolder .mobileSortMenu {
+    display: block;
+    width: 48px;
+  }
+}
+
+@media (max-width: 428px) {
+  .onSale div .mobileMenuHolder .mobileSortMenu {
+    width: 100%;
+  }
+}
+
+.onSale div .sortPanel .background {
   padding: 20px;
   background: #FAFAFA;
   border-radius: 6px;
+}
+
+@media (max-width: 1023px) {
+  .onSale div .sortPanel .background {
+    display: none;
+  }
+}
+
+.onSale div .sortPanel .background.visible {
+  display: block;
 }
 
 .onSale div .sortPanel h5 {

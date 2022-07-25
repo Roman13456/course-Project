@@ -617,7 +617,9 @@ header {
 .path {
     background: #fafafa;
     padding: 108px 12px 20px;
-
+    @media (max-width:767px) {
+        padding-top: 156px;
+    }
     p {
         font-family: $mainFont;
         font-style: normal;
@@ -1088,11 +1090,38 @@ header {
 
 .onSale {
     div {
+        .mobileMenuHolder{
+            padding-bottom: 0;
+            .mobileSortMenu {
+                display: none;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 10px;
+                text-align: left;
+                background: #D6F5FF;
+                border: 1px solid #D6F5FF;
+                border-radius: 6px;
+                @media (max-width: 1023px) {
+                    display: block;
+                    width: 48px;
+                }
+                @media (max-width:428px) {
+                    width: 100%;
+                }
+            }
+        }
         .sortPanel {
-            padding: 20px;
-            background: #FAFAFA;
-            border-radius: 6px;
-
+            .background {
+                padding: 20px;
+                background: #FAFAFA;
+                border-radius: 6px;
+                @media (max-width:1023px) {
+                    display: none;
+                }
+            }
+            .background.visible{
+                display: block;
+            }
             h5 {
                 font-family: $mainFont;
                 font-style: normal;
