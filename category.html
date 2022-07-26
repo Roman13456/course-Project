@@ -107,8 +107,8 @@
         </select>
     </div>
     <section class="onSale container-xl position-relative ">
-        <div class="row d-flex justify-content-between align-items-start">
-            <div class="sortPanel col-xxl-3 col-lg-4 col-12 col-md-2">
+        <div class="row d-flex justify-content-between align-items-start position-relative">
+            <div class="sortPanel col-xxl-3 col-lg-4 col-12 col-md-2 ">
                 <div class="col-12 mobileMenuHolder">
                     <button class="mobileSortMenu "><img src="images/mobileSortMenu.png" alt="mobile Sort Menu"></button>
                 </div>
@@ -135,80 +135,40 @@
                     </div>
                     <div class="colorOption position-relative">
                         <h5>Color</h5>
-                        <div class="d-flex checkboxParent">
-                            <input name="color" class="checkboxInput" id="blue" type="checkbox">
-                            <label for="blue">
-                                <div class="d-flex justify-content-between">
-                                    <p>Blue</p>
-                                </div>
-                            </label>
+                        <div class="row buttons">
+                            <button class="col-12" id="blue">
+                                Blue
+                            </button>
+                            <button class="col-12" id="grey">
+                                Grey
+                            </button>
+                            <button class="col-12" id="green">
+                                Green
+                            </button>
+                            <button class="col-12" id="red">
+                                Red
+                            </button>
+                            <button class="col-12" id="yellow">
+                                Yellow
+                            </button>
                         </div>
-                        <div class="d-flex checkboxParent">
-                            <input name="color" class="checkboxInput" id="grey" type="checkbox">
-                            <label for="grey">
-                                <div class="d-flex justify-content-between">
-                                    <p>Grey</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="d-flex checkboxParent">
-                            <input name="color" class="checkboxInput" id="green" type="checkbox">
-                            <label for="green">
-                                <div class="d-flex justify-content-between">
-                                    <p>Green</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="d-flex checkboxParent">
-                            <input name="color" class="checkboxInput" id="red" type="checkbox">
-                            <label for="red">
-                                <div class="d-flex justify-content-between">
-                                    <p>Red</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="d-flex checkboxParent">
-                            <input name="color" class="checkboxInput" id="yellow" type="checkbox">
-                            <label for="yellow">
-                                <div class="d-flex justify-content-between">
-                                    <p>Yellow</p>
-                                </div>
-                            </label>
-                        </div>
+                        
                     </div>
                     <div class="sizeOption position-relative">
                         <h5>Size</h5>
-                        <div class="d-flex checkboxParent">
-                            <input name="size" class="checkboxInput" id="S" type="checkbox">
-                            <label for="S">
-                                <div class="d-flex justify-content-between">
-                                    <p>S</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="d-flex checkboxParent">
-                            <input name="size" class="checkboxInput" id="M" type="checkbox">
-                            <label for="M">
-                                <div class="d-flex justify-content-between">
-                                    <p>M</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="d-flex checkboxParent">
-                            <input name="size" class="checkboxInput" id="L" type="checkbox">
-                            <label for="L">
-                                <div class="d-flex justify-content-between">
-                                    <p>L</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="d-flex checkboxParent">
-                            <input name="size" class="checkboxInput" id="XL" type="checkbox">
-                            <label for="XL">
-                                <div class="d-flex justify-content-between">
-                                   <p>XL</p>
-                                </div>
-                            </label>
+                        <div class="row buttons">
+                            <button class="col-12" id="S">
+                                S
+                            </button>
+                            <button class="col-12" id="M">
+                                M
+                            </button>
+                            <button class="col-12" id="L">
+                                L
+                            </button>
+                            <button class="col-12" id="XL">
+                                XL
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -216,6 +176,10 @@
             <div class="col-9 col-lg-8 col-12 col-md-10 ">
                 <div class="productsOnHomepage ">
                     <div class="forRemoval row"></div>
+                    <div class="pagination d-flex">
+                        <button class="paginatePrevBtn"><img src="images/prevIcon.png"></button>
+                        <button class="paginateNextBtn"><img src="images/nextIcon.png"></button>
+                    </div>
                 </div>
             </div>
         </div>

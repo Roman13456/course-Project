@@ -617,9 +617,11 @@ header {
 .path {
     background: #fafafa;
     padding: 108px 12px 20px;
+
     @media (max-width:767px) {
         padding-top: 156px;
     }
+
     p {
         font-family: $mainFont;
         font-style: normal;
@@ -632,6 +634,47 @@ header {
         text-align: left;
         margin-bottom: 5px;
     }
+}
+
+.productsOnHomepage {
+    .pagination {
+
+        .paginatePrevBtn,
+        .paginateNextBtn,
+        .paginateBtn {
+            font-family: $mainFont;
+            font-style: normal;
+            font-weight: $mainFontWeight;
+            font-size: calc(#{$mainFontSize} - 4px);
+            line-height: 22px;
+            text-align: center;
+            color: #00C2FF;
+            padding: 10px 14px 10px 10px;
+            gap: 10px;
+            width: 48px;
+            height: 48px;
+            background: #D6F5FF;
+            border: 1px solid #D6F5FF;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .paginateBtn {
+            padding: 10px;
+            margin-right: 10px;
+
+            &:nth-child(2) {
+                margin-left: 10px;
+            }
+        }
+
+        .paginateBtn.active {
+            background: #00FFD1;
+            border: 1px solid #00FFD1;
+            border-radius: 6px;
+        }
+    }
+
 }
 
 .productPage {
@@ -1090,8 +1133,9 @@ header {
 
 .onSale {
     div {
-        .mobileMenuHolder{
+        .mobileMenuHolder {
             padding-bottom: 0;
+
             .mobileSortMenu {
                 display: none;
                 padding-top: 10px;
@@ -1101,27 +1145,44 @@ header {
                 background: #D6F5FF;
                 border: 1px solid #D6F5FF;
                 border-radius: 6px;
+
                 @media (max-width: 1023px) {
                     display: block;
                     width: 48px;
                 }
-                @media (max-width:428px) {
+
+                @media (max-width:767px) {
                     width: 100%;
                 }
             }
         }
+
         .sortPanel {
             .background {
                 padding: 20px;
                 background: #FAFAFA;
                 border-radius: 6px;
+
+                @media (max-width:767px) {
+                    width: calc(100% - 24px);
+                }
+
                 @media (max-width:1023px) {
                     display: none;
+                    position: absolute;
+                    z-index: 1;
+                    margin-top: 11px;
+                    background: #FAFAFA;
+                    border: 1px solid rgba(0, 0, 0, 0.1);
+                    // box-shadow: 0px 20px 60px rgb(0 0 0 / 25%);
+                    border-radius: 6px;
                 }
             }
-            .background.visible{
+
+            .background.visible {
                 display: block;
             }
+
             h5 {
                 font-family: $mainFont;
                 font-style: normal;
@@ -1185,6 +1246,28 @@ header {
                     // display: none;
                 }
 
+                div.buttons {
+                    margin-left: 0;
+
+                    button {
+                        font-family: $mainFont;
+                        font-style: normal;
+                        font-weight: $mainFontWeight;
+                        font-size: calc(#{$mainFontSize} - 4px);
+                        line-height: 17px;
+                        padding: 5px;
+                        color: #000000;
+                        margin-bottom: 0;
+                        background: none;
+                        border: none;
+                        text-align: left;
+                    }
+
+                    button.checked {
+                        background-color: pink;
+                    }
+                }
+
                 &::after {
                     content: "";
                     position: absolute;
@@ -1204,16 +1287,7 @@ header {
                     padding-bottom: 0;
                     margin-bottom: 5px;
 
-                    p {
-                        font-family: $mainFont;
-                        font-style: normal;
-                        font-weight: $mainFontWeight;
-                        font-size: calc(#{$mainFontSize} - 4px);
-                        line-height: 17px;
-                        padding: 5px;
-                        color: #000000;
-                        margin-bottom: 0;
-                    }
+                    p {}
 
                     .sortByPricePanel {
                         margin-bottom: 10px;
@@ -1232,13 +1306,17 @@ header {
 
             .minAndMaxPrice {
                 margin-bottom: 41px;
-                font-family: $mainFont;
-                font-style: normal;
-                font-weight: $mainFontWeight;
-                font-size: calc(#{$mainFontSize} - 4px);
-                line-height: 17px;
-                text-align: center;
-                color: #000000;
+
+                p {
+                    font-family: $mainFont;
+                    font-style: normal;
+                    font-weight: $mainFontWeight;
+                    font-size: calc(#{$mainFontSize} - 4px);
+                    line-height: 17px;
+                    text-align: center;
+                    color: #000000;
+                }
+
             }
         }
     }

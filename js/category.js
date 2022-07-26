@@ -27,21 +27,66 @@ function duringResize() {
 }
 
 window.addEventListener("resize", duringResize)
-function sortAndSetPrice(min, max) {
-    sortedArray.forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+function resetMinAndMaxPrice(){
+    
+}
+function setMinAndMaxPrice(array){
+    const sortedBubble = array.sort((a, b) => a.price - b.price)
+    maxPrice = sortedBubble[sortedBubble.length - 1].price
+    minPrice = sortedBubble[0].price
+    minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)-1}`
+    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)+1}`
+    priceArr.filter((e, index) => {
+        if (e.indexOf("<")!==-1) {
+            priceArr[index] = `+e.price < ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
+        } 
+    })
+    priceArr.filter((e, index) => {
+        if (e.indexOf(">")!==-1) {
+            priceArr[index] = `+e.price > ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
+        } 
+    })
+    allAtOnce.filter((e,index)=>{
+        if(e.indexOf("<")!==-1){
+            allAtOnce[index] = `(${priceArr.join(" && ")})`
+        }
+    })
+}
+function sortAndSetPrice(array,min, max) {
+    console.log(array)
+    if(array!==undefined){
+        array.forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+    }
     if (min !== undefined && max !== undefined) {
         const sortedBubble = sortedArray.sort((a, b) => a.price - b.price)
         maxPrice = sortedBubble[sortedBubble.length - 1].price
         minPrice = sortedBubble[0].price
-        minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)}`
-        priceArr.push(`e.price > '${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}'`)
-        minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
-        priceArr.push(`e.price < '${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}'`)
-        allAtOnce.push(`(${priceArr.join(" || ")})`)
+        minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)-1}`
+        minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)+1}`
+        if(priceArr.length===0){
+            priceArr.push(`+e.price > ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`)
+            priceArr.push(`+e.price < ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`)
+            allAtOnce.push(`(${priceArr.join(" || ")})`)
+        }else{
+            priceArr.filter((e, index) => {
+                if (e.indexOf("<")!==-1) {
+                    priceArr[index] = `+e.price < ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
+                } 
+            })
+            priceArr.filter((e, index) => {
+                if (e.indexOf(">")!==-1) {
+                    priceArr[index] = `+e.price > ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
+                } 
+            })
+            allAtOnce.filter((e,index)=>{
+                if(e.indexOf("<")!==-1){
+                    allAtOnce[index] = `(${priceArr.join(" && ")})`
+                }
+            })
+        }
     }
 }
 function widthElement(element, coord, order) {
-    console.log(element, coord, order)
     if (order === "second") {
         // console.log(dot1Loc,coord)
         if (coord > dot1Loc) {
@@ -84,6 +129,11 @@ let priceArr = []
 let allAtOnce = []
 let productArray
 let sortedArray = []
+let paginationArr = []
+const paginationNav = document.querySelector(".pagination")
+let paginationBtns = []
+const paginatePrevBtn = document.querySelector(".paginatePrevBtn")
+const paginateNextBtn = document.querySelector(".paginateNextBtn")
 const productsOnHomepage = document.querySelector(".productsOnHomepage")
 function parseArray(arr) {//стягнув з інтернету. Не використовується
     let newArray = []
@@ -137,7 +187,8 @@ httpRequest.onreadystatechange = () => {
         if (httpRequest.status === 200) {
             productArray = httpRequest.response
             sortedArray = productArray
-            sortAndSetPrice("min", "max")
+            paginationArr = pagination(sortedArray)
+            sortAndSetPrice(paginationArr[0],"min", "max")
         }
     }
 }
@@ -193,10 +244,10 @@ dots[1].addEventListener("drag", function (e) {
         }
     })()
     widthElement(fill, coord, "second")
-    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
+    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)+1}`
 })
 dots[1].addEventListener("dragend", () => {
-    price = `+e.price < +${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
+    price = `+e.price < ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf("<")!==-1) {
             priceArr[index] = price
@@ -211,10 +262,11 @@ dots[1].addEventListener("dragend", () => {
     sortedArray = []
     sort(allAtOnce.join(" && "))
     clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    sortAndSetPrice()
+    paginationArr = pagination(sortedArray)
+    sortAndSetPrice(paginationArr[0])
 })
 dots[0].addEventListener("dragend",()=>{
-    price = `+e.price > +${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
+    price = `+e.price > ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf(">")!==-1) {
             priceArr[index] = price
@@ -229,7 +281,8 @@ dots[0].addEventListener("dragend",()=>{
     sortedArray = []
     sort(allAtOnce.join(" && "))
     clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    sortAndSetPrice()
+    paginationArr = pagination(sortedArray)
+    sortAndSetPrice(paginationArr[0])
 })
 dots[0].addEventListener("drag", (e) => {
     coord = (() => {
@@ -242,90 +295,163 @@ dots[0].addEventListener("drag", (e) => {
     widthElement(fill, coord, "first")
     minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${(() => {
         if (coord < start) {
-            return `${Math.round(minPrice)}`
+            return `${Math.round(minPrice)-1}`
         } else {
-            return `${Math.round(minPriceCoef * maxPrice)}`
+            return `${Math.round(minPriceCoef * maxPrice)-1}`
         }
     })()}`
 })
 colorOption.addEventListener("click", function (e) {
-    const target = e.target
     e.preventDefault()
-    inputListener(target)
-    const parent = target.closest(".checkboxParent")
-    const child = parent.querySelector(".checkboxInput")
-    color = `e.color === '${child.getAttribute("id")}'`
-    if (child.getAttribute("checked") === null) {
-        colorArr = colorArr.filter((e) => e !== color)
-        allAtOnce.filter((e, index) => {
-            if (e.indexOf(color) !== -1) {
-                allAtOnce[index] = `(${colorArr.join(" || ")})`
+    // inputListener(target)
+    if(e.target.tagName = "BUTTON"){
+        e.target.classList.toggle("checked")
+        const child = e.target.getAttribute("id")
+        color = `e.color === '${child}'`
+        if(color.indexOf("null")==-1){
+            if (e.target.classList.contains("checked") === false) {
+                colorArr = colorArr.filter((e) => e !== color)
+                allAtOnce.filter((e, index) => {
+                    if (e.indexOf(color) !== -1) {
+                        allAtOnce[index] = `(${colorArr.join(" || ")})`
+                    }
+                })
+                allAtOnce = clearEmptySpaces(allAtOnce)
+            } else {
+                colorArr.push(color)
+                allAtOnce.filter((e, index) => {
+                    if (e.indexOf("color") !== -1) {
+                        allAtOnce.splice(index, 1)
+                    }
+                })
+                allAtOnce.push(`(${colorArr.join(" || ")})`)
+                allAtOnce = clearEmptySpaces(allAtOnce)
             }
-        })
-        allAtOnce = clearEmptySpaces(allAtOnce)
-    } else {
-        colorArr.push(color)
-        allAtOnce.filter((e, index) => {
-            if (e.indexOf("color") !== -1) {
-                allAtOnce.splice(index, 1)
-            }
-        })
-        allAtOnce.push(`(${colorArr.join(" || ")})`)
-        allAtOnce = clearEmptySpaces(allAtOnce)
+            sortedArray = []
+            sort(allAtOnce.join(" && "))
+            clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+            paginationArr = pagination(sortedArray)
+            sortAndSetPrice(paginationArr[0])
+            
+        } 
     }
-    sortedArray = []
-    sort(allAtOnce.join(" && "))
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    sortAndSetPrice()
 })
 sizeOption.addEventListener("click", function (e) {
-    const target = e.target
     e.preventDefault()
-    inputListener(target)
-    const parent = target.closest(".checkboxParent")
-    const child = parent.querySelector(".checkboxInput")
-    size = `e.size === '${child.getAttribute("id")}'`
-    if (child.getAttribute("checked") === null) {
-        sizeArr = sizeArr.filter((e) => e !== size)
-        allAtOnce.filter((e, index) => {
-            if (e.indexOf(size) !== -1) {
-                allAtOnce[index] = `(${sizeArr.join(" || ")})`
+    if(e.target.tagName = "BUTTON"){
+        e.target.classList.toggle("checked")
+        const child = e.target.getAttribute("id")
+        size = `e.size === '${child}'`
+        if(size.indexOf("null")==-1){
+            if (e.target.classList.contains("checked") === false) {
+                sizeArr = sizeArr.filter((e) => e !== size)
+                allAtOnce.filter((e, index) => {
+                    if (e.indexOf(size) !== -1) {
+                        allAtOnce[index] = `(${sizeArr.join(" || ")})`
+                    }
+                })
+                allAtOnce = clearEmptySpaces(allAtOnce)
+            } else {
+                sizeArr.push(size)
+                allAtOnce.filter((e, index) => {
+                    if (e.indexOf("size") !== -1) {
+                        allAtOnce.splice(index, 1)
+                    }
+                })
+                allAtOnce.push(`(${sizeArr.join(" || ")})`)
+                allAtOnce = clearEmptySpaces(allAtOnce)
             }
-        })
-        allAtOnce = clearEmptySpaces(allAtOnce)
-    } else {
-        sizeArr.push(size)
-        allAtOnce.filter((e, index) => {
-            if (e.indexOf("size") !== -1) {
-                allAtOnce.splice(index, 1)
-            }
-        })
-        allAtOnce.push(`(${sizeArr.join(" || ")})`)
-        allAtOnce = clearEmptySpaces(allAtOnce)
+            sortedArray = []
+            sort(allAtOnce.join(" && "))
+            clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+            paginationArr = pagination(sortedArray)
+            sortAndSetPrice(paginationArr[0])
+        }   
     }
-    sortedArray = []
-    sort(allAtOnce.join(" && "))
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    sortAndSetPrice()
 })
 function clearPage(removalLoc, loc) {
     removalLoc.remove()
     loc.insertAdjacentHTML("afterbegin", `<div class="forRemoval row"></div>`)
 }
-
-
-
-
-
-
-
-
-
 const mobileSortBurger = document.querySelector(".mobileSortMenu")
 const sortMenu = document.querySelector(".background")
 mobileSortBurger.addEventListener("click",function(){
     sortMenu.classList.toggle("visible")
 })
+// var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'].splice(2);
+function pagination(array){
+    let changableArray = [...array]
+    let paginatedArray =[]
+    function addBtns(){
+        for(let i = 0; i<Math.ceil(array.length/9); i++ ){
+            paginatedArray.push(changableArray.slice(0,9))
+            changableArray.splice(0,9)
+            if(i === 0){
+                paginationNav.querySelector(".paginateNextBtn").insertAdjacentHTML("beforebegin",`
+                <button class="paginateBtn active" data-id='${i}'>${i+1}</button>
+            `)}else{
+                paginationNav.querySelector(".paginateNextBtn").insertAdjacentHTML("beforebegin",`
+                <button class="paginateBtn" data-id='${i}'>${i+1}</button>
+                `)
+            }
+        }   
+    }
+    if(paginationNav.querySelectorAll(".paginateBtn").length===0){
+        addBtns()
+    }else{
+        paginationNav.querySelectorAll(".paginateBtn").forEach((e)=>e.remove())
+        addBtns()
+    }
+    // console.log(Math.ceil(array.length/9))
+    
+    paginationBtns = paginationNav.querySelectorAll(".paginateBtn")
+    paginationBtns.forEach((e)=>{
+        e.addEventListener("click",function(b){
+            if(!b.target.classList.contains("active")){
+                paginationBtns.forEach((x)=>{
+                    x.classList.remove("active")
+                })
+                b.target.classList.add("active")
+                const index = b.target.getAttribute("data-id")
+                clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+                paginatedArray[index].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+            }
+        })
+    })
+    return paginatedArray
+}
+paginateNextBtn.addEventListener("click",function(){
+    const activePage = document.querySelector(".paginateBtn.active")
+    const index = Array.from(paginationBtns).findIndex((e)=>e===activePage)
+    activePage.classList.remove("active")
+    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+    if(paginationBtns.length-1>index){
+        paginationBtns[index+1].classList.add("active")
+        const prevIndex = +activePage.getAttribute("data-id")
+        paginationArr[prevIndex+1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+    }else{
+        paginationBtns[0].classList.add("active")
+        paginationArr[0].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+    }
+})
+paginatePrevBtn.addEventListener("click",function(){
+    const activePage = document.querySelector(".paginateBtn.active")
+    const index = Array.from(paginationBtns).findIndex((e)=>e===activePage)
+    activePage.classList.remove("active")
+    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+    if(index>0){
+        paginationBtns[index-1].classList.add("active")
+        const prevIndex = +activePage.getAttribute("data-id")
+        paginationArr[prevIndex-1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+    }else{
+        paginationBtns[paginationBtns.length-1].classList.add("active")
+        paginationArr[paginationBtns.length-1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+    }
+})
+
+
+
+
 
 
 

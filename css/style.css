@@ -610,6 +610,41 @@ header div.inputSearch input {
   margin-bottom: 5px;
 }
 
+.productsOnHomepage .pagination .paginatePrevBtn,
+.productsOnHomepage .pagination .paginateNextBtn,
+.productsOnHomepage .pagination .paginateBtn {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 4px);
+  line-height: 22px;
+  text-align: center;
+  color: #00C2FF;
+  padding: 10px 14px 10px 10px;
+  gap: 10px;
+  width: 48px;
+  height: 48px;
+  background: #D6F5FF;
+  border: 1px solid #D6F5FF;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.productsOnHomepage .pagination .paginateBtn {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.productsOnHomepage .pagination .paginateBtn:nth-child(2) {
+  margin-left: 10px;
+}
+
+.productsOnHomepage .pagination .paginateBtn.active {
+  background: #00FFD1;
+  border: 1px solid #00FFD1;
+  border-radius: 6px;
+}
+
 .productPage {
   padding: 40px 0;
 }
@@ -1083,7 +1118,7 @@ header div.inputSearch input {
   }
 }
 
-@media (max-width: 428px) {
+@media (max-width: 767px) {
   .onSale div .mobileMenuHolder .mobileSortMenu {
     width: 100%;
   }
@@ -1095,9 +1130,21 @@ header div.inputSearch input {
   border-radius: 6px;
 }
 
+@media (max-width: 767px) {
+  .onSale div .sortPanel .background {
+    width: calc(100% - 24px);
+  }
+}
+
 @media (max-width: 1023px) {
   .onSale div .sortPanel .background {
     display: none;
+    position: absolute;
+    z-index: 1;
+    margin-top: 11px;
+    background: #FAFAFA;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
   }
 }
 
@@ -1159,6 +1206,34 @@ header div.inputSearch input {
   padding-bottom: 41px;
 }
 
+.onSale div .sortPanel .colorOption div.buttons,
+.onSale div .sortPanel .sizeOption div.buttons,
+.onSale div .sortPanel .priceOption div.buttons {
+  margin-left: 0;
+}
+
+.onSale div .sortPanel .colorOption div.buttons button,
+.onSale div .sortPanel .sizeOption div.buttons button,
+.onSale div .sortPanel .priceOption div.buttons button {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 4px);
+  line-height: 17px;
+  padding: 5px;
+  color: #000000;
+  margin-bottom: 0;
+  background: none;
+  border: none;
+  text-align: left;
+}
+
+.onSale div .sortPanel .colorOption div.buttons button.checked,
+.onSale div .sortPanel .sizeOption div.buttons button.checked,
+.onSale div .sortPanel .priceOption div.buttons button.checked {
+  background-color: pink;
+}
+
 .onSale div .sortPanel .colorOption::after,
 .onSale div .sortPanel .sizeOption::after,
 .onSale div .sortPanel .priceOption::after {
@@ -1183,19 +1258,6 @@ header div.inputSearch input {
   margin-bottom: 0;
 }
 
-.onSale div .sortPanel .colorOption div p,
-.onSale div .sortPanel .sizeOption div p,
-.onSale div .sortPanel .priceOption div p {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-size: calc(18px - 4px);
-  line-height: 17px;
-  padding: 5px;
-  color: #000000;
-  margin-bottom: 0;
-}
-
 .onSale div .sortPanel .colorOption div .sortByPricePanel,
 .onSale div .sortPanel .sizeOption div .sortByPricePanel,
 .onSale div .sortPanel .priceOption div .sortByPricePanel {
@@ -1213,6 +1275,9 @@ header div.inputSearch input {
 
 .onSale div .sortPanel .minAndMaxPrice {
   margin-bottom: 41px;
+}
+
+.onSale div .sortPanel .minAndMaxPrice p {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
