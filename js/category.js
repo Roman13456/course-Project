@@ -93,7 +93,9 @@ function widthElement(element, coord, order) {
             if (coord > start + width) {
                 maxPriceCoef = 1
             } else {
-                maxPriceCoef = (coord - start) / (width)
+                const localCoef = minPrice*1/maxPrice
+                maxPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
+                
             }
             marginRight = (width + start - coord)*100/width
             dot2Loc = coord - 40
@@ -234,7 +236,11 @@ function sort(str,array) {
             sortedArray.push(e)
         }
     })
-    document.querySelector(".searchResults").innerHTML = `Search results: ${sortedArray.length}`
+    const results = document.querySelector(".searchResults")
+    if(results!==null){
+        results.innerHTML = `Search results: ${sortedArray.length}`
+    }
+    
 }
 // function sortUniversal(child,arr,str){
 //     let array = arr

@@ -717,9 +717,10 @@ header {
         padding-top: 156px;
     }
 
-    p {
+    a {
         font-family: $mainFont;
         font-style: normal;
+        text-decoration: none;
         font-weight: $mainFontWeight;
         font-size: 12px;
         line-height: 15px;
