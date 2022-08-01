@@ -17,6 +17,7 @@ function responseHandler() {
             productName = productPageObject.name;
             setProductPage();
             productsArray.forEach(createProductClosure(productsHomePage));
+            setListenersOnLinks();
         }
     } else {
         console.log("not ready yet");
@@ -27,31 +28,26 @@ function getRandomInt(min, max, length, array) {
         min = Math.ceil(min);
         max = Math.floor(max);
         let random = Math.floor(Math.random() * (max - min)) + min;
-        if(validation()){
+        if (validation()) {
             array.push(random); //Максимум не включается, минимум включается
         }
-        function validation(){
-            let bool = true
-            for(let x = 0; x<i; x++){
-                if(random===array[x]){
-                    i--
-                    bool = false
+        function validation() {
+            let bool = true;
+            for (let x = 0; x < i; x++) {
+                if (random === array[x]) {
+                    i--;
+                    bool = false;
                 }
             }
-            return bool
-        }  
+            return bool;
+        }
     }
 }
 productsHomePage.addEventListener("click", function (e) {
     if (e.target.tagName === "A") {
         localStorage.setItem(
             "currentItem",
-            e.target.parentElement.getAttribute("data-id")
-        );
-    } else if (e.target.tagName === "IMG") {
-        localStorage.setItem(
-            "currentItem",
-            e.target.parentElement.parentElement.getAttribute("data-id")
+            e.target.closest("div").getAttribute("data-id")
         );
     }
 });
@@ -152,16 +148,26 @@ chooseForm.addEventListener("submit", function (e) {
 
         userChosenProducts.push(obj);
         updateStorage();
+        const counter = JSON.parse(localStorage.getItem("userChosenProducts"));
+        const busketCounter = document.querySelector(".busketCounter");
+        if (counter === null) {
+            busketCounter.innerHTML = 0;
+        } else {
+            busketCounter.innerHTML = counter.length;
+        }
         calcGeneralPrice();
         createChosenProductFromStorage(obj);
     }
 });
 function setProductPage() {
-    document.querySelector(".mainImage").setAttribute("src", `${productPageObject.imgSource}`);
+    document
+        .querySelector(".mainImage")
+        .setAttribute("src", `${productPageObject.imgSource}`);
     if (!productPageObject.isSale) {
         document.querySelector(".saleIndicator").remove();
     }
-    document.querySelector(".productDescription h3").innerHTML = productPageObject.name;
+    document.querySelector(".productDescription h3").innerHTML =
+        productPageObject.name;
     document.querySelector(".productDescription h3").insertAdjacentHTML(
         "afterend",
         `

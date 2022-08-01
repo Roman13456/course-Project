@@ -95,6 +95,19 @@ header {
     }
 
     div.inputSearch {
+        .searchOptions {
+            position: absolute;
+        }
+
+        .searchInput.error {
+            color: red;
+            border: 1px red solid;
+
+            &::placeholder {
+                color: red;
+            }
+        }
+
         .menuHover {
             background: #ffffff;
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -375,6 +388,10 @@ header {
             font-size: 18px;
             line-height: 22px;
             color: #bababa;
+
+            &:focus {
+                outline: none
+            }
         }
     }
 }
@@ -613,10 +630,67 @@ header {
         }
     }
 }
+.orderSent {
+    width: 100%;
+    @media (min-width:375px) {
+        max-width: 315px;
+    }
+    @media (min-width:768px) {
+        max-width: 608px;
+    }
+    @media (min-width:1024px) {
+        max-width: 664px;
+    }
+    @media (min-width:1440px) {
+        max-width: 480px;
+    }
+    @media (min-width:1920px) {
+        max-width: 760px;
+    }
+    margin-top: 40px;
+    margin-bottom: 40px;
+    img{
+        margin-bottom: 12px;
+    }
+    background: #DAFFF8;
+    padding: 20px;
+    border-radius: 6px;
+
+    p {
+        font-family: $mainFont;
+        font-style: normal;
+        font-weight: $mainFontWeight;
+        font-size: calc(#{$mainFontSize} + 12px);
+        line-height: 37px;
+        color: #000000;
+        margin-bottom: 2px;
+    }
+    p.underline{
+        margin-bottom: 21px;
+        position: relative;
+        &::after{
+            content: "";
+            background: #ececec;
+            height: 1px;
+            position: absolute;
+            width: 100%;
+            bottom: -10px;
+            left: 0;
+        }
+    }
+    p.smallFontSize {
+        font-family: $mainFont;
+        font-style: normal;
+        font-weight: $mainFontWeight;
+        font-size: calc(#{$mainFontSize} - 6px);
+        line-height: 22px;
+        color: #000000;
+    }
+}
 
 .path {
     background: #fafafa;
-    padding: 108px 12px 20px;
+    padding: 108px 0 20px;
 
     @media (max-width:767px) {
         padding-top: 156px;
@@ -1376,6 +1450,280 @@ footer {
             & {
                 margin: 0 auto 15px;
             }
+        }
+    }
+}
+
+.checkoutForm {
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    .input_controls input:focus {
+        border: 2px solid blue;
+    }
+
+    .input_controls input:focus {
+        outline: none;
+    }
+
+    .input_controls .error {
+        height: 20px;
+    }
+
+    .input_controls.validated input {
+        border: 2px solid green;
+    }
+
+    form button {
+        width: 100%;
+    }
+
+    .input_controls.error input {
+        border-color: red;
+    }
+
+    .input_controls .error {
+        color: red;
+    }
+
+    .orderExample {
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 21px;
+        }
+    }
+
+    .yourOrders {
+        .orders {
+            strong {
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: calc(#{$mainFontSize} - 6px);
+                line-height: 15px;
+                margin-bottom: 10px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: #000000;
+            }
+
+            .paymentOptions {
+                div {
+                    &:last-child {
+                        margin-bottom: 21px;
+                    }
+                }
+
+                position: relative;
+
+                &::after {
+                    position: absolute;
+                    content: "";
+                    height: 1px;
+                    background: #ECECEC;
+                    width: 100%;
+                    bottom: -10px;
+                }
+
+                input[type=radio] {
+                    display: none
+                }
+
+                label {
+                    position: relative;
+                    padding-left: 29px;
+                    font-family: 'Montserrat';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 24px;
+                    margin-bottom: 10px;
+                    color: #000000;
+
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        width: 24px;
+                        background-image: url(../images/Radio.svg);
+                        background-position: center center;
+                        height: 24px;
+                        left: 0;
+                    }
+                }
+
+                input[type=radio]:checked+label {
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        width: 24px;
+                        background-image: url(../images/RadioChecked.svg);
+                        background-position: center center;
+                        height: 24px;
+                        left: 0;
+                    }
+                }
+            }
+
+            .submitBtn {
+                padding: 12px 10px;
+                background: #00C2FF;
+                border: 1px solid #00C2FF;
+                border-radius: 3px;
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: calc(#{$mainFontSize} - 3px);
+                line-height: 18px;
+                text-align: center;
+                color: #FFFFFF;
+            }
+
+            .privacyPolicy {
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: calc(#{$mainFontSize} - 6px);
+                line-height: 22px;
+                color: #000000;
+                margin-bottom: 10px;
+
+                a {
+                    color: #00C2FF;
+                    text-decoration: none;
+                }
+            }
+
+            .totalPrice {
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: calc(#{$mainFontSize} - 4px);
+                line-height: 17px;
+                text-align: right;
+                color: #00BF9D;
+                margin-bottom: 10px;
+            }
+
+            background: #FFFFFF;
+            padding: 20px;
+            border: 1px solid #ECECEC;
+            border-radius: 6px;
+
+            .underline {
+                &::after {
+                    position: absolute;
+                    content: "";
+                    height: 1px;
+                    background: #ECECEC;
+                    width: 100%;
+                    bottom: -10px;
+                }
+            }
+        }
+
+        .quantityAndPrice {
+            font-family: $mainFont;
+            font-style: normal;
+            font-weight: $mainFontWeight;
+            font-size: calc(#{$mainFontSize} - 4px);
+            line-height: 17px;
+            text-align: right;
+            color: #00BF9D;
+        }
+
+        .imgAndName {
+            img {
+                width: 61px;
+                height: 61px;
+                border-radius: 3px;
+                margin-right: 10px;
+            }
+
+            p {
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: calc(#{$mainFontSize} - 4px);
+                line-height: 17px;
+                color: #000000;
+            }
+        }
+
+
+    }
+
+    h5 {
+        font-family: $mainFont;
+        font-style: normal;
+        font-weight: calc(#{$mainFontWeight} + 200);
+        font-size: calc(#{$mainFontSize} - 4px);
+        line-height: 17px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #000000;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-family: $mainFont;
+        font-style: normal;
+        font-weight: $mainFontWeight;
+        font-size: calc(#{$mainFontSize} - 4px);
+        line-height: 24px;
+        margin-bottom: 5px;
+        color: #000000;
+
+        span {
+            color: #F75900;
+        }
+    }
+
+    .contactInfo,
+    .shippingDetails {
+        margin-bottom: 30px;
+
+        .input_controls {
+            &:last-child {
+                input {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    select {
+        margin-bottom: 20px;
+        border: 1px solid #ECECEC;
+        border-radius: 6px;
+        padding: 11px 7px;
+        font-family: $mainFont;
+        font-style: normal;
+        font-weight: $mainFontWeight;
+        font-size: calc(#{$mainFontSize} - 3px);
+        line-height: 18px;
+
+        color: #000000;
+
+    }
+
+    input {
+        padding: 11px 7px;
+        font-family: $mainFont;
+        font-style: normal;
+        font-weight: $mainFontWeight;
+        font-size: calc(#{$mainFontSize} - 3px);
+        line-height: 18px;
+        color: #BABABA;
+        border: 1px solid #ECECEC;
+        border-radius: 6px;
+    }
+
+    .input_controls {
+        margin-bottom: 20px;
+
+        &:last-child {
+            margin-bottom: 0;
         }
     }
 }

@@ -95,6 +95,31 @@ header div.inputSearch {
   width: 100%;
 }
 
+header div.inputSearch .searchOptions {
+  position: absolute;
+}
+
+header div.inputSearch .searchInput.error {
+  color: red;
+  border: 1px red solid;
+}
+
+header div.inputSearch .searchInput.error::-webkit-input-placeholder {
+  color: red;
+}
+
+header div.inputSearch .searchInput.error:-ms-input-placeholder {
+  color: red;
+}
+
+header div.inputSearch .searchInput.error::-ms-input-placeholder {
+  color: red;
+}
+
+header div.inputSearch .searchInput.error::placeholder {
+  color: red;
+}
+
 header div.inputSearch .menuHover {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -358,6 +383,10 @@ header div.inputSearch input {
   color: #bababa;
 }
 
+header div.inputSearch input:focus {
+  outline: none;
+}
+
 .onSale .saleIndicator,
 .saleIndicator {
   top: 10px;
@@ -586,9 +615,86 @@ header div.inputSearch input {
   margin-bottom: 20px;
 }
 
+.orderSent {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background: #DAFFF8;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+@media (min-width: 375px) {
+  .orderSent {
+    max-width: 315px;
+  }
+}
+
+@media (min-width: 768px) {
+  .orderSent {
+    max-width: 608px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .orderSent {
+    max-width: 664px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .orderSent {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .orderSent {
+    max-width: 760px;
+  }
+}
+
+.orderSent img {
+  margin-bottom: 12px;
+}
+
+.orderSent p {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px + 12px);
+  line-height: 37px;
+  color: #000000;
+  margin-bottom: 2px;
+}
+
+.orderSent p.underline {
+  margin-bottom: 21px;
+  position: relative;
+}
+
+.orderSent p.underline::after {
+  content: "";
+  background: #ececec;
+  height: 1px;
+  position: absolute;
+  width: 100%;
+  bottom: -10px;
+  left: 0;
+}
+
+.orderSent p.smallFontSize {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 6px);
+  line-height: 22px;
+  color: #000000;
+}
+
 .path {
   background: #fafafa;
-  padding: 108px 12px 20px;
+  padding: 108px 0 20px;
 }
 
 @media (max-width: 767px) {
@@ -1344,5 +1450,262 @@ footer img {
   footer img {
     margin: 0 auto 15px;
   }
+}
+
+.checkoutForm {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.checkoutForm .input_controls input:focus {
+  border: 2px solid blue;
+}
+
+.checkoutForm .input_controls input:focus {
+  outline: none;
+}
+
+.checkoutForm .input_controls .error {
+  height: 20px;
+}
+
+.checkoutForm .input_controls.validated input {
+  border: 2px solid green;
+}
+
+.checkoutForm form button {
+  width: 100%;
+}
+
+.checkoutForm .input_controls.error input {
+  border-color: red;
+}
+
+.checkoutForm .input_controls .error {
+  color: red;
+}
+
+.checkoutForm .orderExample {
+  margin-bottom: 10px;
+}
+
+.checkoutForm .orderExample:last-child {
+  margin-bottom: 21px;
+}
+
+.checkoutForm .yourOrders .orders {
+  background: #FFFFFF;
+  padding: 20px;
+  border: 1px solid #ECECEC;
+  border-radius: 6px;
+}
+
+.checkoutForm .yourOrders .orders strong {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 6px);
+  line-height: 15px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.checkoutForm .yourOrders .orders .paymentOptions {
+  position: relative;
+}
+
+.checkoutForm .yourOrders .orders .paymentOptions div:last-child {
+  margin-bottom: 21px;
+}
+
+.checkoutForm .yourOrders .orders .paymentOptions::after {
+  position: absolute;
+  content: "";
+  height: 1px;
+  background: #ECECEC;
+  width: 100%;
+  bottom: -10px;
+}
+
+.checkoutForm .yourOrders .orders .paymentOptions input[type=radio] {
+  display: none;
+}
+
+.checkoutForm .yourOrders .orders .paymentOptions label {
+  position: relative;
+  padding-left: 29px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.checkoutForm .yourOrders .orders .paymentOptions label::before {
+  position: absolute;
+  content: "";
+  width: 24px;
+  background-image: url(../images/Radio.svg);
+  background-position: center center;
+  height: 24px;
+  left: 0;
+}
+
+.checkoutForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before {
+  position: absolute;
+  content: "";
+  width: 24px;
+  background-image: url(../images/RadioChecked.svg);
+  background-position: center center;
+  height: 24px;
+  left: 0;
+}
+
+.checkoutForm .yourOrders .orders .submitBtn {
+  padding: 12px 10px;
+  background: #00C2FF;
+  border: 1px solid #00C2FF;
+  border-radius: 3px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 3px);
+  line-height: 18px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.checkoutForm .yourOrders .orders .privacyPolicy {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 6px);
+  line-height: 22px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.checkoutForm .yourOrders .orders .privacyPolicy a {
+  color: #00C2FF;
+  text-decoration: none;
+}
+
+.checkoutForm .yourOrders .orders .totalPrice {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 4px);
+  line-height: 17px;
+  text-align: right;
+  color: #00BF9D;
+  margin-bottom: 10px;
+}
+
+.checkoutForm .yourOrders .orders .underline::after {
+  position: absolute;
+  content: "";
+  height: 1px;
+  background: #ECECEC;
+  width: 100%;
+  bottom: -10px;
+}
+
+.checkoutForm .yourOrders .quantityAndPrice {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 4px);
+  line-height: 17px;
+  text-align: right;
+  color: #00BF9D;
+}
+
+.checkoutForm .yourOrders .imgAndName img {
+  width: 61px;
+  height: 61px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.checkoutForm .yourOrders .imgAndName p {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 4px);
+  line-height: 17px;
+  color: #000000;
+}
+
+.checkoutForm h5 {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: calc(500 + 200);
+  font-size: calc(18px - 4px);
+  line-height: 17px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.checkoutForm label {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 4px);
+  line-height: 24px;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+.checkoutForm label span {
+  color: #F75900;
+}
+
+.checkoutForm .contactInfo,
+.checkoutForm .shippingDetails {
+  margin-bottom: 30px;
+}
+
+.checkoutForm .contactInfo .input_controls:last-child input,
+.checkoutForm .shippingDetails .input_controls:last-child input {
+  margin-bottom: 0;
+}
+
+.checkoutForm select {
+  margin-bottom: 20px;
+  border: 1px solid #ECECEC;
+  border-radius: 6px;
+  padding: 11px 7px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 3px);
+  line-height: 18px;
+  color: #000000;
+}
+
+.checkoutForm input {
+  padding: 11px 7px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(18px - 3px);
+  line-height: 18px;
+  color: #BABABA;
+  border: 1px solid #ECECEC;
+  border-radius: 6px;
+}
+
+.checkoutForm .input_controls {
+  margin-bottom: 20px;
+}
+
+.checkoutForm .input_controls:last-child {
+  margin-bottom: 0;
 }
 /*# sourceMappingURL=style.css.map */

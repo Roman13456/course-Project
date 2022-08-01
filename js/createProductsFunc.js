@@ -13,7 +13,7 @@ function createProductClosure(loc){
                     return ""
                  }
             })()}
-            <a class="d-block" href="products_page2.html">${element.name}</a>
+            <a class="d-block" href="products_page.html">${element.name}</a>
             <p>$${element.price}
                 ${(()=>{
                     if(element.isSale){

@@ -9,19 +9,41 @@ const menuHoverArray = document.querySelectorAll(".menuHover");
 const menuHover = menuHoverArray[0];
 const busketMenu = menuHoverArray[1];
 const header = document.querySelector("header");
+const busketCounter = document.querySelector(".busketCounter")
+
 function init() {
+    const counter = JSON.parse(localStorage.getItem("userChosenProducts"))
+    const busketCounter = document.querySelector(".busketCounter")
+    if (counter === null) {
+        busketCounter.innerHTML = 0
+    } else {
+        busketCounter.innerHTML = counter.length
+    }
     showCatalogBtn();
 }
+console.log(catalogBtn.querySelector("img"))
+catalogBtn.querySelector("img").addEventListener("hover", function () {
+    console.log('hhh')
+    // const categoriesList = document.querySelector(".categoriesList")
+    // console.log("categoriesList")
+    // categoriesList.addEventListener("click",function(e){
+    //     console.log(e.target)
+    //     if(e.target.tahName = 'A'){
+    //         console.log("hh")
+    //         // localStorage.setItem("currentCategory",this.querySelector("p").innerHTML)
+    //     }
+    // })
+})
 let userChosenProducts = [];
 getFromStorage();
-function calcGeneralPrice(){
-    const sum = userChosenProducts.reduce((sum,current)=>sum + current.price,0)
+function calcGeneralPrice() {
+    const sum = userChosenProducts.reduce((sum, current) => sum + current.price, 0)
     busketMenu.querySelector(".total").innerHTML = `$${sum}`
 }
 calcGeneralPrice()
 busketMenu.addEventListener("click", function (e) {
     const target = e.target;
-    if(target.classList.contains("addition") || target.classList.contains("removeItem") || target.classList.contains("deduction")){
+    if (target.classList.contains("addition") || target.classList.contains("removeItem") || target.classList.contains("deduction")) {
         const parent = target.closest("li");
         const id = parent.getAttribute("data-id");
         const index = userChosenProducts.findIndex((e) => e.id === id);
@@ -29,6 +51,13 @@ busketMenu.addEventListener("click", function (e) {
             parent.remove();
             userChosenProducts.splice(index, 1);
             updateStorage();
+            const counter = JSON.parse(localStorage.getItem("userChosenProducts"));
+            const busketCounter = document.querySelector(".busketCounter");
+            if (counter === null) {
+                busketCounter.innerHTML = 0;
+            } else {
+                busketCounter.innerHTML = counter.length;
+            }
             calcGeneralPrice()
         }
         if (target.classList.contains("addition")) {
@@ -36,18 +65,18 @@ busketMenu.addEventListener("click", function (e) {
             quantity++
             parent.querySelector(".counter p").innerHTML = quantity
             userChosenProducts[index].quantity = quantity
-            userChosenProducts[index].price = userChosenProducts[index].priceForItem*quantity
+            userChosenProducts[index].price = userChosenProducts[index].priceForItem * quantity
             parent.querySelector(".price").innerHTML = `$${userChosenProducts[index].price}`
             updateStorage()
             calcGeneralPrice()
         }
         if (target.classList.contains("deduction")) {
-            if(+parent.querySelector(".counter p").innerHTML!==1){
+            if (+parent.querySelector(".counter p").innerHTML !== 1) {
                 let quantity = parent.querySelector(".counter p").innerHTML
                 quantity--
                 parent.querySelector(".counter p").innerHTML = quantity
                 userChosenProducts[index].quantity = quantity
-                userChosenProducts[index].price = userChosenProducts[index].priceForItem*quantity
+                userChosenProducts[index].price = userChosenProducts[index].priceForItem * quantity
                 parent.querySelector(".price").innerHTML = `$${userChosenProducts[index].price}`
                 updateStorage()
                 calcGeneralPrice()
@@ -68,15 +97,16 @@ function getFromStorage() {
 }
 function createChosenProductFromStorage(element) {
     const httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = ()=>{
+    httpRequest.onreadystatechange = () => {
         if (httpRequest.readyState === 4) {
             if (httpRequest.status === 200) {
                 const productArray = httpRequest.response
-                const index = productArray.findIndex((e)=> {
-                return e.id === element.id})
+                const index = productArray.findIndex((e) => {
+                    return e.id === element.id
+                })
                 busketMenu.querySelector("ul").insertAdjacentHTML(
-            "beforeend",
-            `
+                    "beforeend",
+                    `
         <li data-id='${element.id}' class="col-12 d-flex align-items-center justify-content-between">
             <div class="wrapper align-items-center d-flex">
                 <img src="${productArray[index].imgSource}">
@@ -95,11 +125,13 @@ function createChosenProductFromStorage(element) {
             </div>
             
         </li>`
-        )}} else {
+                )
+            }
+        } else {
             console.log("not ready yet");
         }
     }
-    httpRequest.open("GET","https://62d575ef15ad24cbf2c7a034.mockapi.io/products")
+    httpRequest.open("GET", "https://62d575ef15ad24cbf2c7a034.mockapi.io/products")
     httpRequest.responseType = "json"
     httpRequest.send()
     // console.log(index)
@@ -215,6 +247,57 @@ function setMenuPhone(status, menu, str) {
         menu.style.display = "none";
     }
 }
+const spaceRegex = /\s+/g
+searchInput.addEventListener("input", function () {
+    const searchValue = searchInput.value.trim().toLowerCase()
+    const substrArr = searchValue.split(spaceRegex)
+    const parent = searchInput.closest('div')
+    parent.querySelector('.searchOptions').innerHTML = ""
+    substrArr.forEach((e, index) => {
+        substrArr[index] = `e.name.search(/${e}/i)!==-1`
+    })
+    const substrCondition = substrArr.join(" || ")
+
+    if (searchValue !== "") {
+        if (searchInput.classList.contains("error")) {
+            searchInput.classList.remove("error")
+        }
+        const options = productsArray.filter((e) => eval(substrCondition))
+        localStorage.setItem("searchString", `${substrCondition}`)
+        console.log(options)
+        searchInput.closest('div')
+        options.slice(0, 4).forEach((e) => {
+            parent.querySelector('.searchOptions').insertAdjacentHTML('beforeend', `
+                <a href='products_page.html' class='d-block option' data-id='${e.id}' >${e.name}</a>
+            `)
+        })
+        parent.querySelectorAll('.option').forEach((e) => {
+            e.addEventListener("click", function (b) {
+                localStorage.setItem("currentItem", e.getAttribute("data-id"))
+            })
+        })
+
+    }
+
+})
+searchBtn.addEventListener("click", function (e) {
+    e.preventDefault()
+    const searchValue = searchInput.value.trim();
+    let bool = true;
+    if (searchValue === "") {
+        searchInput.classList.add("error")
+        searchInput.setAttribute("placeholder", 'search field is empty')
+        bool = false;
+    } else {
+        if (searchInput.classList.contains("error")) {
+            searchInput.classList.remove("error")
+        }
+    }
+    if (bool) {
+        localStorage.setItem("status", 'search')
+        window.open('category.html', '_self')
+    }
+})
 header.addEventListener("click", function (e) {
     const status = +menuHover.getAttribute("data-id");
     const status1 = +busketMenu.getAttribute("data-id");
@@ -224,6 +307,18 @@ header.addEventListener("click", function (e) {
         } else {
             setMenuPhone(status, menuHover, "closeCatalogBtn");
         }
+        const categoriesList = document.querySelector(".categoriesList")
+        console.log(categoriesList)
+        if (categoriesList !== null) {
+            categoriesList.addEventListener("click", function (e) {
+                console.log(e.target)
+                if (e.target.tagName = 'A') {
+                    console.log(e.target)
+                    localStorage.setItem("currentCategory", e.target.closest("div").querySelector('a').getAttribute("data-info"))
+                }
+            })
+        }
+
     } else if (e.target.classList.contains(`closeCatalogBtn`)) {
         setMenuPhone(status, menuHover, "closeCatalogBtn");
     }

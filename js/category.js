@@ -34,8 +34,8 @@ function setMinAndMaxPrice(array){
     const sortedBubble = array.sort((a, b) => a.price - b.price)
     maxPrice = sortedBubble[sortedBubble.length - 1].price
     minPrice = sortedBubble[0].price
-    minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)-1}`
-    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)+1}`
+    minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)}`
+    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
     priceArr.filter((e, index) => {
         if (e.indexOf("<")!==-1) {
             priceArr[index] = `+e.price < ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
@@ -61,11 +61,11 @@ function sortAndSetPrice(array,min, max) {
         const sortedBubble = sortedArray.sort((a, b) => a.price - b.price)
         maxPrice = sortedBubble[sortedBubble.length - 1].price
         minPrice = sortedBubble[0].price
-        minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)-1}`
-        minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)+1}`
+        minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)}`
+        minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
         if(priceArr.length===0){
-            priceArr.push(`+e.price > ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`)
-            priceArr.push(`+e.price < ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`)
+            priceArr.push(`+e.price >= ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`)
+            priceArr.push(`+e.price <= ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`)
             allAtOnce.push(`(${priceArr.join(" || ")})`)
         }else{
             priceArr.filter((e, index) => {
@@ -127,7 +127,7 @@ let sizeArr = []
 let price = ""
 let priceArr = []
 let allAtOnce = []
-let productArray
+let productsArray
 let sortedArray = []
 let paginationArr = []
 const paginationNav = document.querySelector(".pagination")
@@ -166,29 +166,45 @@ const makeUniq = (arr) => {//стягнув з інета, доволі хоро
     }
     return result;
 };
-function inputListener(target) {
-    if (target.tagName = "INPUT") {
-        if (target.getAttribute("checked") === null) {
-            const parent = target.closest(".checkboxParent")
-            const child = parent.querySelector(".checkboxInput")
-            child.setAttribute("checked", true)
-            parent.querySelector("p").setAttribute("checked", true)
-        } else {
-            const parent = target.closest(".checkboxParent")
-            const child = parent.querySelector(".checkboxInput")
-            child.removeAttribute("checked")
-            parent.querySelector("p").removeAttribute("checked")
-        }
-    }
-}
 const httpRequest = new XMLHttpRequest();
 httpRequest.onreadystatechange = () => {
     if (httpRequest.readyState === 4) {
         if (httpRequest.status === 200) {
-            productArray = httpRequest.response
-            sortedArray = productArray
-            paginationArr = pagination(sortedArray)
-            sortAndSetPrice(paginationArr[0],"min", "max")
+            productsArray = httpRequest.response
+            sortedArray = productsArray
+            const category = localStorage.getItem("currentCategory")
+            const status = localStorage.getItem("status")
+            const categoryName = document.querySelector('.categoryName')
+            if(status!=='search'){
+                sortedArray = sortedArray.filter((e)=>e.category===category)
+                categoryName.innerHTML = category.charAt(0).toUpperCase()+category.slice(1)
+                paginationArr = pagination(sortedArray)
+                sortAndSetPrice(paginationArr[0],"min", "max")
+            }else{
+                localStorage.removeItem("status")
+                const conditionString = localStorage.getItem("searchString")
+                sortedArray = productsArray.filter((e)=>eval(conditionString))
+                paginationArr = pagination(sortedArray)
+                sortAndSetPrice(paginationArr[0],"min", "max")
+                const productsList = document.querySelector(".productsList")
+                categoryName.innerHTML = 'Search'
+                productsList.insertAdjacentHTML("afterbegin",`
+                    <p>Search results: ${sortedArray.length}</p>
+                `)
+            }
+            setListenersOnLinks()
+            // const productsHomePage = document.querySelectorAll(".productsOnHomepage")
+            // productsHomePage.forEach((e)=>{
+            //     e.addEventListener("click",function(e){
+            //         if(e.target.tagName === "A"){
+            //             localStorage.setItem("currentItem",e.target.parentElement.getAttribute("data-id"))
+                
+            //         }else if(e.target.tagName === "IMG"){
+            //             localStorage.setItem("currentItem",e.target.parentElement.parentElement.getAttribute("data-id"))
+            //         }
+            //     })
+            // })
+            
         }
     }
 }
@@ -202,7 +218,7 @@ function clearEmptySpaces(array) {
     return localArr.filter((e) => e !== "()")
 }
 function sort(str) {
-    productArray.filter((e) => {
+    productsArray.filter((e) => {
         if (str === "") {
             console.log("all")
             sortedArray.push(e)
@@ -244,10 +260,10 @@ dots[1].addEventListener("drag", function (e) {
         }
     })()
     widthElement(fill, coord, "second")
-    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)+1}`
+    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
 })
 dots[1].addEventListener("dragend", () => {
-    price = `+e.price < ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
+    price = `+e.price <= ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf("<")!==-1) {
             priceArr[index] = price
@@ -266,7 +282,7 @@ dots[1].addEventListener("dragend", () => {
     sortAndSetPrice(paginationArr[0])
 })
 dots[0].addEventListener("dragend",()=>{
-    price = `+e.price > ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
+    price = `+e.price >= ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf(">")!==-1) {
             priceArr[index] = price
@@ -295,9 +311,9 @@ dots[0].addEventListener("drag", (e) => {
     widthElement(fill, coord, "first")
     minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${(() => {
         if (coord < start) {
-            return `${Math.round(minPrice)-1}`
+            return `${Math.round(minPrice)}`
         } else {
-            return `${Math.round(minPriceCoef * maxPrice)-1}`
+            return `${Math.round(minPriceCoef * maxPrice)}`
         }
     })()}`
 })
@@ -366,6 +382,7 @@ sizeOption.addEventListener("click", function (e) {
             clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
             paginationArr = pagination(sortedArray)
             sortAndSetPrice(paginationArr[0])
+            
         }   
     }
 })
