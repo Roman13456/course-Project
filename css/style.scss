@@ -97,6 +97,24 @@ header {
     div.inputSearch {
         .searchOptions {
             position: absolute;
+            top: 44px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #ececec;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            a{
+                padding: 5px 14px;
+                gap: 10px;
+                background: #ffffff;
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: 14px;
+                line-height: 22px;
+                text-decoration: none;
+                color: #bababa;
+            }
         }
 
         .searchInput.error {
@@ -370,12 +388,15 @@ header {
                 top: 10px;
                 right: 10px;
                 background-color: transparent;
+                z-index: 2;
                 border: none;
             }
         }
 
         input {
             max-width: 693px;
+            position: relative;
+            z-index: 1;
             box-sizing: border-box;
             padding: 13px 10px;
             gap: 10px;

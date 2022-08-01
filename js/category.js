@@ -103,7 +103,11 @@ function widthElement(element, coord, order) {
             if (coord - start < 0) {
                 minPriceCoef = 1
             } else {
-                minPriceCoef = (coord - start) / (width)
+                const localCoef = minPrice*1/maxPrice
+                console.log(localCoef)
+                // console.log((coord - start) / (width))
+                // console.log((coord - start) / ((+width)-localCoef*width))
+                minPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
             }
             marginLeft = (coord - start)*100/width
             dot1Loc = coord + 40
@@ -129,6 +133,7 @@ let priceArr = []
 let allAtOnce = []
 let productsArray
 let sortedArray = []
+let beforeAnySortingArray =[]
 let paginationArr = []
 const paginationNav = document.querySelector(".pagination")
 let paginationBtns = []
@@ -177,6 +182,7 @@ httpRequest.onreadystatechange = () => {
             const categoryName = document.querySelector('.categoryName')
             if(status!=='search'){
                 sortedArray = sortedArray.filter((e)=>e.category===category)
+                beforeAnySortingArray = [...sortedArray]
                 categoryName.innerHTML = category.charAt(0).toUpperCase()+category.slice(1)
                 paginationArr = pagination(sortedArray)
                 sortAndSetPrice(paginationArr[0],"min", "max")
@@ -184,12 +190,13 @@ httpRequest.onreadystatechange = () => {
                 localStorage.removeItem("status")
                 const conditionString = localStorage.getItem("searchString")
                 sortedArray = productsArray.filter((e)=>eval(conditionString))
+                beforeAnySortingArray = [...sortedArray]
                 paginationArr = pagination(sortedArray)
                 sortAndSetPrice(paginationArr[0],"min", "max")
                 const productsList = document.querySelector(".productsList")
                 categoryName.innerHTML = 'Search'
                 productsList.insertAdjacentHTML("afterbegin",`
-                    <p>Search results: ${sortedArray.length}</p>
+                    <p class='searchResults'>Search results: ${beforeAnySortingArray.length}</p>
                 `)
             }
             setListenersOnLinks()
@@ -217,8 +224,8 @@ function clearEmptySpaces(array) {
     let localArr = array
     return localArr.filter((e) => e !== "()")
 }
-function sort(str) {
-    productsArray.filter((e) => {
+function sort(str,array) {
+    array.filter((e) => {
         if (str === "") {
             console.log("all")
             sortedArray.push(e)
@@ -227,6 +234,7 @@ function sort(str) {
             sortedArray.push(e)
         }
     })
+    document.querySelector(".searchResults").innerHTML = `Search results: ${sortedArray.length}`
 }
 // function sortUniversal(child,arr,str){
 //     let array = arr
@@ -276,7 +284,7 @@ dots[1].addEventListener("dragend", () => {
     })
     // allAtOnce = clearEmptySpaces(allAtOnce)
     sortedArray = []
-    sort(allAtOnce.join(" && "))
+    sort(allAtOnce.join(" && "),beforeAnySortingArray)
     clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
     paginationArr = pagination(sortedArray)
     sortAndSetPrice(paginationArr[0])
@@ -295,7 +303,7 @@ dots[0].addEventListener("dragend",()=>{
     })
     // allAtOnce = clearEmptySpaces(allAtOnce)
     sortedArray = []
-    sort(allAtOnce.join(" && "))
+    sort(allAtOnce.join(" && "),beforeAnySortingArray)
     clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
     paginationArr = pagination(sortedArray)
     sortAndSetPrice(paginationArr[0])
@@ -313,7 +321,7 @@ dots[0].addEventListener("drag", (e) => {
         if (coord < start) {
             return `${Math.round(minPrice)}`
         } else {
-            return `${Math.round(minPriceCoef * maxPrice)}`
+            return Math.round(minPriceCoef * maxPrice)
         }
     })()}`
 })
@@ -344,7 +352,7 @@ colorOption.addEventListener("click", function (e) {
                 allAtOnce = clearEmptySpaces(allAtOnce)
             }
             sortedArray = []
-            sort(allAtOnce.join(" && "))
+            sort(allAtOnce.join(" && "),beforeAnySortingArray)
             clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
             paginationArr = pagination(sortedArray)
             sortAndSetPrice(paginationArr[0])
@@ -378,7 +386,7 @@ sizeOption.addEventListener("click", function (e) {
                 allAtOnce = clearEmptySpaces(allAtOnce)
             }
             sortedArray = []
-            sort(allAtOnce.join(" && "))
+            sort(allAtOnce.join(" && "),beforeAnySortingArray)
             clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
             paginationArr = pagination(sortedArray)
             sortAndSetPrice(paginationArr[0])
