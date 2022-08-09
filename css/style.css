@@ -96,13 +96,10 @@ header div.inputSearch {
 }
 
 header div.inputSearch .searchOptions {
-  position: absolute;
   top: 44px;
   width: 100%;
   background: #ffffff;
-  border: 1px solid #ececec;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
+  position: absolute;
 }
 
 header div.inputSearch .searchOptions a {
@@ -116,6 +113,12 @@ header div.inputSearch .searchOptions a {
   line-height: 22px;
   text-decoration: none;
   color: #bababa;
+}
+
+header div.inputSearch .searchOptions.borders {
+  border: 1px solid #ececec;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
 header div.inputSearch .searchInput.error {

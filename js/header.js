@@ -170,14 +170,14 @@ function showCatalogBtn() {
     }
 }
 init();
-function removeCloseMenuBtnDuingResize(status, menu, str) {
+function removeCloseMenuBtnDuringResize(status, menu, str) {
     if (status === 1) {
         if (menu.querySelector(`.${str}`) !== null) {
             menu.querySelector(`.${str}`).parentElement.remove();
         }
     }
 }
-function addCloseMenuBtnDuingResize(status, menu, str) {
+function addCloseMenuBtnDuringResize(status, menu, str) {
     if (status === 1) {
         if (menu.querySelector(`.${str}`) === null) {
             menu.insertAdjacentHTML(
@@ -196,12 +196,12 @@ window.addEventListener("resize", () => {
     const status1 = +busketMenu.getAttribute("data-id");
     catalogBtn = document.getElementById("catalogBtn");
     if (window.innerWidth > 767) {
-        removeCloseMenuBtnDuingResize(status, menuHover, "closeCatalogBtn");
-        removeCloseMenuBtnDuingResize(status1, busketMenu, "closeBusketBtn");
+        removeCloseMenuBtnDuringResize(status, menuHover, "closeCatalogBtn");
+        removeCloseMenuBtnDuringResize(status1, busketMenu, "closeBusketBtn");
         hideInput();
     } else {
-        addCloseMenuBtnDuingResize(status, menuHover, "closeCatalogBtn");
-        addCloseMenuBtnDuingResize(status1, busketMenu, "closeBusketBtn");
+        addCloseMenuBtnDuringResize(status, menuHover, "closeCatalogBtn");
+        addCloseMenuBtnDuringResize(status1, busketMenu, "closeBusketBtn");
     }
 });
 searchBtn.addEventListener("click", function () {
@@ -211,17 +211,35 @@ searchBtn.addEventListener("click", function () {
         console.log("search"); //провести пошук
     } else if (window.innerWidth < 768) {
         showInput();
+        // this.setAttribute("data-width",window.innerWidth)
     }
 });
 busketBtn.addEventListener("click", function () {
+    const status = +menuHover.getAttribute("data-id");
+    const status1 = +busketMenu.getAttribute("data-id");
     if (!headerLogo.classList.contains("hide")) {
         console.log("show busket"); //показати корзину
-    } else {
+            // console.log(searchInput.getAttribute('style'))
+            // if(searchInput)
+            if (window.innerWidth > 767) {
+                busketBtn.classList.toggle("on");
+                setCatalogTablet(status1, busketMenu, "closeBusketBtn");
+            } else {
+                setMenuPhone(status1, busketMenu, "closeBusketBtn");
+            }
+        } 
+        // else if (e.target.classList.contains(`closeBusketBtn`)) {
+        //     setMenuPhone(status1, busketMenu, "closeBusketBtn");
+        // }
+    else {
+        console.log('hide')
         hideInput();
     }
 });
 function setCatalogTablet(status, menu) {
     if (status === 0) {
+        
+        // if(searchInput.getAttribute("style.display")==="block")
         menu.setAttribute("data-id", "1");
         menu.style.display = "block";
     } else {
@@ -231,6 +249,7 @@ function setCatalogTablet(status, menu) {
 }
 function setMenuPhone(status, menu, str) {
     if (status === 0) {
+        // console.log(searchInput.getAttribute("style"))
         menu.setAttribute("data-id", "1");
         menu.style.display = "block";
         menu.insertAdjacentHTML(
@@ -266,6 +285,8 @@ searchInput.addEventListener("input", function () {
         localStorage.setItem("searchString", `${substrCondition}`)
         console.log(options)
         searchInput.closest('div')
+        parent.querySelector('.searchOptions').classList.add("borders")
+        console.log(parent.querySelector('.searchOptions'))
         options.slice(0, 4).forEach((e) => {
             parent.querySelector('.searchOptions').insertAdjacentHTML('beforeend', `
                 <a href='products_page.html' class='d-block option' data-id='${e.id}' >${e.name}</a>
@@ -277,6 +298,8 @@ searchInput.addEventListener("input", function () {
             })
         })
 
+    }else{
+        parent.querySelector('.searchOptions').classList.remove("borders")
     }
 
 })
@@ -322,17 +345,23 @@ header.addEventListener("click", function (e) {
     } else if (e.target.classList.contains(`closeCatalogBtn`)) {
         setMenuPhone(status, menuHover, "closeCatalogBtn");
     }
-    if (
-        e.target.classList.contains("busket") ||
-        e.target.classList.contains("busketImg")
-    ) {
-        busketBtn.classList.toggle("on");
-        if (window.innerWidth > 767) {
-            setCatalogTablet(status1, busketMenu, "closeBusketBtn");
-        } else {
+    if (e.target.classList.contains(`closeBusketBtn`)) {
             setMenuPhone(status1, busketMenu, "closeBusketBtn");
-        }
-    } else if (e.target.classList.contains(`closeBusketBtn`)) {
-        setMenuPhone(status1, busketMenu, "closeBusketBtn");
     }
-});
+    // if (
+    //     e.target.classList.contains("busket") ||
+    //     e.target.classList.contains("busketImg")
+    // ) {
+    //     // console.log(searchInput.getAttribute('style'))
+    //     // if(searchInput)
+    //     if (window.innerWidth > 767) {
+    //         busketBtn.classList.toggle("on");
+    //         setCatalogTablet(status1, busketMenu, "closeBusketBtn");
+    //     } else {
+    //         setMenuPhone(status1, busketMenu, "closeBusketBtn");
+    //     }
+    // } else if (e.target.classList.contains(`closeBusketBtn`)) {
+    //     setMenuPhone(status1, busketMenu, "closeBusketBtn");
+    // }
+}
+);
