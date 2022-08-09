@@ -51,6 +51,26 @@ header {
         }
     }
 
+    .closeBusketBtn {
+        padding: 0;
+        padding-right: 12px;
+
+        img {
+            padding: 0;
+        }
+    }
+
+    .phoneHeading {
+        font-family: $mainFont;
+        font-style: normal;
+        font-weight: $mainFontWeight;
+        font-size: 30px;
+        line-height: 37px;
+        text-align: center;
+        color: #000000;
+        padding-left: 12px;
+    }
+
     .busket {
         &:hover {
             background: #e7f9ff;
@@ -100,7 +120,8 @@ header {
             width: 100%;
             background: #ffffff;
             position: absolute;
-            a{
+
+            a {
                 padding: 5px 14px;
                 gap: 10px;
                 background: #ffffff;
@@ -113,7 +134,8 @@ header {
                 color: #bababa;
             }
         }
-        .searchOptions.borders{
+
+        .searchOptions.borders {
             border: 1px solid #ececec;
             border-bottom-left-radius: 6px;
             border-bottom-right-radius: 6px;
@@ -653,28 +675,37 @@ header {
         }
     }
 }
+
 .orderSent {
     width: 100%;
+
     @media (min-width:375px) {
         max-width: 315px;
     }
+
     @media (min-width:768px) {
         max-width: 608px;
     }
+
     @media (min-width:1024px) {
         max-width: 664px;
     }
+
     @media (min-width:1440px) {
         max-width: 480px;
     }
+
     @media (min-width:1920px) {
         max-width: 760px;
     }
+
     margin-top: 40px;
     margin-bottom: 40px;
-    img{
+
+    img {
         margin-bottom: 12px;
     }
+
     background: #DAFFF8;
     padding: 20px;
     border-radius: 6px;
@@ -688,10 +719,12 @@ header {
         color: #000000;
         margin-bottom: 2px;
     }
-    p.underline{
+
+    p.underline {
         margin-bottom: 21px;
         position: relative;
-        &::after{
+
+        &::after {
             content: "";
             background: #ececec;
             height: 1px;
@@ -701,6 +734,7 @@ header {
             left: 0;
         }
     }
+
     p.smallFontSize {
         font-family: $mainFont;
         font-style: normal;

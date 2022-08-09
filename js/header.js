@@ -141,8 +141,8 @@ searchInput.closest("div").addEventListener("focusout",function(){
     setTimeout(()=>{
         document.querySelector('.searchOptions').classList.remove("borders")
         document.querySelector('.searchOptions').innerHTML = ''
-    },1)
-    
+    },100)
+
 })
 searchInput.addEventListener("focusin",function(){
     searching()
@@ -190,13 +190,13 @@ function removeCloseMenuBtnDuringResize(status, menu, str) {
         }
     }
 }
-function addCloseMenuBtnDuringResize(status, menu, str) {
+function addCloseMenuBtnDuringResize(status, menu, str, heading) {
     if (status === 1) {
         if (menu.querySelector(`.${str}`) === null) {
             menu.insertAdjacentHTML(
                 "afterbegin",
                 `<div class="d-flex justify-content-between align-items-center mb-3">
-        <p class="mb-0">Catalog</p>
+        <p class="mb-0 phoneHeading">${heading}</p>
         <button class='${str}' type="button"><img class='${str}' src="images/Close.svg" alt="close catalog"></button>
     </div>`
             );
@@ -213,8 +213,8 @@ window.addEventListener("resize", () => {
         removeCloseMenuBtnDuringResize(status1, busketMenu, "closeBusketBtn");
         hideInput();
     } else {
-        addCloseMenuBtnDuringResize(status, menuHover, "closeCatalogBtn");
-        addCloseMenuBtnDuringResize(status1, busketMenu, "closeBusketBtn");
+        addCloseMenuBtnDuringResize(status, menuHover, "closeCatalogBtn",'Catalog');
+        addCloseMenuBtnDuringResize(status1, busketMenu, "closeBusketBtn",'Cart');
     }
 });
 searchBtn.addEventListener("click", function () {
@@ -238,7 +238,7 @@ busketBtn.addEventListener("click", function () {
                 busketBtn.classList.toggle("on");
                 setCatalogTablet(status1, busketMenu, "closeBusketBtn");
             } else {
-                setMenuPhone(status1, busketMenu, "closeBusketBtn");
+                setMenuPhone(status1, busketMenu, "closeBusketBtn",'Cart');
             }
         } 
         // else if (e.target.classList.contains(`closeBusketBtn`)) {
@@ -261,7 +261,7 @@ function setCatalogTablet(status, menu) {
         menu.setAttribute("data-id", "0");
     }
 }
-function setMenuPhone(status, menu, str) {
+function setMenuPhone(status, menu, str,heading) {
     if (status === 0) {
         // console.log(searchInput.getAttribute("style"))
         menu.setAttribute("data-id", "1");
@@ -269,7 +269,7 @@ function setMenuPhone(status, menu, str) {
         menu.insertAdjacentHTML(
             "afterbegin",
             `<div class="d-flex justify-content-between align-items-center mb-3">
-        <p class="mb-0">Catalog</p>
+        <p class="mb-0 phoneHeading">${heading}</p>
         <button class='${str}'  type="button"><img  class='${str}' src="images/Close.svg" alt="close catalog"></button>
     </div>`
         );
@@ -350,7 +350,7 @@ header.addEventListener("click", function (e) {
         if (window.innerWidth > 767) {
             setCatalogTablet(status, menuHover, "closeCatalogBtn");
         } else {
-            setMenuPhone(status, menuHover, "closeCatalogBtn");
+            setMenuPhone(status, menuHover, "closeCatalogBtn", 'Catalog');
         }
         const categoriesList = document.querySelector(".categoriesList")
         console.log(categoriesList)
@@ -365,10 +365,10 @@ header.addEventListener("click", function (e) {
         }
 
     } else if (e.target.classList.contains(`closeCatalogBtn`)) {
-        setMenuPhone(status, menuHover, "closeCatalogBtn");
+        setMenuPhone(status, menuHover, "closeCatalogBtn",'Catalog');
     }
     if (e.target.classList.contains(`closeBusketBtn`)) {
-            setMenuPhone(status1, busketMenu, "closeBusketBtn");
+            setMenuPhone(status1, busketMenu, "closeBusketBtn",'Cart');
     }
     // if (
     //     e.target.classList.contains("busket") ||
