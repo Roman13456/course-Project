@@ -137,9 +137,12 @@ function createChosenProductFromStorage(element) {
     // console.log(index)
 }
 userChosenProducts.forEach(createChosenProductFromStorage);
-searchInput.addEventListener("focusout",function(){
-    document.querySelector('.searchOptions').classList.remove("borders")
-    document.querySelector('.searchOptions').innerHTML = ''
+searchInput.closest("div").addEventListener("focusout",function(){
+    setTimeout(()=>{
+        document.querySelector('.searchOptions').classList.remove("borders")
+        document.querySelector('.searchOptions').innerHTML = ''
+    },1)
+    
 })
 searchInput.addEventListener("focusin",function(){
     searching()
