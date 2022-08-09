@@ -137,6 +137,13 @@ function createChosenProductFromStorage(element) {
     // console.log(index)
 }
 userChosenProducts.forEach(createChosenProductFromStorage);
+searchInput.addEventListener("focusout",function(){
+    document.querySelector('.searchOptions').classList.remove("borders")
+    document.querySelector('.searchOptions').innerHTML = ''
+})
+searchInput.addEventListener("focusin",function(){
+    searching()
+})
 function showInput() {
     headerLogo.classList.add("hide");
     const str = `display:block!important;`;
@@ -145,6 +152,9 @@ function showInput() {
     busketBtn.querySelector("img").setAttribute("src", "images/Close.svg");
 }
 function hideInput() {
+    document.querySelector('.searchOptions').classList.remove("borders")
+    document.querySelector('.searchOptions').innerHTML = ''
+    searchInput.value = ''
     headerLogo.classList.remove("hide");
     searchInput.removeAttribute("style");
     busketBtn.querySelector("p").removeAttribute("style");
@@ -211,7 +221,7 @@ searchBtn.addEventListener("click", function () {
         console.log("search"); //провести пошук
     } else if (window.innerWidth < 768) {
         showInput();
-        // this.setAttribute("data-width",window.innerWidth)
+        this.setAttribute("data-width",window.innerWidth)
     }
 });
 busketBtn.addEventListener("click", function () {
@@ -232,7 +242,8 @@ busketBtn.addEventListener("click", function () {
         //     setMenuPhone(status1, busketMenu, "closeBusketBtn");
         // }
     else {
-        console.log('hide')
+        searchInput.classList.remove("error")
+        searchInput.setAttribute("placeholder",'Search....')
         hideInput();
     }
 });
@@ -268,6 +279,10 @@ function setMenuPhone(status, menu, str) {
 }
 const spaceRegex = /\s+/g
 searchInput.addEventListener("input", function () {
+    searching()
+
+})
+function searching(){
     const searchValue = searchInput.value.trim().toLowerCase()
     const substrArr = searchValue.split(spaceRegex)
     const parent = searchInput.closest('div')
@@ -279,12 +294,12 @@ searchInput.addEventListener("input", function () {
 
     if (searchValue !== "") {
         if (searchInput.classList.contains("error")) {
+            
             searchInput.classList.remove("error")
         }
         const options = productsArray.filter((e) => eval(substrCondition))
         localStorage.setItem("searchString", `${substrCondition}`)
         console.log(options)
-        searchInput.closest('div')
         parent.querySelector('.searchOptions').classList.add("borders")
         console.log(parent.querySelector('.searchOptions'))
         options.slice(0, 4).forEach((e) => {
@@ -301,24 +316,28 @@ searchInput.addEventListener("input", function () {
     }else{
         parent.querySelector('.searchOptions').classList.remove("borders")
     }
-
-})
+}
 searchBtn.addEventListener("click", function (e) {
-    e.preventDefault()
-    const searchValue = searchInput.value.trim();
-    let bool = true;
-    if (searchValue === "") {
-        searchInput.classList.add("error")
-        searchInput.setAttribute("placeholder", 'search field is empty')
-        bool = false;
-    } else {
-        if (searchInput.classList.contains("error")) {
-            searchInput.classList.remove("error")
+    if(searchBtn.getAttribute("data-width")==null){
+        console.log('hh')
+        e.preventDefault()
+        const searchValue = searchInput.value.trim();
+        let bool = true;
+        if (searchValue === "") {
+            searchInput.classList.add("error")
+            searchInput.setAttribute("placeholder", 'search field is empty')
+            bool = false;
+        } else {
+            if (searchInput.classList.contains("error")) {
+                searchInput.classList.remove("error")
+            }
         }
-    }
-    if (bool) {
-        localStorage.setItem("status", 'search')
-        window.open('category.html', '_self')
+        if (bool) {
+            localStorage.setItem("status", 'search')
+            window.open('category.html', '_self')
+        }
+    }else{
+        searchBtn.removeAttribute("data-width")
     }
 })
 header.addEventListener("click", function (e) {
