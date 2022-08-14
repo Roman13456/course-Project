@@ -55,7 +55,7 @@ function setMinAndMaxPrice(array){
 function sortAndSetPrice(array,min, max) {
     console.log(array)
     if(array!==undefined){
-        array.forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+        array.forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'),4,4))
     }
     if (min !== undefined && max !== undefined) {
         const sortedBubble = sortedArray.sort((a, b) => a.price - b.price)
@@ -276,7 +276,37 @@ dots[1].addEventListener("drag", function (e) {
     widthElement(fill, coord, "second")
     minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
 })
+dots[1].addEventListener("touchmove",function (e) {
+    coord = (() => {
+        if (e.pageX !== 0) {
+            return e.pageX
+        } else {
+            return coord
+        }
+    })()
+    widthElement(fill, coord, "second")
+    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
+})
 dots[1].addEventListener("dragend", () => {
+    price = `+e.price <= ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
+    priceArr.filter((e, index) => {
+        if (e.indexOf("<")!==-1) {
+            priceArr[index] = price
+        } 
+    })
+    allAtOnce.filter((e,index)=>{
+        if(e.indexOf("<")!==-1){
+            allAtOnce[index] = `(${priceArr.join(" && ")})`
+        }
+    })
+    // allAtOnce = clearEmptySpaces(allAtOnce)
+    sortedArray = []
+    sort(allAtOnce.join(" && "),beforeAnySortingArray)
+    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+    paginationArr = pagination(sortedArray)
+    sortAndSetPrice(paginationArr[0])
+})
+dots[1].addEventListener("touchend", () => {
     price = `+e.price <= ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf("<")!==-1) {
@@ -314,7 +344,43 @@ dots[0].addEventListener("dragend",()=>{
     paginationArr = pagination(sortedArray)
     sortAndSetPrice(paginationArr[0])
 })
+dots[0].addEventListener("touchend",()=>{
+    price = `+e.price >= ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
+    priceArr.filter((e, index) => {
+        if (e.indexOf(">")!==-1) {
+            priceArr[index] = price
+        } 
+    })
+    allAtOnce.filter((e,index)=>{
+        if(e.indexOf(">")!==-1){
+            allAtOnce[index] = `(${priceArr.join(" && ")})`
+        }
+    })
+    // allAtOnce = clearEmptySpaces(allAtOnce)
+    sortedArray = []
+    sort(allAtOnce.join(" && "),beforeAnySortingArray)
+    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+    paginationArr = pagination(sortedArray)
+    sortAndSetPrice(paginationArr[0])
+})
 dots[0].addEventListener("drag", (e) => {
+    coord = (() => {
+        if (e.pageX !== 0) {
+            return e.pageX
+        } else {
+            return coord
+        }
+    })()
+    widthElement(fill, coord, "first")
+    minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${(() => {
+        if (coord < start) {
+            return `${Math.round(minPrice)}`
+        } else {
+            return Math.round(minPriceCoef * maxPrice)
+        }
+    })()}`
+})
+dots[0].addEventListener("touchmove", (e) => {
     coord = (() => {
         if (e.pageX !== 0) {
             return e.pageX
@@ -445,7 +511,7 @@ function pagination(array){
                 b.target.classList.add("active")
                 const index = b.target.getAttribute("data-id")
                 clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-                paginatedArray[index].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+                paginatedArray[index].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'),4,4))
             }
         })
     })
@@ -459,10 +525,10 @@ paginateNextBtn.addEventListener("click",function(){
     if(paginationBtns.length-1>index){
         paginationBtns[index+1].classList.add("active")
         const prevIndex = +activePage.getAttribute("data-id")
-        paginationArr[prevIndex+1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+        paginationArr[prevIndex+1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'),4,4))
     }else{
         paginationBtns[0].classList.add("active")
-        paginationArr[0].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+        paginationArr[0].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'),4,4))
     }
 })
 paginatePrevBtn.addEventListener("click",function(){
@@ -473,10 +539,10 @@ paginatePrevBtn.addEventListener("click",function(){
     if(index>0){
         paginationBtns[index-1].classList.add("active")
         const prevIndex = +activePage.getAttribute("data-id")
-        paginationArr[prevIndex-1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+        paginationArr[prevIndex-1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'),4,4))
     }else{
         paginationBtns[paginationBtns.length-1].classList.add("active")
-        paginationArr[paginationBtns.length-1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval')))
+        paginationArr[paginationBtns.length-1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'),4,4))
     }
 })
 

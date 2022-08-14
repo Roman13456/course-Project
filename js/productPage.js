@@ -16,7 +16,7 @@ function responseHandler() {
             price = productPageObject.price;
             productName = productPageObject.name;
             setProductPage();
-            productsArray.forEach(createProductClosure(productsHomePage));
+            productsArray.forEach(createProductClosure(productsHomePage,4,3));
             setListenersOnLinks();
         }
     } else {

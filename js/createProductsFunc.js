@@ -1,8 +1,8 @@
-function createProductClosure(loc){
+function createProductClosure(loc,lg,xxl){
     const place = loc
     function createProduct(element){
         place.insertAdjacentHTML("beforeend",`
-        <div class="col-6 col-lg-4 col-xxl-3 position-relative" data-id='${element.id}'>
+        <div class="col-6 col-lg-${lg} col-xxl-${xxl} position-relative" data-id='${element.id}'>
             <a href="products_page.html" class=" d-block">
                 <img src="${element.imgSource}" alt="printed blazer">
             </a>

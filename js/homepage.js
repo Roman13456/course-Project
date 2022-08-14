@@ -24,8 +24,8 @@ function responseHandler(){
         if(httpRequest.status === 200){
             productsArray = httpRequest.response;
             // localStorage.setItem("productArray",JSON.stringify(productsArray));
-            productsArray.slice(0,8).forEach(createProductClosure(otherProducts));
-            productsArray.filter((e)=>e.isSale === true).slice(0,4).forEach(createProductClosure(onSaleHomePage))
+            productsArray.slice(0,8).forEach(createProductClosure(otherProducts,4,3));
+            productsArray.filter((e)=>e.isSale === true).slice(0,4).forEach(createProductClosure(onSaleHomePage,4,3))
             // productsArray.forEach((e)=>{
             //     nameBase.push(e.name)
             // })

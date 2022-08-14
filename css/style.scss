@@ -1,8 +1,8 @@
+@import '../assets/bootstrap.scss';
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
 $mainFont: "Montserrat";
 $mainFontWeight: 500;
 $mainFontSize: 18px;
-
 form input {
     border-color: #ECECEC;
 }
@@ -478,7 +478,7 @@ header {
             background: #ececec;
             height: 1px;
             position: absolute;
-            width: calc(100% - 24px);
+            width: calc(100% - 40px);
         }
     }
 
@@ -818,7 +818,7 @@ header {
             background: #ececec;
             height: 1px;
             position: absolute;
-            width: calc(100% - 24px);
+            width: calc(100% - 40px);
             bottom: -41px;
         }
     }
@@ -1135,7 +1135,7 @@ header {
                     background: #ececec;
                     height: 1px;
                     position: absolute;
-                    width: calc(100% - 24px);
+                    width: calc(100% - 40px);
                     bottom: -15px;
                     left: 12px;
                 }
@@ -1296,7 +1296,7 @@ header {
                 border-radius: 6px;
 
                 @media (max-width:767px) {
-                    width: calc(100% - 24px);
+                    width: calc(100% - 40px);
                 }
 
                 @media (max-width:1023px) {
