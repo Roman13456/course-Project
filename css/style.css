@@ -13564,7 +13564,6 @@ header div.inputSearch input:focus {
   line-height: 18px;
   color: #000000;
   padding: 12px 7px;
-  margin-bottom: 20px;
 }
 
 .productPage .descriptionAndReviews .reviews form .userName {
@@ -13587,7 +13586,6 @@ header div.inputSearch input:focus {
   line-height: 18px;
   color: #000000;
   padding: 12px 7px;
-  margin-bottom: 20px;
 }
 
 .productPage .descriptionAndReviews .reviews form #textAreaCommentary {
@@ -13600,7 +13598,6 @@ header div.inputSearch input:focus {
   line-height: 18px;
   color: #000000;
   padding: 12px 7px;
-  margin-bottom: 20px;
   height: 200px;
 }
 
@@ -13776,9 +13773,9 @@ header div.inputSearch input:focus {
 
 @media (max-width: 1023px) {
   .onSale div .sortPanel .background {
-    display: none;
+    opacity: 0;
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     margin-top: 11px;
     background: #FAFAFA;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -13788,6 +13785,8 @@ header div.inputSearch input:focus {
 
 .onSale div .sortPanel .background.visible {
   display: block;
+  z-index: 1;
+  opacity: 1;
 }
 
 .onSale div .sortPanel h5, .onSale div .sortPanel .h5 {
@@ -13984,55 +13983,51 @@ footer img {
   }
 }
 
-.checkoutForm {
+.checkoutForm, .commentaryForm {
   padding-top: 40px;
   padding-bottom: 40px;
 }
 
-.checkoutForm .input_controls input:focus {
+.checkoutForm .input_controls input:focus, .commentaryForm .input_controls input:focus {
   border: 2px solid blue;
 }
 
-.checkoutForm .input_controls input:focus {
+.checkoutForm .input_controls input:focus, .commentaryForm .input_controls input:focus {
   outline: none;
 }
 
-.checkoutForm .input_controls .error {
-  height: 20px;
-}
-
-.checkoutForm .input_controls.validated input {
+.checkoutForm .input_controls.validated input, .commentaryForm .input_controls.validated input {
   border: 2px solid green;
 }
 
-.checkoutForm form button {
+.checkoutForm form button, .commentaryForm form button {
   width: 100%;
 }
 
-.checkoutForm .input_controls.error input {
+.checkoutForm .input_controls.error input, .commentaryForm .input_controls.error input {
   border-color: red;
 }
 
-.checkoutForm .input_controls .error {
+.checkoutForm .input_controls .error, .commentaryForm .input_controls .error {
   color: red;
 }
 
-.checkoutForm .orderExample {
+.checkoutForm .orderExample, .commentaryForm .orderExample {
   margin-bottom: 10px;
 }
 
-.checkoutForm .orderExample:last-child {
+.checkoutForm .orderExample:last-child, .commentaryForm .orderExample:last-child {
   margin-bottom: 21px;
 }
 
-.checkoutForm .yourOrders .orders {
+.checkoutForm .yourOrders .orders, .commentaryForm .yourOrders .orders {
   background: #FFFFFF;
   padding: 20px;
   border: 1px solid #ECECEC;
   border-radius: 6px;
 }
 
-.checkoutForm .yourOrders .orders strong {
+.checkoutForm .yourOrders .orders strong, .commentaryForm .yourOrders .orders strong {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14044,15 +14039,15 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions {
+.checkoutForm .yourOrders .orders .paymentOptions, .commentaryForm .yourOrders .orders .paymentOptions {
   position: relative;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions div:last-child {
+.checkoutForm .yourOrders .orders .paymentOptions div:last-child, .commentaryForm .yourOrders .orders .paymentOptions div:last-child {
   margin-bottom: 21px;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions::after {
+.checkoutForm .yourOrders .orders .paymentOptions::after, .commentaryForm .yourOrders .orders .paymentOptions::after {
   position: absolute;
   content: "";
   height: 1px;
@@ -14061,11 +14056,11 @@ footer img {
   bottom: -10px;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions input[type=radio] {
+.checkoutForm .yourOrders .orders .paymentOptions input[type=radio], .commentaryForm .yourOrders .orders .paymentOptions input[type=radio] {
   display: none;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions label {
+.checkoutForm .yourOrders .orders .paymentOptions label, .commentaryForm .yourOrders .orders .paymentOptions label {
   position: relative;
   padding-left: 29px;
   font-family: 'Montserrat';
@@ -14077,7 +14072,7 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions label::before {
+.checkoutForm .yourOrders .orders .paymentOptions label::before, .commentaryForm .yourOrders .orders .paymentOptions label::before {
   position: absolute;
   content: "";
   width: 24px;
@@ -14087,7 +14082,7 @@ footer img {
   left: 0;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before {
+.checkoutForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before, .commentaryForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before {
   position: absolute;
   content: "";
   width: 24px;
@@ -14097,7 +14092,7 @@ footer img {
   left: 0;
 }
 
-.checkoutForm .yourOrders .orders .submitBtn {
+.checkoutForm .yourOrders .orders .submitBtn, .commentaryForm .yourOrders .orders .submitBtn {
   padding: 12px 10px;
   background: #00C2FF;
   border: 1px solid #00C2FF;
@@ -14111,7 +14106,7 @@ footer img {
   color: #FFFFFF;
 }
 
-.checkoutForm .yourOrders .orders .privacyPolicy {
+.checkoutForm .yourOrders .orders .privacyPolicy, .commentaryForm .yourOrders .orders .privacyPolicy {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14121,12 +14116,12 @@ footer img {
   margin-bottom: 10px;
 }
 
-.checkoutForm .yourOrders .orders .privacyPolicy a {
+.checkoutForm .yourOrders .orders .privacyPolicy a, .commentaryForm .yourOrders .orders .privacyPolicy a {
   color: #00C2FF;
   text-decoration: none;
 }
 
-.checkoutForm .yourOrders .orders .totalPrice {
+.checkoutForm .yourOrders .orders .totalPrice, .commentaryForm .yourOrders .orders .totalPrice {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14137,7 +14132,7 @@ footer img {
   margin-bottom: 10px;
 }
 
-.checkoutForm .yourOrders .orders .underline::after {
+.checkoutForm .yourOrders .orders .underline::after, .commentaryForm .yourOrders .orders .underline::after {
   position: absolute;
   content: "";
   height: 1px;
@@ -14146,7 +14141,7 @@ footer img {
   bottom: -10px;
 }
 
-.checkoutForm .yourOrders .quantityAndPrice {
+.checkoutForm .yourOrders .quantityAndPrice, .commentaryForm .yourOrders .quantityAndPrice {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14156,14 +14151,14 @@ footer img {
   color: #00BF9D;
 }
 
-.checkoutForm .yourOrders .imgAndName img {
+.checkoutForm .yourOrders .imgAndName img, .commentaryForm .yourOrders .imgAndName img {
   width: 61px;
   height: 61px;
   border-radius: 3px;
   margin-right: 10px;
 }
 
-.checkoutForm .yourOrders .imgAndName p {
+.checkoutForm .yourOrders .imgAndName p, .commentaryForm .yourOrders .imgAndName p {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14172,7 +14167,7 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm h5, .checkoutForm .h5 {
+.checkoutForm h5, .checkoutForm .h5, .commentaryForm h5, .commentaryForm .h5 {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: calc(500 + 200);
@@ -14184,7 +14179,7 @@ footer img {
   margin-bottom: 10px;
 }
 
-.checkoutForm label {
+.checkoutForm label, .commentaryForm label {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14194,21 +14189,23 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm label span {
+.checkoutForm label span, .commentaryForm label span {
   color: #F75900;
 }
 
 .checkoutForm .contactInfo,
-.checkoutForm .shippingDetails {
+.checkoutForm .shippingDetails, .commentaryForm .contactInfo,
+.commentaryForm .shippingDetails {
   margin-bottom: 30px;
 }
 
 .checkoutForm .contactInfo .input_controls:last-child input,
-.checkoutForm .shippingDetails .input_controls:last-child input {
+.checkoutForm .shippingDetails .input_controls:last-child input, .commentaryForm .contactInfo .input_controls:last-child input,
+.commentaryForm .shippingDetails .input_controls:last-child input {
   margin-bottom: 0;
 }
 
-.checkoutForm select {
+.checkoutForm select, .commentaryForm select {
   margin-bottom: 20px;
   border: 1px solid #ECECEC;
   border-radius: 6px;
@@ -14221,7 +14218,7 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm input {
+.checkoutForm input, .commentaryForm input {
   padding: 11px 7px;
   font-family: "Montserrat";
   font-style: normal;
@@ -14233,11 +14230,11 @@ footer img {
   border-radius: 6px;
 }
 
-.checkoutForm .input_controls {
+.checkoutForm .input_controls, .commentaryForm .input_controls {
   margin-bottom: 20px;
 }
 
-.checkoutForm .input_controls:last-child {
+.checkoutForm .input_controls:last-child, .commentaryForm .input_controls:last-child {
   margin-bottom: 0;
 }
 /*# sourceMappingURL=style.css.map */

@@ -133,45 +133,38 @@
             <div class="row descriptionAndReviews align-items-start">
                 <div class="descriptionAndReviewsButtons col-12 col-md-8 col-lg-6 d-flex flex-lg-column  align-items-lg-end ">
                     <button class="descriptionBtn col-6  mb-0 me-lg-0" type="button">Description</button>
-                    <button class="reviewsBtn col-6 " type="button">Reviews (4)</button>
+                    <button class="reviewsBtn col-6 " type="button">Reviews (<span class="reviewsQuantity"></span>)</button>
                 </div>
                 <div class="col-12 col-lg-6 fullDesciption">
                     <p class="mb-0 ">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
                 </div>
                 <div class="col-12 col-lg-6 reviews d-none">
-                    <div>
-                        <div class="commentaryContainer d-flex justify-content-between row">
-                            <div class="col-6">
-                                <p class="autor mb-0"><strong>Mark</strong></p>
-                                <p class="date mb-0">December 29, 2021</p>
-                            </div>
-                            <div class="rating col-6 position-relative">
-                                <img class="position-absolute toRight" src="images/Rating.svg">
-                            </div>
-                            <p class="col-12 commentary mb-0">Great t-shirt, like!</p>
-                        </div>
-                        <div class="commentaryContainer d-flex justify-content-between row">
-                            <div class="col-6">
-                                <p class="autor mb-0"><strong>Mark</strong></p>
-                                <p class="date mb-0">December 29, 2021</p>
-                            </div>
-                            <div class="rating col-6 position-relative">
-                                <img class="position-absolute toRight" src="images/Rating.svg">
-                            </div>
-                            <p class="col-12 commentary mb-0">Great t-shirt, like!</p>
-                        </div>
+                    <div class="commentsContainer">
                     </div>
                     <form action="#" class="commentaryForm">
                         <p class="mb-0">Your rating</p>
                         <div class="rating col-12">
-                            <img src="images/RatingCommentaryForm.svg">
+                            <img class="rateImg active" src="images/Star0.svg">
+                            <img class="rateImg active" src="images/Star0.svg">
+                            <img class="rateImg active" src="images/Star0.svg">
+                            <img class="rateImg active" src="images/Star0.svg">
+                            <img class="rateImg active" src="images/Star0.svg">
                         </div>
-                        <label for="textAreaCommentary" class="textAreaLabel mb-0">Your review</label>
-                        <textarea class="col-12" id="textAreaCommentary" value="" required></textarea><!--Якщо зробити ентер то буде рахуватись як пробіли, тому цього не робити-->
-                        <label for="userName" class="userName">Name</label>
-                        <input class="col-12" id="userName" value="John" required>
-                        <label for="userEmail" class="userEmail">Email</label>
-                        <input class="col-12" id="userEmail" value="john.smith@gmail.com" required type="email">
+                        <div class="input_controls success">
+                            <label for="textAreaCommentary" class="textAreaLabel mb-0">Your review</label>
+                            <textarea class="col-12" id="textAreaCommentary" value=""></textarea><!--Якщо зробити ентер то буде рахуватись як пробіли, тому цього не робити-->
+                            <div class="error"></div>
+                        </div>
+                        <div class="input_controls success">
+                            <label for="userName" class="userName">Name</label>
+                            <input class="col-12" id="userName">
+                            <div class="error"></div>
+                        </div>
+                        <div class="input_controls success">
+                            <label for="userEmail" class="userEmail">Email</label>
+                            <input class="col-12" id="userEmail">
+                            <div class="error"></div>
+                        </div>
                         <button class="col-12">Send review</button>
                     </form>
                 </div>
@@ -209,6 +202,7 @@
             </div>
         </div>
     </footer>
+    <script src="js/rating.js"></script>
     <script src="js/createProductsFunc.js"></script>
     <script src="js/setListenersOnLinks.js"></script>
     <script src="js/productPage.js"></script>

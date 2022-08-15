@@ -87,32 +87,33 @@ function sortAndSetPrice(array,min, max) {
     }
 }
 function widthElement(element, coord, order) {
+    console.log(element)
     if (order === "second") {
         // console.log(dot1Loc,coord)
         if (coord > dot1Loc) {
             if (coord > start + width) {
                 maxPriceCoef = 1
+                dot2Loc = start + width - 40
             } else {
+                dot2Loc = coord - 40
                 const localCoef = minPrice*1/maxPrice
                 maxPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
                 
             }
             marginRight = (width + start - coord)*100/width
-            dot2Loc = coord - 40
         }
     } else {
         if (coord < dot2Loc) {
             if (coord - start < 0) {
                 minPriceCoef = 1
+                dot1Loc = start + 40
             } else {
+                dot1Loc = coord + 40
                 const localCoef = minPrice*1/maxPrice
                 console.log(localCoef)
-                // console.log((coord - start) / (width))
-                // console.log((coord - start) / ((+width)-localCoef*width))
                 minPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
             }
             marginLeft = (coord - start)*100/width
-            dot1Loc = coord + 40
         }
     }
     if (marginRight < 0) {
@@ -266,6 +267,7 @@ function sort(str,array) {
 //     }
 // }
 dots[1].addEventListener("drag", function (e) {
+    e.preventDefault()
     coord = (() => {
         if (e.pageX !== 0) {
             return e.pageX
@@ -277,17 +279,20 @@ dots[1].addEventListener("drag", function (e) {
     minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
 })
 dots[1].addEventListener("touchmove",function (e) {
+    
     coord = (() => {
-        if (e.pageX !== 0) {
-            return e.pageX
+        if (e.touches[0].clientX !== 0) {
+            return e.touches[0].clientX;
         } else {
             return coord
         }
     })()
+    console.log(coord)
     widthElement(fill, coord, "second")
     minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
 })
-dots[1].addEventListener("dragend", () => {
+dots[1].addEventListener("dragend", (e) => {
+    e.preventDefault()
     price = `+e.price <= ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf("<")!==-1) {
@@ -325,7 +330,8 @@ dots[1].addEventListener("touchend", () => {
     paginationArr = pagination(sortedArray)
     sortAndSetPrice(paginationArr[0])
 })
-dots[0].addEventListener("dragend",()=>{
+dots[0].addEventListener("dragend",(e)=>{
+    e.preventDefault()
     price = `+e.price >= ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
     priceArr.filter((e, index) => {
         if (e.indexOf(">")!==-1) {
@@ -364,6 +370,7 @@ dots[0].addEventListener("touchend",()=>{
     sortAndSetPrice(paginationArr[0])
 })
 dots[0].addEventListener("drag", (e) => {
+    e.preventDefault()
     coord = (() => {
         if (e.pageX !== 0) {
             return e.pageX
@@ -381,13 +388,8 @@ dots[0].addEventListener("drag", (e) => {
     })()}`
 })
 dots[0].addEventListener("touchmove", (e) => {
-    coord = (() => {
-        if (e.pageX !== 0) {
-            return e.pageX
-        } else {
-            return coord
-        }
-    })()
+    coord = e.touches[0].clientX;
+    console.log(coord)
     widthElement(fill, coord, "first")
     minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${(() => {
         if (coord < start) {

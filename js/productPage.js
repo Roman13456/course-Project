@@ -7,6 +7,7 @@ httpRequest.onreadystatechange = responseHandler;
 httpRequest.open("GET", productsUrl);
 httpRequest.responseType = "json";
 httpRequest.send();
+renderComments()
 function responseHandler() {
     if (httpRequest.readyState === 4) {
         if (httpRequest.status === 200) {
@@ -16,7 +17,7 @@ function responseHandler() {
             price = productPageObject.price;
             productName = productPageObject.name;
             setProductPage();
-            productsArray.forEach(createProductClosure(productsHomePage,4,3));
+            productsArray.forEach(createProductClosure(productsHomePage, 4, 3));
             setListenersOnLinks();
         }
     } else {
@@ -105,19 +106,31 @@ miniImages.addEventListener("click", (e) => {
             .setAttribute("src", path);
     }
 });
-function setError(element, error) {
-    const inputControls = element.parentElement;
-    // const errorMsg = inputControls.querySelector(".error")
-    // errorMsg.innerHTML=error
-    inputControls.classList.add("error");
-    inputControls.classList.remove("success");
+function setError(element, error, msg) {
+    if (msg === 'noMsg') {
+        const inputControls = element.parentElement;
+        inputControls.classList.add("error");
+        inputControls.classList.remove("success");
+    } else {
+        const inputControls = element.parentElement;
+        const errorMsg = inputControls.querySelector(".error")
+        errorMsg.innerHTML = error
+        inputControls.classList.add("error");
+        inputControls.classList.remove("success");
+    }
 }
-function setSuccess(element) {
-    const inputControls = element.parentElement;
-    // const errorMsg = inputControls.querySelector(".error")
-    inputControls.classList.add("success");
-    inputControls.classList.remove("error");
-    // errorMsg.innerHTML=""
+function setSuccess(element, msg) {
+    if (msg === 'noMsg') {
+        const inputControls = element.parentElement;
+        inputControls.classList.add("success");
+        inputControls.classList.remove("error");
+    } else {
+        const inputControls = element.parentElement;
+        const errorMsg = inputControls.querySelector(".error")
+        inputControls.classList.add("success");
+        inputControls.classList.remove("error");
+        errorMsg.innerHTML = ""
+    }
 }
 chooseForm.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -127,13 +140,13 @@ chooseForm.addEventListener("submit", function (e) {
     const priceValue = +price;
     let bool = true;
     if (quantityValue === "") {
-        setError(quantity, "quantity field is empty");
+        setError(quantity, "quantity field is empty", 'noMsg');
         bool = false;
     } else if (quantityValue === "0") {
-        setError(quantity, "should be at least 1 item");
+        setError(quantity, "should be at least 1 item", 'noMsg');
         bool = false;
     } else {
-        setSuccess(quantity);
+        setSuccess(quantity, 'noMsg');
     }
     if (bool) {
         const obj = {
@@ -160,9 +173,7 @@ chooseForm.addEventListener("submit", function (e) {
     }
 });
 function setProductPage() {
-    document
-        .querySelector(".mainImage")
-        .setAttribute("src", `${productPageObject.imgSource}`);
+    document.querySelector(".mainImage").setAttribute("src", `${productPageObject.imgSource}`);
     if (!productPageObject.isSale) {
         document.querySelector(".saleIndicator").remove();
     }
@@ -183,4 +194,153 @@ function setProductPage() {
     </p>
     `
     );
+}
+const form = document.querySelector('.commentaryForm')
+const textAreaCommentary = document.querySelector('#textAreaCommentary')
+const userName = document.querySelector('#userName')
+const userEmail = document.querySelector('#userEmail')
+const commentsContainer = document.querySelector('.commentsContainer')
+const reviewsQuantity = document.querySelector('.reviewsQuantity')
+function validate() {
+    let bool = true
+    bool = validateTextArea(bool)
+    bool = validateName(bool)
+    bool = validateEmail(bool)
+    return bool
+}
+form.addEventListener("submit", function (e) {
+    e.preventDefault()
+    validate()
+    // date:`${date.toLocaleString(['en-us'], { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`,
+    if (validate()) {
+        const itemId = localStorage.getItem('currentItem')
+        const comment = {
+            "itemId":`${itemId}`,
+            body:textAreaCommentary.value,
+            name:userName.value,
+            date:new Date(),
+            email:userEmail.value,
+            "rating":`${ratingCounter}`
+        }
+        // console.log(comment)
+        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/commentaries',{
+            method: 'POST',
+            body: JSON.stringify(comment),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8'
+              })
+        })
+        .then(res => res.json())
+        .then(createComment)
+        .then(reviewsQuantity.innerHTML = +reviewsQuantity.innerHTML+1)
+    // .catch((error) => {
+    //     alert(error);
+    // });
+    }else{
+        console.log('error')
+    }
+})
+function renderComments(){
+    const itemId = localStorage.getItem('currentItem')
+    fetch(`https://62d575ef15ad24cbf2c7a034.mockapi.io/commentaries?itemId=${itemId}`)
+        .then((data => data.json()))
+        .then((array)=>{
+            reviewsQuantity.innerHTML = `${array.length}`
+            array.forEach(createComment)
+        })
+}
+
+function createComment(newComment){
+    const date = new Date(Date.parse(newComment.date)) 
+    commentsContainer.insertAdjacentHTML('afterbegin', `
+    <div class="commentaryContainer d-flex justify-content-between row">
+        <div class="col-6">
+            <p class="autor mb-0"><strong>${newComment.name}</strong></p>
+            <p class="date mb-0">${date.toLocaleString(['en-us'], { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}</p>
+        </div>
+        <div class="rating col-6 position-relative">
+            <div class='position-absolute toRight'>${displayRating(newComment.rating)}</div>
+        </div>
+        
+        <p class="col-12 commentary mb-0">${newComment.body}</p>
+    </div>
+`)
+}
+function displayRating(rating){
+    const imgs = []
+    for(let i=0; i<rating; i++){
+        imgs.unshift(`<img class="rateImg active" src="images/Star1.svg">`)
+    }
+    for(let i=0; i<5-rating;i++){
+        imgs.push(`<img class="rateImg" src="images/Star0.svg">`)
+    }
+    console.log(imgs.join(' '))
+    return imgs.join(' ')
+}
+form.addEventListener("focusout", function (e) {
+    if (e.target.classList.contains("firstName")) {
+        validateName()
+    }
+    if (e.target.classList.contains("email")) {
+        validateEmail()
+    }
+    if (e.target.classList.contains("email")) {
+        validateEmail()
+    }
+    let inputArr = Array.from(document.querySelectorAll(".input_controls input"))
+    inputArr = inputArr.map((element) => {
+        if (element.value.trim() !== "") {
+            return element
+        } else {
+            return 0
+        }
+    })
+    inputArr = inputArr.filter((e) => e !== 0)
+    function validateFilledInputs(element) {//при автозаповненні щоб при втраті фокусу перевіряло
+        if (element.classList.contains("firstName")) {
+            validateName()
+        } else if (element.classList.contains("email")) {
+            validateEmail()
+        }
+    }
+    inputArr.forEach(validateFilledInputs)
+})
+function validateName(bool) {
+    const inputNameValue = userName.value.trim()
+    const regexName = /^[A-Z А-Я]/
+    if (inputNameValue === "") {
+        setError(userName, "Не введене ім'я")
+        return false
+    } else if (!regexName.test(inputNameValue)) {
+        setError(userName, "Ваше ім'я не з великої букви")
+        return false
+    } else {
+        setSuccess(userName)
+        return bool
+    }
+}
+
+function validateEmail(bool) {
+    const inputEmailValue = userEmail.value.trim()
+    const regexEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gm
+    if (inputEmailValue === "") {
+        setError(userEmail, "Не введений email")
+        return false
+    } else if (!regexEmail.test(inputEmailValue)) {
+        setError(userEmail, "не вірний email")
+        return false
+    } else {
+        setSuccess(userEmail)
+        return bool
+    }
+}
+function validateTextArea(bool) {
+    const inputTextAreaValue = textAreaCommentary.value.trim()
+    if (inputTextAreaValue === "") {
+        setError(textAreaCommentary, "empty comment field")
+        return false
+    } else {
+        setSuccess(textAreaCommentary)
+        return bool
+    }
 }
