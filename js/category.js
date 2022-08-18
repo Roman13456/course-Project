@@ -8,6 +8,7 @@ const shaft = document.querySelector(".shaft")
 const sortByPricePanel = document.querySelector(".sortByPricePanel")
 const dots = document.querySelectorAll(".dot")
 const minAndMaxPrice = document.querySelector(".minAndMaxPrice")
+const sortBy = document.querySelector('.sortBy')
 let start = sortByPricePanel.getBoundingClientRect().left
 let width = sortByPricePanel.offsetWidth
 let newWidth
@@ -15,7 +16,7 @@ let coord
 let dot1Loc = dots[0].getBoundingClientRect().left + 40
 let dot2Loc = dots[1].getBoundingClientRect().left - 40
 let maxPriceCoef = 1
-let minPriceCoef = 1
+let minPriceCoef = 0.1
 let maxPrice
 let minPrice
 // console.log(newWidth)
@@ -87,7 +88,7 @@ function sortAndSetPrice(array,min, max) {
     }
 }
 function widthElement(element, coord, order) {
-    console.log(element)
+    // console.log(element)
     if (order === "second") {
         // console.log(dot1Loc,coord)
         if (coord > dot1Loc) {
@@ -96,22 +97,28 @@ function widthElement(element, coord, order) {
                 dot2Loc = start + width - 40
             } else {
                 dot2Loc = coord - 40
-                const localCoef = minPrice*1/maxPrice
+                const localCoef = minPrice/maxPrice
+                // maxPriceCoef = (((coord - start)+(+(coord - start)*localCoef)) / (+(width)+(+width*localCoef)))
                 maxPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
-                
+                const percent = (1-(minPrice/maxPrice))
+                const cut = localCoef*width/percent
+                // minPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
+                maxPriceCoef = (coord-start+(+cut))/(width+(+cut))
             }
             marginRight = (width + start - coord)*100/width
         }
     } else {
         if (coord < dot2Loc) {
             if (coord - start < 0) {
-                minPriceCoef = 1
                 dot1Loc = start + 40
             } else {
                 dot1Loc = coord + 40
-                const localCoef = minPrice*1/maxPrice
+                const percent = (1-(minPrice/maxPrice))
+                const localCoef = minPrice/maxPrice
+                const cut = localCoef*width/percent
                 console.log(localCoef)
-                minPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
+                // minPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
+                minPriceCoef = (coord-start+(+cut))/(width+(+cut))
             }
             marginLeft = (coord - start)*100/width
         }
@@ -187,6 +194,8 @@ httpRequest.onreadystatechange = () => {
                 sortedArray = sortedArray.filter((e)=>e.category===category)
                 beforeAnySortingArray = [...sortedArray]
                 categoryName.innerHTML = category.charAt(0).toUpperCase()+category.slice(1)
+                sortBy.value!==''?localStorage.setItem('sortedBy',sortBy.value):console.log('empty')
+                sortByOptions(sortBy)
                 paginationArr = pagination(sortedArray)
                 sortAndSetPrice(paginationArr[0],"min", "max")
             }else{
@@ -194,6 +203,8 @@ httpRequest.onreadystatechange = () => {
                 const conditionString = localStorage.getItem("searchString")
                 sortedArray = productsArray.filter((e)=>eval(conditionString))
                 beforeAnySortingArray = [...sortedArray]
+                sortBy.value!==''?localStorage.setItem('sortedBy',sortBy.value):console.log('empty')
+                sortByOptions(sortBy)
                 paginationArr = pagination(sortedArray)
                 sortAndSetPrice(paginationArr[0],"min", "max")
                 const productsList = document.querySelector(".productsList")
@@ -279,15 +290,7 @@ dots[1].addEventListener("drag", function (e) {
     minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
 })
 dots[1].addEventListener("touchmove",function (e) {
-    
-    coord = (() => {
-        if (e.touches[0].clientX !== 0) {
-            return e.touches[0].clientX;
-        } else {
-            return coord
-        }
-    })()
-    console.log(coord)
+    coord = e.touches[0].clientX;
     widthElement(fill, coord, "second")
     minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice * maxPriceCoef)}`
 })
@@ -305,11 +308,7 @@ dots[1].addEventListener("dragend", (e) => {
         }
     })
     // allAtOnce = clearEmptySpaces(allAtOnce)
-    sortedArray = []
-    sort(allAtOnce.join(" && "),beforeAnySortingArray)
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    paginationArr = pagination(sortedArray)
-    sortAndSetPrice(paginationArr[0])
+    optionsAfterProcedure()
 })
 dots[1].addEventListener("touchend", () => {
     price = `+e.price <= ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
@@ -324,11 +323,7 @@ dots[1].addEventListener("touchend", () => {
         }
     })
     // allAtOnce = clearEmptySpaces(allAtOnce)
-    sortedArray = []
-    sort(allAtOnce.join(" && "),beforeAnySortingArray)
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    paginationArr = pagination(sortedArray)
-    sortAndSetPrice(paginationArr[0])
+    optionsAfterProcedure()
 })
 dots[0].addEventListener("dragend",(e)=>{
     e.preventDefault()
@@ -344,11 +339,7 @@ dots[0].addEventListener("dragend",(e)=>{
         }
     })
     // allAtOnce = clearEmptySpaces(allAtOnce)
-    sortedArray = []
-    sort(allAtOnce.join(" && "),beforeAnySortingArray)
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    paginationArr = pagination(sortedArray)
-    sortAndSetPrice(paginationArr[0])
+    optionsAfterProcedure()
 })
 dots[0].addEventListener("touchend",()=>{
     price = `+e.price >= ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
@@ -363,11 +354,7 @@ dots[0].addEventListener("touchend",()=>{
         }
     })
     // allAtOnce = clearEmptySpaces(allAtOnce)
-    sortedArray = []
-    sort(allAtOnce.join(" && "),beforeAnySortingArray)
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    paginationArr = pagination(sortedArray)
-    sortAndSetPrice(paginationArr[0])
+    optionsAfterProcedure()
 })
 dots[0].addEventListener("drag", (e) => {
     e.preventDefault()
@@ -383,19 +370,18 @@ dots[0].addEventListener("drag", (e) => {
         if (coord < start) {
             return `${Math.round(minPrice)}`
         } else {
-            return Math.round(minPriceCoef * maxPrice)
+            return Math.round(maxPrice * minPriceCoef)
         }
     })()}`
 })
 dots[0].addEventListener("touchmove", (e) => {
     coord = e.touches[0].clientX;
-    console.log(coord)
     widthElement(fill, coord, "first")
     minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${(() => {
         if (coord < start) {
             return `${Math.round(minPrice)}`
         } else {
-            return Math.round(minPriceCoef * maxPrice)
+            return Math.round(maxPrice * minPriceCoef)
         }
     })()}`
 })
@@ -425,15 +411,34 @@ colorOption.addEventListener("click", function (e) {
                 allAtOnce.push(`(${colorArr.join(" || ")})`)
                 allAtOnce = clearEmptySpaces(allAtOnce)
             }
-            sortedArray = []
-            sort(allAtOnce.join(" && "),beforeAnySortingArray)
-            clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-            paginationArr = pagination(sortedArray)
-            sortAndSetPrice(paginationArr[0])
-            
+            optionsAfterProcedure()
         } 
     }
 })
+let data = new Date('Thu Aug 18 2022 13:04:13 GMT+0300').getTime()
+let dateArr =[]
+function randomDate(){
+    for(let i= 0; i<64;i++){
+        data+=86400000
+        dateArr.push(new Date(data))
+    }
+}
+function generateArray(){
+    let newProductsArray = productsArray.map((e,index)=>{
+        e.date = dateArr[index]
+        return e
+    })
+    console.log(JSON.stringify(newProductsArray))
+}
+
+function optionsAfterProcedure(){
+    sortedArray = []
+    sort(allAtOnce.join(" && "),beforeAnySortingArray)
+    sortByOptions("extra")
+    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+    paginationArr = pagination(sortedArray)
+    sortAndSetPrice(paginationArr[0])
+}
 sizeOption.addEventListener("click", function (e) {
     e.preventDefault()
     if(e.target.tagName = "BUTTON"){
@@ -459,12 +464,7 @@ sizeOption.addEventListener("click", function (e) {
                 allAtOnce.push(`(${sizeArr.join(" || ")})`)
                 allAtOnce = clearEmptySpaces(allAtOnce)
             }
-            sortedArray = []
-            sort(allAtOnce.join(" && "),beforeAnySortingArray)
-            clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-            paginationArr = pagination(sortedArray)
-            sortAndSetPrice(paginationArr[0])
-            
+            optionsAfterProcedure()
         }   
     }
 })
@@ -547,6 +547,25 @@ paginatePrevBtn.addEventListener("click",function(){
         paginationArr[paginationBtns.length-1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'),4,4))
     }
 })
+sortBy.addEventListener('change',function(){
+    localStorage.setItem('sortedBy',this.value)
+    sortByOptions()
+})
+function sortByOptions(bool){
+    if(localStorage.getItem('sortedBy')!==null){
+        const option = localStorage.getItem('sortedBy')
+        if(option==='rating'){
+            sortedArray = sortedArray.sort((a,b)=>b.rating - a.rating)
+        }else if(option==='newest'){
+            sortedArray = sortedArray.sort((a,b)=>new Date(b.date).getTime() - new Date(a.date).getTime())
+        }
+        if(bool===undefined){
+            clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+            paginationArr = pagination(sortedArray)
+            sortAndSetPrice(paginationArr[0])
+        }
+    }
+}
 
 
 

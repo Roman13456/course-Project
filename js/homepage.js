@@ -3,6 +3,7 @@ const productsUrl = 'https://62d575ef15ad24cbf2c7a034.mockapi.io/products'
 const productsHomePage = document.querySelectorAll(".productsOnHomepage")
 const onSaleHomePage =  productsHomePage[0]
 const otherProducts = productsHomePage[1]
+const productLinks = document.querySelector('.productLinks')
 let productsArray 
 // let nameBase = []
 httpRequest.onreadystatechange = responseHandler
@@ -18,6 +19,11 @@ productsHomePage.forEach((e)=>{
             localStorage.setItem("currentItem",e.target.parentElement.parentElement.getAttribute("data-id"))
         }
     })
+})
+productLinks.querySelectorAll('a').forEach((element)=>{
+    element.addEventListener("click",()=>{
+        localStorage.setItem("currentCategory", element.closest("div").querySelector('a').getAttribute("data-info"))
+    })   
 })
 function responseHandler(){
     if(httpRequest.readyState === 4){

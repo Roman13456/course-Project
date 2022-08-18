@@ -116,6 +116,7 @@ function setError(element, error, msg) {
         const errorMsg = inputControls.querySelector(".error")
         errorMsg.innerHTML = error
         inputControls.classList.add("error");
+        inputControls.classList.remove("validated")
         inputControls.classList.remove("success");
     }
 }
@@ -130,6 +131,7 @@ function setSuccess(element, msg) {
         inputControls.classList.add("success");
         inputControls.classList.remove("error");
         errorMsg.innerHTML = ""
+        inputControls.classList.add("validated")
     }
 }
 chooseForm.addEventListener("submit", function (e) {
@@ -215,45 +217,61 @@ form.addEventListener("submit", function (e) {
     if (validate()) {
         const itemId = localStorage.getItem('currentItem')
         const comment = {
-            "itemId":`${itemId}`,
-            body:textAreaCommentary.value,
-            name:userName.value,
-            date:new Date(),
-            email:userEmail.value,
-            "rating":`${ratingCounter}`
+            itemId,
+            body: textAreaCommentary.value,
+            name: userName.value,
+            date: new Date(),
+            email: userEmail.value,
+            rating: ratingCounter
         }
+        const comments = document.querySelectorAll('.commentaryContainer')
+        const commentsSorted = []
+        comments.forEach((e) => {
+            commentsSorted.push(+e.getAttribute('data-rating'))
+        })
+        const rating = ((commentsSorted.reduce((sum, current) => sum + current, 0) + ratingCounter) / (comments.length + 1)).toFixed(1) 
+        console.log(rating)
         // console.log(comment)
-        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/commentaries',{
+        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/commentaries', {
             method: 'POST',
             body: JSON.stringify(comment),
             headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8'
-              })
+            })
         })
-        .then(res => res.json())
-        .then(createComment)
-        .then(reviewsQuantity.innerHTML = +reviewsQuantity.innerHTML+1)
-    // .catch((error) => {
-    //     alert(error);
-    // });
-    }else{
-        console.log('error')
+            .then(res => res.json())
+            .then(createComment)
+            .then(reviewsQuantity.innerHTML = +reviewsQuantity.innerHTML + 1)
+            .catch((error) => {
+                alert(error);
+            });
+        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/products/' + itemId, {
+            method: 'PUT',
+            body: JSON.stringify({ rating }),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => res.json())
+            .then(updateTodo => {
+                console.log(updateTodo);
+            })
     }
 })
-function renderComments(){
+function renderComments() {
     const itemId = localStorage.getItem('currentItem')
     fetch(`https://62d575ef15ad24cbf2c7a034.mockapi.io/commentaries?itemId=${itemId}`)
         .then((data => data.json()))
-        .then((array)=>{
+        .then((array) => {
             reviewsQuantity.innerHTML = `${array.length}`
             array.forEach(createComment)
         })
 }
 
-function createComment(newComment){
-    const date = new Date(Date.parse(newComment.date)) 
+function createComment(newComment) {
+    const date = new Date(Date.parse(newComment.date))
     commentsContainer.insertAdjacentHTML('afterbegin', `
-    <div class="commentaryContainer d-flex justify-content-between row">
+    <div class="commentaryContainer d-flex justify-content-between row" data-rating='${newComment.rating}'>
         <div class="col-6">
             <p class="autor mb-0"><strong>${newComment.name}</strong></p>
             <p class="date mb-0">${date.toLocaleString(['en-us'], { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}</p>
@@ -266,25 +284,25 @@ function createComment(newComment){
     </div>
 `)
 }
-function displayRating(rating){
+function displayRating(rating) {
     const imgs = []
-    for(let i=0; i<rating; i++){
+    for (let i = 0; i < rating; i++) {
         imgs.unshift(`<img class="rateImg active" src="images/Star1.svg">`)
     }
-    for(let i=0; i<5-rating;i++){
+    for (let i = 0; i < 5 - rating; i++) {
         imgs.push(`<img class="rateImg" src="images/Star0.svg">`)
     }
     console.log(imgs.join(' '))
     return imgs.join(' ')
 }
 form.addEventListener("focusout", function (e) {
-    if (e.target.classList.contains("firstName")) {
+    if (e.target.classList.contains("textAreaComment")) {
+        validateTextArea()
+    }
+    if (e.target.classList.contains("userName")) {
         validateName()
     }
-    if (e.target.classList.contains("email")) {
-        validateEmail()
-    }
-    if (e.target.classList.contains("email")) {
+    if (e.target.classList.contains("userEmail")) {
         validateEmail()
     }
     let inputArr = Array.from(document.querySelectorAll(".input_controls input"))

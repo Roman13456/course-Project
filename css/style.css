@@ -13566,6 +13566,11 @@ header div.inputSearch input:focus {
   padding: 12px 7px;
 }
 
+.productPage .descriptionAndReviews .reviews form #userEmail:focus {
+  outline: none;
+  border: 2px solid blue !important;
+}
+
 .productPage .descriptionAndReviews .reviews form .userName {
   font-family: "Montserrat";
   font-style: normal;
@@ -13588,6 +13593,11 @@ header div.inputSearch input:focus {
   padding: 12px 7px;
 }
 
+.productPage .descriptionAndReviews .reviews form #userName:focus {
+  outline: none;
+  border: 2px solid blue !important;
+}
+
 .productPage .descriptionAndReviews .reviews form #textAreaCommentary {
   border: 1px solid #ECECEC;
   border-radius: 6px;
@@ -13599,6 +13609,16 @@ header div.inputSearch input:focus {
   color: #000000;
   padding: 12px 7px;
   height: 200px;
+}
+
+.productPage .descriptionAndReviews .reviews form #textAreaCommentary:focus {
+  outline: none;
+  border: 2px solid blue !important;
+}
+
+.productPage .descriptionAndReviews .reviews form #textAreaCommentary:focus {
+  outline: none;
+  border: 2px solid blue !important;
 }
 
 .productPage .descriptionAndReviews .reviews .commentaryContainer {
@@ -13618,7 +13638,7 @@ header div.inputSearch input:focus {
   position: absolute;
   width: calc(100% - 40px);
   bottom: -15px;
-  left: 12px;
+  left: 20px;
 }
 
 .productPage .descriptionAndReviews .reviews .commentaryContainer .autor {
@@ -13649,7 +13669,7 @@ header div.inputSearch input:focus {
 }
 
 .productPage .descriptionAndReviews .reviews .commentaryContainer .rating .toRight {
-  right: 12px;
+  right: 20px;
   top: 0;
 }
 
@@ -13988,24 +14008,20 @@ footer img {
   padding-bottom: 40px;
 }
 
-.checkoutForm .input_controls input:focus, .commentaryForm .input_controls input:focus {
-  border: 2px solid blue;
-}
-
-.checkoutForm .input_controls input:focus, .commentaryForm .input_controls input:focus {
+.checkoutForm .input_controls .input_controls .input_controls input:focus, .commentaryForm .input_controls .input_controls .input_controls input:focus {
   outline: none;
 }
 
-.checkoutForm .input_controls.validated input, .commentaryForm .input_controls.validated input {
-  border: 2px solid green;
+.checkoutForm .input_controls.validated input, .checkoutForm .input_controls.validated textarea, .commentaryForm .input_controls.validated input, .commentaryForm .input_controls.validated textarea {
+  border: 2px solid green !important;
 }
 
 .checkoutForm form button, .commentaryForm form button {
   width: 100%;
 }
 
-.checkoutForm .input_controls.error input, .commentaryForm .input_controls.error input {
-  border-color: red;
+.checkoutForm .input_controls.error input, .checkoutForm .input_controls.error textArea, .commentaryForm .input_controls.error input, .commentaryForm .input_controls.error textArea {
+  border-color: red !important;
 }
 
 .checkoutForm .input_controls .error, .commentaryForm .input_controls .error {
