@@ -26,11 +26,7 @@ function duringResize() {
     start = sortByPricePanel.getBoundingClientRect().left
     width = sortByPricePanel.offsetWidth
 }
-
 window.addEventListener("resize", duringResize)
-function resetMinAndMaxPrice() {
-
-}
 function setMinAndMaxPrice(array) {
     const sortedBubble = array.sort((a, b) => a.price - b.price)
     maxPrice = sortedBubble[sortedBubble.length - 1].price
@@ -88,9 +84,7 @@ function sortAndSetPrice(array, min, max) {
     }
 }
 function widthElement(element, coord, order) {
-    // console.log(element)
     if (order === "second") {
-        // console.log(dot1Loc,coord)
         if (coord > dot1Loc) {
             if (coord > start + width) {
                 maxPriceCoef = 1
@@ -98,11 +92,9 @@ function widthElement(element, coord, order) {
             } else {
                 dot2Loc = coord - 40
                 const localCoef = minPrice / maxPrice
-                // maxPriceCoef = (((coord - start)+(+(coord - start)*localCoef)) / (+(width)+(+width*localCoef)))
                 maxPriceCoef = ((coord - start) / (+(width) + (+width * localCoef))) + localCoef
                 const percent = (1 - (minPrice / maxPrice))
                 const cut = localCoef * width / percent
-                // minPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
                 maxPriceCoef = (coord - start + (+cut)) / (width + (+cut))
             }
             marginRight = (width + start - coord) * 100 / width
@@ -418,6 +410,23 @@ colorOption.addEventListener("click", function (e) {
         }
     }
 })
+// let data = new Date('Thu Aug 18 2022 13:04:13 GMT+0300').getTime()
+// let dateArr =[]
+// function randomDate(){
+//     for(let i= 0; i<64;i++){
+//         data+=86400000
+//         dateArr.push(new Date(data))
+//     }
+// }
+// function generateArray(){
+//     let newProductsArray = productsArray.map((e,index)=>{
+//         // e.date = dateArr[index]
+//         e.rating = 0
+//         return e
+//     })
+//     console.log(JSON.stringify(newProductsArray))
+// }
+
 function optionsAfterProcedure() {
     sortedArray = []
     sort(allAtOnce.join(" && "), beforeAnySortingArray)
@@ -464,6 +473,7 @@ const sortMenu = document.querySelector(".background")
 mobileSortBurger.addEventListener("click", function () {
     sortMenu.classList.toggle("visible")
 })
+// var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'].splice(2);
 function pagination(array) {
     let changableArray = [...array]
     let paginatedArray = []
@@ -563,6 +573,51 @@ function sortByOptions(bool) {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// productsLinks.forEach((e)=>{
+    //     e.addEventListener('mouseover',function(){
+    //         const price = this.querySelector('.itemPrice')
+    //         price.insertAdjacentHTML('afterend',`
+    //         <button class='hoverAddToCartButton'>Add to cart</button>
+    //         `)
+    //         const button = this.querySelector('.hoverAddToCartButton')
+    //     })
+    //     e.addEventListener('mouseout',function(){
+    //         const button = this.querySelector('.hoverAddToCartButton')
+    //         button.remove()
+    //     })
+    // })
 
 
 

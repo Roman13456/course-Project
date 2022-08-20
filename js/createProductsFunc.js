@@ -2,9 +2,9 @@ function createProductClosure(loc,lg,xxl){
     const place = loc
     function createProduct(element){
         place.insertAdjacentHTML("beforeend",`
-        <div class="col-6 col-lg-${lg} col-xxl-${xxl} position-relative" data-id='${element.id}'>
+        <div class="productItemLink col-6 col-lg-${lg} col-xxl-${xxl} position-relative" data-id='${element.id}'>
             <a href="products_page.html" class=" d-block">
-                <img src="${element.imgSource}" alt="printed blazer">
+                <img src="${element.imgsGallery[0]}" alt="printed blazer">
             </a>
             ${(()=>{
                 if(element.isSale){
@@ -14,7 +14,7 @@ function createProductClosure(loc,lg,xxl){
                  }
             })()}
             <a class="d-block" href="products_page.html">${element.name}</a>
-            <p>$${element.price}
+            <p class='itemPrice'>$${element.price}
                 ${(()=>{
                     if(element.isSale){
                         return `<span>$${element.oldPrice}</span>`
@@ -23,8 +23,12 @@ function createProductClosure(loc,lg,xxl){
                     }
                 })()}
             </p>
-                </div>
+            <button data-id ='${element.id}' >Add to cart</button>
+            </div>
         `)
+        const buttons = Array.from(document.querySelectorAll('.productItemLink button')) 
+        const exactBtn = buttons.find((e)=>e.getAttribute('data-id')==element.id)
+        productsHoverLinks(exactBtn)
     }
     return createProduct;
 }

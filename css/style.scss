@@ -3,6 +3,7 @@
 $mainFont: "Montserrat";
 $mainFontWeight: 500;
 $mainFontSize: 18px;
+
 form input {
     border-color: #ECECEC;
 }
@@ -17,6 +18,9 @@ header {
     .centralContainer {
         max-width: 1296px;
         margin: auto;
+        .lowerCatalogBtn{
+            position: relative;
+        } 
     }
 
     position: absolute;
@@ -32,6 +36,7 @@ header {
     }
 
     #catalogBtn {
+        height: 48px;
         text-align: left;
         width: 100%;
         font-family: $mainFont;
@@ -45,9 +50,44 @@ header {
         border: 1px solid #00c2ff;
         border-radius: 6px;
         margin-right: 18px;
-
+        display: flex;
+        align-items: center;
         img {
             margin-right: 10px;
+        }
+        &:focus {
+            border: 1px solid #00FFD1;
+            outline: none;
+        }
+
+        &:hover {
+            background: #2FDAFF;
+            border: 1px solid #2FDAFF;
+        }
+
+        &:active {
+            background: #00ACE2;
+            border: 1px solid #00ACE2;
+        }
+
+        &:disabled {
+            text-indent: 38px;
+            background: #ECECEC;
+            border: 1px solid #ECECEC;
+            color: #BABABA;
+            img {
+                display: none;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 28px;
+                height: 28px;
+                background-image: url('../images/NaviconsCatalogDisabled.svg');
+            }
         }
     }
 
@@ -141,12 +181,19 @@ header {
             border-bottom-right-radius: 6px;
         }
 
+        .searchInput,
         .searchInput.error {
-            color: red;
-            border: 1px red solid;
+            &:focus {
+                border-color: #00FFD1;
+            }
+        }
+
+        .searchInput.error {
+            color: #F65900;
+            border: 1px #F65900 solid;
 
             &::placeholder {
-                color: red;
+                color: #F65900;
             }
         }
 
@@ -405,6 +452,8 @@ header {
 
         #catalogBtn {
             max-width: 135px;
+
+            
         }
 
         div {
@@ -441,8 +490,8 @@ header {
     }
 }
 
-.onSale .saleIndicator,
-.saleIndicator {
+.onSale .productItemLink .saleIndicator,
+.productItemLink .saleIndicator,.saleIndicator {
     top: 10px;
     left: 22px;
     padding: 6px;
@@ -459,8 +508,116 @@ header {
     color: #000000;
 }
 
+@keyframes addToCartHoverBtn {
+    from {
+        background-image: url('../images/Spinner.svg');
+    }
+
+    70% {
+        background-image: url('../images/Spinner.svg');
+    }
+
+    100% {
+        background-image: url('../images/Success.svg');
+    }
+}
+
 .onSale {
     padding-top: 40px;
+
+    .productItemLink {
+        &:hover {
+            button {
+                display: block;
+            }
+        }
+
+        p {
+            font-family: $mainFont;
+            font-style: normal;
+            font-weight: $mainFontWeight;
+            font-size: 16px;
+            line-height: 20px;
+            color: #00bf9d;
+            margin-bottom: 0;
+
+            &:first-child {
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: 12px;
+                line-height: 15px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: #000000;
+                margin-bottom: 40px;
+            }
+
+            span {
+                padding-left: 10px;
+                font-family: $mainFont;
+                font-style: normal;
+                font-weight: $mainFontWeight;
+                font-size: 16px;
+                line-height: 20px;
+                text-decoration-line: line-through;
+                color: #bababa;
+            }
+        }
+
+        button {
+            display: none;
+            margin-top: 10px;
+            padding: 13px;
+            width: 100%;
+            background: #00C2FF;
+            border: 1px solid #00C2FF;
+            border-radius: 6px;
+            color: white;
+            font-family: $mainFont;
+            font-style: normal;
+            font-weight: $mainFontWeight;
+            font-size: $mainFontSize;
+            line-height: 22px;
+            text-align: center;
+            color: #FFFFFF;
+
+            &.animationAddToCartBtn {
+                display: block;
+                padding: 11px;
+                border: none;
+                outline: none;
+                background: #00FFD1;
+            }
+
+            &.animationAddToCartBtn .spinner {
+                margin: auto;
+                padding: 0;
+                width: 28px;
+                height: 28px;
+                background-repeat: no-repeat;
+                animation: 2s linear addToCartHoverBtn;
+            }
+        }
+
+        a {
+            padding-left: 0;
+            font-family: $mainFont;
+            font-style: normal;
+            font-weight: $mainFontWeight;
+            font-size: 16px;
+            line-height: 20px;
+            color: #000000;
+            text-decoration: none;
+            padding-bottom: 10px;
+
+            &:first-child {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
 
     img {
         border-radius: 6px;
@@ -479,57 +636,6 @@ header {
             height: 1px;
             position: absolute;
             width: calc(100% - 40px);
-        }
-    }
-
-    p {
-        font-family: $mainFont;
-        font-style: normal;
-        font-weight: $mainFontWeight;
-        font-size: 16px;
-        line-height: 20px;
-        color: #00bf9d;
-        margin-bottom: 0;
-
-        &:first-child {
-            font-family: $mainFont;
-            font-style: normal;
-            font-weight: $mainFontWeight;
-            font-size: 12px;
-            line-height: 15px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #000000;
-            margin-bottom: 40px;
-        }
-
-        span {
-            padding-left: 10px;
-            font-family: $mainFont;
-            font-style: normal;
-            font-weight: $mainFontWeight;
-            font-size: 16px;
-            line-height: 20px;
-            text-decoration-line: line-through;
-            color: #bababa;
-        }
-    }
-
-    a {
-        padding-left: 0;
-        font-family: $mainFont;
-        font-style: normal;
-        font-weight: $mainFontWeight;
-        font-size: 16px;
-        line-height: 20px;
-        color: #000000;
-        text-decoration: none;
-        padding-bottom: 10px;
-
-        &:first-child {
-            img {
-                width: 100%;
-            }
         }
     }
 }
@@ -768,7 +874,8 @@ header {
     }
 }
 
-.productsOnHomepage {
+.productsOnHomepage,.forRemoval  {
+    align-items: flex-end;
     .pagination {
 
         .paginatePrevBtn,
@@ -863,7 +970,7 @@ header {
                 }
 
                 .input_controls.error input {
-                    border-color: red;
+                    border-color: #F65900;
                 }
 
                 div {
@@ -1003,7 +1110,7 @@ header {
 
             .saleIndicator {
                 top: 0;
-                left: 12px;
+                left: 20px;
             }
         }
 
@@ -1090,10 +1197,12 @@ header {
                     line-height: 18px;
                     color: #000000;
                     padding: 12px 7px;
+
                     &:focus {
                         outline: none;
-                        border: 2px solid blue!important;
+                        border: 2px solid #00FFD1 !important;
                     }
+
                     // margin-bottom: 20px;
                 }
 
@@ -1107,7 +1216,6 @@ header {
 
                 #userEmail {
                     @include input
-                    
                 }
 
                 .userName {
@@ -1116,15 +1224,16 @@ header {
 
                 #userName {
                     @include input;
-                    
+
                 }
 
                 #textAreaCommentary {
-                    
-                &:focus {
+
+                    &:focus {
                         outline: none;
-                        border: 2px solid blue!important;
+                        border: 2px solid blue !important;
                     }
+
                     @include input;
                     height: 200px;
                 }
@@ -1525,30 +1634,31 @@ footer {
     }
 }
 
-.checkoutForm,.commentaryForm {
+.checkoutForm,
+.commentaryForm {
     padding-top: 40px;
     padding-bottom: 40px;
 
-    .input_controls 
-    .input_controls 
-
-    .input_controls input:focus {
+    .input_controls .input_controls .input_controls input:focus {
         outline: none;
     }
-    .input_controls.validated input ,.input_controls.validated textarea{
-        border: 2px solid green!important;
+
+    .input_controls.validated input,
+    .input_controls.validated textarea {
+        border: 2px solid green !important;
     }
 
     form button {
         width: 100%;
     }
 
-    .input_controls.error input, .input_controls.error textArea{
-        border-color: red!important;
+    .input_controls.error input,
+    .input_controls.error textArea {
+        border-color: #F65900 !important;
     }
 
     .input_controls .error {
-        color: red;
+        color: #F65900;
     }
 
     .orderExample {

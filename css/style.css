@@ -12505,6 +12505,10 @@ header .centralContainer {
   margin: auto;
 }
 
+header .centralContainer .lowerCatalogBtn {
+  position: relative;
+}
+
 header .logo {
   display: inline-block;
 }
@@ -12514,6 +12518,7 @@ header .logo.hide {
 }
 
 header #catalogBtn {
+  height: 48px;
   text-align: left;
   width: 100%;
   font-family: "Montserrat";
@@ -12527,10 +12532,52 @@ header #catalogBtn {
   border: 1px solid #00c2ff;
   border-radius: 6px;
   margin-right: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 header #catalogBtn img {
   margin-right: 10px;
+}
+
+header #catalogBtn:focus {
+  border: 1px solid #00FFD1;
+  outline: none;
+}
+
+header #catalogBtn:hover {
+  background: #2FDAFF;
+  border: 1px solid #2FDAFF;
+}
+
+header #catalogBtn:active {
+  background: #00ACE2;
+  border: 1px solid #00ACE2;
+}
+
+header #catalogBtn:disabled {
+  text-indent: 38px;
+  background: #ECECEC;
+  border: 1px solid #ECECEC;
+  color: #BABABA;
+}
+
+header #catalogBtn:disabled img {
+  display: none;
+}
+
+header #catalogBtn:disabled::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 28px;
+  height: 28px;
+  background-image: url("../images/NaviconsCatalogDisabled.svg");
 }
 
 header .closeBusketBtn {
@@ -12627,25 +12674,30 @@ header div.inputSearch .searchOptions.borders {
   border-bottom-right-radius: 6px;
 }
 
+header div.inputSearch .searchInput:focus,
+header div.inputSearch .searchInput.error:focus {
+  border-color: #00FFD1;
+}
+
 header div.inputSearch .searchInput.error {
-  color: red;
-  border: 1px red solid;
+  color: #F65900;
+  border: 1px #F65900 solid;
 }
 
 header div.inputSearch .searchInput.error::-webkit-input-placeholder {
-  color: red;
+  color: #F65900;
 }
 
 header div.inputSearch .searchInput.error:-ms-input-placeholder {
-  color: red;
+  color: #F65900;
 }
 
 header div.inputSearch .searchInput.error::-ms-input-placeholder {
-  color: red;
+  color: #F65900;
 }
 
 header div.inputSearch .searchInput.error::placeholder {
-  color: red;
+  color: #F65900;
 }
 
 header div.inputSearch .menuHover {
@@ -12918,8 +12970,8 @@ header div.inputSearch input:focus {
   outline: none;
 }
 
-.onSale .saleIndicator,
-.saleIndicator {
+.onSale .productItemLink .saleIndicator,
+.productItemLink .saleIndicator, .saleIndicator {
   top: 10px;
   left: 22px;
   padding: 6px;
@@ -12936,8 +12988,122 @@ header div.inputSearch input:focus {
   color: #000000;
 }
 
+@-webkit-keyframes addToCartHoverBtn {
+  from {
+    background-image: url("../images/Spinner.svg");
+  }
+  70% {
+    background-image: url("../images/Spinner.svg");
+  }
+  100% {
+    background-image: url("../images/Success.svg");
+  }
+}
+
+@keyframes addToCartHoverBtn {
+  from {
+    background-image: url("../images/Spinner.svg");
+  }
+  70% {
+    background-image: url("../images/Spinner.svg");
+  }
+  100% {
+    background-image: url("../images/Success.svg");
+  }
+}
+
 .onSale {
   padding-top: 40px;
+}
+
+.onSale .productItemLink:hover button {
+  display: block;
+}
+
+.onSale .productItemLink p {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #00bf9d;
+  margin-bottom: 0;
+}
+
+.onSale .productItemLink p:first-child {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 40px;
+}
+
+.onSale .productItemLink p span {
+  padding-left: 10px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-text-decoration-line: line-through;
+          text-decoration-line: line-through;
+  color: #bababa;
+}
+
+.onSale .productItemLink button {
+  display: none;
+  margin-top: 10px;
+  padding: 13px;
+  width: 100%;
+  background: #00C2FF;
+  border: 1px solid #00C2FF;
+  border-radius: 6px;
+  color: white;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.onSale .productItemLink button.animationAddToCartBtn {
+  display: block;
+  padding: 11px;
+  border: none;
+  outline: none;
+  background: #00FFD1;
+}
+
+.onSale .productItemLink button.animationAddToCartBtn .spinner {
+  margin: auto;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  background-repeat: no-repeat;
+  -webkit-animation: 2s linear addToCartHoverBtn;
+          animation: 2s linear addToCartHoverBtn;
+}
+
+.onSale .productItemLink a {
+  padding-left: 0;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  text-decoration: none;
+  padding-bottom: 10px;
+}
+
+.onSale .productItemLink a:first-child img {
+  width: 100%;
 }
 
 .onSale img {
@@ -12954,56 +13120,6 @@ header div.inputSearch input:focus {
   height: 1px;
   position: absolute;
   width: calc(100% - 40px);
-}
-
-.onSale p {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  color: #00bf9d;
-  margin-bottom: 0;
-}
-
-.onSale p:first-child {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #000000;
-  margin-bottom: 40px;
-}
-
-.onSale p span {
-  padding-left: 10px;
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  -webkit-text-decoration-line: line-through;
-          text-decoration-line: line-through;
-  color: #bababa;
-}
-
-.onSale a {
-  padding-left: 0;
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  color: #000000;
-  text-decoration: none;
-  padding-bottom: 10px;
-}
-
-.onSale a:first-child img {
-  width: 100%;
 }
 
 .categories {
@@ -13248,9 +13364,17 @@ header div.inputSearch input:focus {
   margin-bottom: 5px;
 }
 
+.productsOnHomepage, .forRemoval {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
 .productsOnHomepage .pagination .paginatePrevBtn,
 .productsOnHomepage .pagination .paginateNextBtn,
-.productsOnHomepage .pagination .paginateBtn {
+.productsOnHomepage .pagination .paginateBtn, .forRemoval .pagination .paginatePrevBtn,
+.forRemoval .pagination .paginateNextBtn,
+.forRemoval .pagination .paginateBtn {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -13268,16 +13392,16 @@ header div.inputSearch input:focus {
   text-align: center;
 }
 
-.productsOnHomepage .pagination .paginateBtn {
+.productsOnHomepage .pagination .paginateBtn, .forRemoval .pagination .paginateBtn {
   padding: 10px;
   margin-right: 10px;
 }
 
-.productsOnHomepage .pagination .paginateBtn:nth-child(2) {
+.productsOnHomepage .pagination .paginateBtn:nth-child(2), .forRemoval .pagination .paginateBtn:nth-child(2) {
   margin-left: 10px;
 }
 
-.productsOnHomepage .pagination .paginateBtn.active {
+.productsOnHomepage .pagination .paginateBtn.active, .forRemoval .pagination .paginateBtn.active {
   background: #00FFD1;
   border: 1px solid #00FFD1;
   border-radius: 6px;
@@ -13318,7 +13442,7 @@ header div.inputSearch input:focus {
 }
 
 .productPage .product .productDescription .chooseOptions .input_controls.error input {
-  border-color: red;
+  border-color: #F65900;
 }
 
 .productPage .product .productDescription .chooseOptions div {
@@ -13472,7 +13596,7 @@ header div.inputSearch input:focus {
 
 .productPage .product .productDescription .saleIndicator {
   top: 0;
-  left: 12px;
+  left: 20px;
 }
 
 .productPage .product .imgGallery img.active {
@@ -13568,7 +13692,7 @@ header div.inputSearch input:focus {
 
 .productPage .descriptionAndReviews .reviews form #userEmail:focus {
   outline: none;
-  border: 2px solid blue !important;
+  border: 2px solid #00FFD1 !important;
 }
 
 .productPage .descriptionAndReviews .reviews form .userName {
@@ -13595,7 +13719,7 @@ header div.inputSearch input:focus {
 
 .productPage .descriptionAndReviews .reviews form #userName:focus {
   outline: none;
-  border: 2px solid blue !important;
+  border: 2px solid #00FFD1 !important;
 }
 
 .productPage .descriptionAndReviews .reviews form #textAreaCommentary {
@@ -13618,7 +13742,7 @@ header div.inputSearch input:focus {
 
 .productPage .descriptionAndReviews .reviews form #textAreaCommentary:focus {
   outline: none;
-  border: 2px solid blue !important;
+  border: 2px solid #00FFD1 !important;
 }
 
 .productPage .descriptionAndReviews .reviews .commentaryContainer {
@@ -14003,47 +14127,61 @@ footer img {
   }
 }
 
-.checkoutForm, .commentaryForm {
+.checkoutForm,
+.commentaryForm {
   padding-top: 40px;
   padding-bottom: 40px;
 }
 
-.checkoutForm .input_controls .input_controls .input_controls input:focus, .commentaryForm .input_controls .input_controls .input_controls input:focus {
+.checkoutForm .input_controls .input_controls .input_controls input:focus,
+.commentaryForm .input_controls .input_controls .input_controls input:focus {
   outline: none;
 }
 
-.checkoutForm .input_controls.validated input, .checkoutForm .input_controls.validated textarea, .commentaryForm .input_controls.validated input, .commentaryForm .input_controls.validated textarea {
+.checkoutForm .input_controls.validated input,
+.checkoutForm .input_controls.validated textarea,
+.commentaryForm .input_controls.validated input,
+.commentaryForm .input_controls.validated textarea {
   border: 2px solid green !important;
 }
 
-.checkoutForm form button, .commentaryForm form button {
+.checkoutForm form button,
+.commentaryForm form button {
   width: 100%;
 }
 
-.checkoutForm .input_controls.error input, .checkoutForm .input_controls.error textArea, .commentaryForm .input_controls.error input, .commentaryForm .input_controls.error textArea {
-  border-color: red !important;
+.checkoutForm .input_controls.error input,
+.checkoutForm .input_controls.error textArea,
+.commentaryForm .input_controls.error input,
+.commentaryForm .input_controls.error textArea {
+  border-color: #F65900 !important;
 }
 
-.checkoutForm .input_controls .error, .commentaryForm .input_controls .error {
-  color: red;
+.checkoutForm .input_controls .error,
+.commentaryForm .input_controls .error {
+  color: #F65900;
 }
 
-.checkoutForm .orderExample, .commentaryForm .orderExample {
+.checkoutForm .orderExample,
+.commentaryForm .orderExample {
   margin-bottom: 10px;
 }
 
-.checkoutForm .orderExample:last-child, .commentaryForm .orderExample:last-child {
+.checkoutForm .orderExample:last-child,
+.commentaryForm .orderExample:last-child {
   margin-bottom: 21px;
 }
 
-.checkoutForm .yourOrders .orders, .commentaryForm .yourOrders .orders {
+.checkoutForm .yourOrders .orders,
+.commentaryForm .yourOrders .orders {
   background: #FFFFFF;
   padding: 20px;
   border: 1px solid #ECECEC;
   border-radius: 6px;
 }
 
-.checkoutForm .yourOrders .orders strong, .commentaryForm .yourOrders .orders strong {
+.checkoutForm .yourOrders .orders strong,
+.commentaryForm .yourOrders .orders strong {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14055,15 +14193,18 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions, .commentaryForm .yourOrders .orders .paymentOptions {
+.checkoutForm .yourOrders .orders .paymentOptions,
+.commentaryForm .yourOrders .orders .paymentOptions {
   position: relative;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions div:last-child, .commentaryForm .yourOrders .orders .paymentOptions div:last-child {
+.checkoutForm .yourOrders .orders .paymentOptions div:last-child,
+.commentaryForm .yourOrders .orders .paymentOptions div:last-child {
   margin-bottom: 21px;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions::after, .commentaryForm .yourOrders .orders .paymentOptions::after {
+.checkoutForm .yourOrders .orders .paymentOptions::after,
+.commentaryForm .yourOrders .orders .paymentOptions::after {
   position: absolute;
   content: "";
   height: 1px;
@@ -14072,11 +14213,13 @@ footer img {
   bottom: -10px;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions input[type=radio], .commentaryForm .yourOrders .orders .paymentOptions input[type=radio] {
+.checkoutForm .yourOrders .orders .paymentOptions input[type=radio],
+.commentaryForm .yourOrders .orders .paymentOptions input[type=radio] {
   display: none;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions label, .commentaryForm .yourOrders .orders .paymentOptions label {
+.checkoutForm .yourOrders .orders .paymentOptions label,
+.commentaryForm .yourOrders .orders .paymentOptions label {
   position: relative;
   padding-left: 29px;
   font-family: 'Montserrat';
@@ -14088,7 +14231,8 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions label::before, .commentaryForm .yourOrders .orders .paymentOptions label::before {
+.checkoutForm .yourOrders .orders .paymentOptions label::before,
+.commentaryForm .yourOrders .orders .paymentOptions label::before {
   position: absolute;
   content: "";
   width: 24px;
@@ -14098,7 +14242,8 @@ footer img {
   left: 0;
 }
 
-.checkoutForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before, .commentaryForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before {
+.checkoutForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before,
+.commentaryForm .yourOrders .orders .paymentOptions input[type=radio]:checked + label::before {
   position: absolute;
   content: "";
   width: 24px;
@@ -14108,7 +14253,8 @@ footer img {
   left: 0;
 }
 
-.checkoutForm .yourOrders .orders .submitBtn, .commentaryForm .yourOrders .orders .submitBtn {
+.checkoutForm .yourOrders .orders .submitBtn,
+.commentaryForm .yourOrders .orders .submitBtn {
   padding: 12px 10px;
   background: #00C2FF;
   border: 1px solid #00C2FF;
@@ -14122,7 +14268,8 @@ footer img {
   color: #FFFFFF;
 }
 
-.checkoutForm .yourOrders .orders .privacyPolicy, .commentaryForm .yourOrders .orders .privacyPolicy {
+.checkoutForm .yourOrders .orders .privacyPolicy,
+.commentaryForm .yourOrders .orders .privacyPolicy {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14132,12 +14279,14 @@ footer img {
   margin-bottom: 10px;
 }
 
-.checkoutForm .yourOrders .orders .privacyPolicy a, .commentaryForm .yourOrders .orders .privacyPolicy a {
+.checkoutForm .yourOrders .orders .privacyPolicy a,
+.commentaryForm .yourOrders .orders .privacyPolicy a {
   color: #00C2FF;
   text-decoration: none;
 }
 
-.checkoutForm .yourOrders .orders .totalPrice, .commentaryForm .yourOrders .orders .totalPrice {
+.checkoutForm .yourOrders .orders .totalPrice,
+.commentaryForm .yourOrders .orders .totalPrice {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14148,7 +14297,8 @@ footer img {
   margin-bottom: 10px;
 }
 
-.checkoutForm .yourOrders .orders .underline::after, .commentaryForm .yourOrders .orders .underline::after {
+.checkoutForm .yourOrders .orders .underline::after,
+.commentaryForm .yourOrders .orders .underline::after {
   position: absolute;
   content: "";
   height: 1px;
@@ -14157,7 +14307,8 @@ footer img {
   bottom: -10px;
 }
 
-.checkoutForm .yourOrders .quantityAndPrice, .commentaryForm .yourOrders .quantityAndPrice {
+.checkoutForm .yourOrders .quantityAndPrice,
+.commentaryForm .yourOrders .quantityAndPrice {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14167,14 +14318,16 @@ footer img {
   color: #00BF9D;
 }
 
-.checkoutForm .yourOrders .imgAndName img, .commentaryForm .yourOrders .imgAndName img {
+.checkoutForm .yourOrders .imgAndName img,
+.commentaryForm .yourOrders .imgAndName img {
   width: 61px;
   height: 61px;
   border-radius: 3px;
   margin-right: 10px;
 }
 
-.checkoutForm .yourOrders .imgAndName p, .commentaryForm .yourOrders .imgAndName p {
+.checkoutForm .yourOrders .imgAndName p,
+.commentaryForm .yourOrders .imgAndName p {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14183,7 +14336,9 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm h5, .checkoutForm .h5, .commentaryForm h5, .commentaryForm .h5 {
+.checkoutForm h5, .checkoutForm .h5,
+.commentaryForm h5,
+.commentaryForm .h5 {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: calc(500 + 200);
@@ -14195,7 +14350,8 @@ footer img {
   margin-bottom: 10px;
 }
 
-.checkoutForm label, .commentaryForm label {
+.checkoutForm label,
+.commentaryForm label {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -14205,23 +14361,27 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm label span, .commentaryForm label span {
+.checkoutForm label span,
+.commentaryForm label span {
   color: #F75900;
 }
 
 .checkoutForm .contactInfo,
-.checkoutForm .shippingDetails, .commentaryForm .contactInfo,
+.checkoutForm .shippingDetails,
+.commentaryForm .contactInfo,
 .commentaryForm .shippingDetails {
   margin-bottom: 30px;
 }
 
 .checkoutForm .contactInfo .input_controls:last-child input,
-.checkoutForm .shippingDetails .input_controls:last-child input, .commentaryForm .contactInfo .input_controls:last-child input,
+.checkoutForm .shippingDetails .input_controls:last-child input,
+.commentaryForm .contactInfo .input_controls:last-child input,
 .commentaryForm .shippingDetails .input_controls:last-child input {
   margin-bottom: 0;
 }
 
-.checkoutForm select, .commentaryForm select {
+.checkoutForm select,
+.commentaryForm select {
   margin-bottom: 20px;
   border: 1px solid #ECECEC;
   border-radius: 6px;
@@ -14234,7 +14394,8 @@ footer img {
   color: #000000;
 }
 
-.checkoutForm input, .commentaryForm input {
+.checkoutForm input,
+.commentaryForm input {
   padding: 11px 7px;
   font-family: "Montserrat";
   font-style: normal;
@@ -14246,11 +14407,13 @@ footer img {
   border-radius: 6px;
 }
 
-.checkoutForm .input_controls, .commentaryForm .input_controls {
+.checkoutForm .input_controls,
+.commentaryForm .input_controls {
   margin-bottom: 20px;
 }
 
-.checkoutForm .input_controls:last-child, .commentaryForm .input_controls:last-child {
+.checkoutForm .input_controls:last-child,
+.commentaryForm .input_controls:last-child {
   margin-bottom: 0;
 }
 /*# sourceMappingURL=style.css.map */
