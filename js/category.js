@@ -49,13 +49,13 @@ function setMinAndMaxPrice(array) {
         }
     })
 }
-function sortAndSetPrice(array, min, max) {
+function sortAndSetPrice(array, bool) {
     console.log(array)
     if (array !== undefined) {
         array.forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
     }
-    if (min !== undefined && max !== undefined) {
-        const sortedBubble = sortedArray.sort((a, b) => a.price - b.price)
+    if (bool === true) {
+        const sortedBubble = array.sort((a, b) => a.price - b.price)
         maxPrice = sortedBubble[sortedBubble.length - 1].price
         minPrice = sortedBubble[0].price
         minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)}`
@@ -174,54 +174,100 @@ const makeUniq = (arr) => {//стягнув з інета, доволі хоро
     return result;
 };
 const httpRequest = new XMLHttpRequest();
-
-httpRequest.onreadystatechange = () => {
-    if (httpRequest.readyState === 4) {
-        if (httpRequest.status === 200) {
-            productsArray = httpRequest.response
-            sortedArray = productsArray
-            const category = localStorage.getItem("currentCategory")
-            const status = localStorage.getItem("status")
-            const categoryName = document.querySelector('.categoryName')
-            if (status !== 'search') {
-                sortedArray = sortedArray.filter((e) => e.category === category)
-                beforeAnySortingArray = [...sortedArray]
+function renderCategory() {
+    const status = localStorage.getItem("status")
+    const category = localStorage.getItem("currentCategory");
+    const categoryName = document.querySelector('.categoryName')
+    if (localStorage.getItem('currentCategory') !== 'search') {
+        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/products?category=' + category)
+            .then((data) => data.json())
+            .then((products) => {
+                productsArray = products
+                sortedArray = products
                 categoryName.innerHTML = category.charAt(0).toUpperCase() + category.slice(1)
                 sortBy.value !== '' ? localStorage.setItem('sortedBy', sortBy.value) : console.log('empty')
-                sortByOptions('extra')
-                paginationArr = pagination(sortedArray)
-                sortAndSetPrice(paginationArr[0], "min", "max")
-            } else {
-                localStorage.removeItem("status")
-                const conditionString = localStorage.getItem("searchString")
-                sortedArray = productsArray.filter((e) => eval(conditionString))
-                beforeAnySortingArray = [...sortedArray]
+                const array = sortByOptions(products)
+                paginationArr = pagination(array)
+                sortAndSetPrice(paginationArr[0], true)
+            })
+    } else {
+        const searchValue = localStorage.getItem('searchStringValue')
+        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/products?name='+searchValue)
+            .then((data) => data.json())
+            .then((products) => {
                 sortBy.value !== '' ? localStorage.setItem('sortedBy', sortBy.value) : console.log('empty')
-                sortByOptions('extra')
-                paginationArr = pagination(sortedArray)
-                sortAndSetPrice(paginationArr[0], "min", "max")
+                const array = sortByOptions(products)
+                if (localStorage.getItem('searchStringValue') !== "") {
+                    searchInput.value = localStorage.getItem('searchStringValue')
+                }
+                productsArray = array
+                sortedArray = array
+                beforeAnySortingArray = [...productsArray]
+                paginationArr = pagination(productsArray)
+                sortAndSetPrice(paginationArr[0], true)
                 const productsList = document.querySelector(".productsList")
                 categoryName.innerHTML = 'Search'
                 productsList.insertAdjacentHTML("afterbegin", `
                         <p class='searchResults'>Search results: ${beforeAnySortingArray.length}</p>
                     `)
-            }
-            setListenersOnLinks()
-            // const productsHomePage = document.querySelectorAll(".productsOnHomepage")
-            // productsHomePage.forEach((e)=>{
-            //     e.addEventListener("click",function(e){
-            //         if(e.target.tagName === "A"){
-            //             localStorage.setItem("currentItem",e.target.parentElement.getAttribute("data-id"))
-
-            //         }else if(e.target.tagName === "IMG"){
-            //             localStorage.setItem("currentItem",e.target.parentElement.parentElement.getAttribute("data-id"))
-            //         }
-            //     })
-            // })
-
-        }
+            })
     }
-};
+}
+renderCategory()
+setListenersOnLinks()
+// httpRequest.onreadystatechange = () => {
+//     if (httpRequest.readyState === 4) {
+//         if (httpRequest.status === 200) {
+//             productsArray = httpRequest.response
+//             sortedArray = productsArray
+//             const category = localStorage.getItem("currentCategory")
+//             const status = localStorage.getItem("status")
+//             const categoryName = document.querySelector('.categoryName')
+//             if (status !== 'search') {
+//                 sortedArray = sortedArray.filter((e) => e.category === category)
+//                 beforeAnySortingArray = [...sortedArray]
+//                 categoryName.innerHTML = category.charAt(0).toUpperCase() + category.slice(1)
+//                 sortBy.value !== '' ? localStorage.setItem('sortedBy', sortBy.value) : console.log('empty')
+//                 sortByOptions(sortedArray)
+//                 paginationArr = pagination(sortedArray)
+//                 sortAndSetPrice(paginationArr[0], "min", "max")
+//                 if (localStorage.getItem('searchStringValue') !== "") {
+//                     searchInput.value = localStorage.getItem('searchStringValue')
+//                 }
+//             } else {
+//                 localStorage.removeItem("status")
+//                 const conditionString = localStorage.getItem("searchString")
+//                 if (localStorage.getItem('searchStringValue') !== "") {
+//                     searchInput.value = localStorage.getItem('searchStringValue')
+//                 }
+//                 sortedArray = productsArray.filter((e) => eval(conditionString))
+//                 beforeAnySortingArray = [...sortedArray]
+//                 sortBy.value !== '' ? localStorage.setItem('sortedBy', sortBy.value) : console.log('empty')
+//                 sortByOptions(sortedArray)
+//                 paginationArr = pagination(sortedArray)
+//                 sortAndSetPrice(paginationArr[0], "min", "max")
+//                 const productsList = document.querySelector(".productsList")
+//                 categoryName.innerHTML = 'Search'
+//                 productsList.insertAdjacentHTML("afterbegin", `
+//                         <p class='searchResults'>Search results: ${beforeAnySortingArray.length}</p>
+//                     `)
+//             }
+//             setListenersOnLinks()
+//             // const productsHomePage = document.querySelectorAll(".productsOnHomepage")
+//             // productsHomePage.forEach((e)=>{
+//             //     e.addEventListener("click",function(e){
+//             //         if(e.target.tagName === "A"){
+//             //             localStorage.setItem("currentItem",e.target.parentElement.getAttribute("data-id"))
+
+//             //         }else if(e.target.tagName === "IMG"){
+//             //             localStorage.setItem("currentItem",e.target.parentElement.parentElement.getAttribute("data-id"))
+//             //         }
+//             //     })
+//             // })
+
+//         }
+//     }
+// };
 
 
 httpRequest.open("GET", "https://62d575ef15ad24cbf2c7a034.mockapi.io/products")
@@ -272,6 +318,21 @@ function sort(str, array) {
 //         return array
 //     }
 // }
+let filterOption = ''
+let filterValue = ''
+function dotsWidgetDuringChange(){
+    if(filterOption!==""){
+        console.log(priceArr.join(' && ')+` && e.${filterOption}`)
+        sortedArray = productsArray.filter((e)=>eval(priceArr.join(' && ')))
+        sortedArray = checkIfElementContainsOption(sortedArray,filterOption,filterValue)
+    }else{
+        sortedArray = productsArray.filter((e)=>eval(priceArr.join(' && ')))
+    }
+    if(document.querySelector('.searchResults')!==null){
+        document.querySelector('.searchResults').innerHTML = `Search results: ${sortedArray.length}`
+    }
+    optionsAfterProcedure(sortedArray)
+}
 dots[1].addEventListener("drag", function (e) {
     e.preventDefault()
     coord = (() => {
@@ -302,8 +363,7 @@ dots[1].addEventListener("dragend", (e) => {
             allAtOnce[index] = `(${priceArr.join(" && ")})`
         }
     })
-    // allAtOnce = clearEmptySpaces(allAtOnce)
-    optionsAfterProcedure()
+    dotsWidgetDuringChange()
 })
 dots[1].addEventListener("touchend", () => {
     price = `+e.price <= ${minAndMaxPrice.querySelector(".maxPrice").innerHTML.replace("$", "")}`
@@ -317,8 +377,9 @@ dots[1].addEventListener("touchend", () => {
             allAtOnce[index] = `(${priceArr.join(" && ")})`
         }
     })
+    dotsWidgetDuringChange()
     // allAtOnce = clearEmptySpaces(allAtOnce)
-    optionsAfterProcedure()
+    
 })
 dots[0].addEventListener("dragend", (e) => {
     e.preventDefault()
@@ -333,8 +394,7 @@ dots[0].addEventListener("dragend", (e) => {
             allAtOnce[index] = `(${priceArr.join(" && ")})`
         }
     })
-    // allAtOnce = clearEmptySpaces(allAtOnce)
-    optionsAfterProcedure()
+    dotsWidgetDuringChange()
 })
 dots[0].addEventListener("touchend", () => {
     price = `+e.price >= ${minAndMaxPrice.querySelector(".minPrice").innerHTML.replace("$", "")}`
@@ -348,8 +408,7 @@ dots[0].addEventListener("touchend", () => {
             allAtOnce[index] = `(${priceArr.join(" && ")})`
         }
     })
-    // allAtOnce = clearEmptySpaces(allAtOnce)
-    optionsAfterProcedure()
+    dotsWidgetDuringChange()
 })
 dots[0].addEventListener("drag", (e) => {
     e.preventDefault()
@@ -380,33 +439,41 @@ dots[0].addEventListener("touchmove", (e) => {
         }
     })()}`
 })
+function checkIfElementContainsOption(array0,option,val){
+    return array0.filter((e)=>{
+        if(e[option].find((b)=>b===val)!==undefined){
+            filterOption = option
+            filterValue = val
+            return true
+        }else{
+            return false
+        }
+    })
+}
+function filterProducts(data,option,val) {
+    document.querySelectorAll('.buttons button').forEach((b)=>b.classList.remove('checked'))
+    if(data===''){
+        sortedArray = productsArray
+        filterOption = ""
+        filterValue = ""
+    }else{
+        sortedArray = checkIfElementContainsOption(productsArray,option,val)
+    }
+    if(document.querySelector('.searchResults')!==null){
+        document.querySelector('.searchResults').innerHTML = `Search results: ${sortedArray.length}`
+    }
+    optionsAfterProcedure(sortedArray)
+}
 colorOption.addEventListener("click", function (e) {
-    e.preventDefault()
     // inputListener(target)
-    if (e.target.tagName = "BUTTON") {
-        e.target.classList.toggle("checked")
-        const child = e.target.getAttribute("id")
-        color = `e.color === '${child}'`
-        if (color.indexOf("null") == -1) {
-            if (e.target.classList.contains("checked") === false) {
-                colorArr = colorArr.filter((e) => e !== color)
-                allAtOnce.filter((e, index) => {
-                    if (e.indexOf(color) !== -1) {
-                        allAtOnce[index] = `(${colorArr.join(" || ")})`
-                    }
-                })
-                allAtOnce = clearEmptySpaces(allAtOnce)
-            } else {
-                colorArr.push(color)
-                allAtOnce.filter((e, index) => {
-                    if (e.indexOf("color") !== -1) {
-                        allAtOnce.splice(index, 1)
-                    }
-                })
-                allAtOnce.push(`(${colorArr.join(" || ")})`)
-                allAtOnce = clearEmptySpaces(allAtOnce)
-            }
-            optionsAfterProcedure()
+    if (e.target.tagName === "BUTTON") {
+        if(e.target.classList.contains('checked')){
+            e.target.classList.remove('checked')
+            filterProducts('')
+        }else{
+            const child = e.target.getAttribute("id")
+            filterProducts(`color=${child}`,"color",child)
+            e.target.classList.add("checked")
         }
     }
 })
@@ -427,40 +494,24 @@ colorOption.addEventListener("click", function (e) {
 //     console.log(JSON.stringify(newProductsArray))
 // }
 
-function optionsAfterProcedure() {
-    sortedArray = []
-    sort(allAtOnce.join(" && "), beforeAnySortingArray)
-    sortByOptions("extra")
+function optionsAfterProcedure(array) {
+    // sortedArray = []
+    // sort(allAtOnce.join(" && "), beforeAnySortingArray)
+    // sortByOptions("extra")
     clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    paginationArr = pagination(sortedArray)
+    paginationArr = pagination(array)
     sortAndSetPrice(paginationArr[0])
+    setListenersOnLinks()
 }
 sizeOption.addEventListener("click", function (e) {
-    e.preventDefault()
-    if (e.target.tagName = "BUTTON") {
-        e.target.classList.toggle("checked")
-        const child = e.target.getAttribute("id")
-        size = `e.size === '${child}'`
-        if (size.indexOf("null") == -1) {
-            if (e.target.classList.contains("checked") === false) {
-                sizeArr = sizeArr.filter((e) => e !== size)
-                allAtOnce.filter((e, index) => {
-                    if (e.indexOf(size) !== -1) {
-                        allAtOnce[index] = `(${sizeArr.join(" || ")})`
-                    }
-                })
-                allAtOnce = clearEmptySpaces(allAtOnce)
-            } else {
-                sizeArr.push(size)
-                allAtOnce.filter((e, index) => {
-                    if (e.indexOf("size") !== -1) {
-                        allAtOnce.splice(index, 1)
-                    }
-                })
-                allAtOnce.push(`(${sizeArr.join(" || ")})`)
-                allAtOnce = clearEmptySpaces(allAtOnce)
-            }
-            optionsAfterProcedure()
+    if (e.target.tagName === "BUTTON") {
+        if(e.target.classList.contains('checked')){
+            e.target.classList.remove('checked')
+            filterProducts('')
+        }else{
+            const child = e.target.getAttribute("id")
+            filterProducts(`size=${child}`,"size",`size${child}`)
+            e.target.classList.add("checked")
         }
     }
 })
@@ -546,17 +597,18 @@ paginatePrevBtn.addEventListener("click", function () {
 })
 sortBy.addEventListener('change', function () {
     localStorage.setItem('sortedBy', this.value)
-    sortByOptions()
+    sortByOptions(sortedArray,true)
 })
-function sortByOptions(bool) {
+function sortByOptions(array, bool) {
+    let localArray = array
     if (localStorage.getItem('sortedBy') !== null) {
         const option = localStorage.getItem('sortedBy')
         if (option === 'rating') {
-            sortedArray = sortedArray.sort((a, b) => b.rating - a.rating)
+            localArray = localArray.sort((a, b) => b.rating - a.rating)
         } else if (option === 'newest') {
-            sortedArray = sortedArray.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            localArray = localArray.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         } else if (option === "onSale") {
-            sortedArray = sortedArray.sort((a, b) => {
+            localArray = localArray.sort((a, b) => {
                 if (a.isSale - b.isSale === 1) {
                     return -1
                 } else if (a.isSale - b.isSale === -1) {
@@ -566,12 +618,13 @@ function sortByOptions(bool) {
                 }
             })
         }
-        if (bool === undefined) {
+        if (bool !== undefined) {
             clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-            paginationArr = pagination(sortedArray)
+            paginationArr = pagination(localArray)
             sortAndSetPrice(paginationArr[0])
         }
     }
+    return localArray
 }
 
 

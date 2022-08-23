@@ -186,7 +186,26 @@ function setSuccess(element, msg) {
 /////////////////generate data---------------------------------------------------------------------------------
 let data = new Date('Thu Aug 18 2022 13:04:13 GMT+0300').getTime()
 let gallery = []
+const makeUniq = (arr) => {//стягнув з інета, доволі хороший метод для видалення 'повторок'. . Не використовується
+    const seen = {};
+    const result = [];
+    let j = 0;
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i]
+        const obj = arr[i]
+        const itemType = typeof item;
+        const key = `${itemType}_${item}`;
+        if (!seen[key]) {
+            seen[key] = 1;
+            result[j++] = obj;
+        }
+    }
+    return result;
+};
 let images = ['images/Bag.jpg', 'images/Blazer.jpg', 'images/girlsTShirt.jpg', 'images/PrintedBlazer.jpg', 'images/printableTShirt.jpg']
+let sizes = ['sizeXL','sizeL','sizeS','sizeM','sizeXXL']
+let colors = ['blue','grey','green','red','yellow']
+let categs = ['accessories','fashion','gadgets']
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -198,9 +217,11 @@ function randomGallery() {
         const arr = []
         for (let i = 0; i < quantity; i++) {
             const randomIndex = getRandomIntInclusive(0, 4)
-            arr.push(images[randomIndex])
+            // arr.push(images[randomIndex])
+            arr.push(colors[randomIndex])
         }
-        gallery.push(arr)
+        
+        gallery.push(makeUniq(arr))
     }
     return gallery
 }
@@ -208,10 +229,17 @@ async function generateArray() {
     const array = await fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/products')
     const parsedArray = await array.json()
     let newProductsArray = parsedArray.map((e, index) => {
+        // e.category = categs[getRandomIntInclusive(0, 2)]
+        // e.color = gallery[index]
+        delete e.imgSource
         // e.date = dateArr[index]
-        e.rating = 0
+        // const obj = {
+        //     name: e.name,
+        // }
+        // e.rating = 0
         // e.imgsGallery = gallery[index]
         return e
+        // return obj
     })
     console.log(JSON.stringify(newProductsArray))
 }
@@ -227,6 +255,17 @@ function setGallery(array) {
             str = `${str} <img class="active" src="${e}" alt=""> `
         } else {
             str = `${str} <img src="${e}" alt=""> `
+        }
+    })
+    return str
+}
+function createSelectOptions(array){
+    let str = ''
+    array.forEach((e, index) => {
+        if (index === 0) {
+            str = `${str} <option value="${e}" selected>${e}</option>`
+        } else {
+            str = `${str} <option value="${e}">${e}</option>`
         }
     })
     return str
@@ -272,20 +311,14 @@ function setProductPage() {
                         <p class="mb-0">Color</p>
                         <select name="userColor" size="1" required="">
                             <!-- <option value=""></option> -->
-                            <option value="Green" selected="">Green</option>
-                            <option value="Yellow">Yellow</option>
-                            <option value="Blue">Blue</option>
+                            ${createSelectOptions(productPageObject.color)}
                         </select>
                     </div>
                     <div class="chooseOptions d-flex align-items-center justify-content-between col-12 col-md-5 col-lg-7 col-xxl-5 col-xl-6">
                         <p class="mb-0">Size</p>
                         <select name="userSize" size="1" required="">
                             <!-- <option value=""></option> -->
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L" selected="">L</option>
-                            <option value="XL">XL</option>
-                            <option value="XXL">XXL</option>
+                            ${createSelectOptions(productPageObject.size.map((e)=>e=e.slice(4)))}
                         </select>
                     </div>
                 </div>

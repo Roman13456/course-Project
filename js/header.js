@@ -109,7 +109,7 @@ function createChosenProductFromStorage(element) {
                     `
         <li data-id='${element.id}' class="col-12 d-flex align-items-center justify-content-between">
             <div class="wrapper align-items-center d-flex">
-                <img src="${productArray[index].imgSource}">
+                <img src="${productArray[index].imgsGallery[0]}">
                 <p class="mb-0">${element.productName}</p>
             </div>
             <div class="wrapper d-flex align-items-center">
@@ -141,11 +141,11 @@ searchInput.closest("div").addEventListener("focusout",function(){
     setTimeout(()=>{
         document.querySelector('.searchOptions').classList.remove("borders")
         document.querySelector('.searchOptions').innerHTML = ''
-    },100)
+    },150)
 
 })
 searchInput.addEventListener("focusin",function(){
-    searching()
+    searchTimeout(500)
 })
 function showInput() {
     headerLogo.classList.add("hide");
@@ -274,56 +274,68 @@ function setMenuPhone(status, menu, str,heading) {
     </div>`
         );
     } else {
-        // console.log(menu,busketMenu)
         menu.querySelector(`.${str}`).parentElement.remove();
         menu.setAttribute("data-id", "0");
         menu.style.display = "none";
     }
 }
-const spaceRegex = /\s+/g
+// const spaceRegex = /\s+/g
+let timeoutIndex = ''
+let searchString = ''
+function searchTimeout(time){
+    if(timeoutIndex===''){
+        console.log('init search...')
+        searchString = searchInput.value.trim().toLowerCase()
+        timeoutIndex = setTimeout(searching,time)
+    }else{
+        searchString = searchInput.value.trim().toLowerCase()
+        console.log('terminate search...')
+    }
+}
 searchInput.addEventListener("input", function () {
-    searching()
-
+    searchTimeout(500)
 })
 function searching(){
     const searchValue = searchInput.value.trim().toLowerCase()
-    const substrArr = searchValue.split(spaceRegex)
     const parent = searchInput.closest('div')
     parent.querySelector('.searchOptions').innerHTML = ""
-    substrArr.forEach((e, index) => {
-        substrArr[index] = `e.name.search(/${e}/i)!==-1`
-    })
-    const substrCondition = substrArr.join(" || ")
-
     if (searchValue !== "") {
         if (searchInput.classList.contains("error")) {
-            
             searchInput.classList.remove("error")
         }
-        const options = productsArray.filter((e) => eval(substrCondition))
-        localStorage.setItem("searchString", `${substrCondition}`)
-        console.log(options)
-        parent.querySelector('.searchOptions').classList.add("borders")
-        console.log(parent.querySelector('.searchOptions'))
-        options.slice(0, 4).forEach((e) => {
-            parent.querySelector('.searchOptions').insertAdjacentHTML('beforeend', `
-                <a href='products_page.html' class='d-block option' data-id='${e.id}' >${e.name}</a>
-            `)
-        })
-        parent.querySelectorAll('.option').forEach((e) => {
-            e.addEventListener("click", function (b) {
-                localStorage.setItem("currentItem", e.getAttribute("data-id"))
+        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/products?name='+searchValue)
+            .then((data)=>data.json())
+            .then((res)=>{
+                if(res.length!==0){
+                    parent.querySelector('.searchOptions').classList.add("borders")
+                    res.slice(0, 4).forEach((e) => {
+                        parent.querySelector('.searchOptions').insertAdjacentHTML('beforeend', `
+                            <p class='d-block option' >${e.name}</p>
+                        `)
+                    })
+                    localStorage.setItem("searchStringValue", searchValue)
+                    parent.querySelectorAll('.option').forEach((e) => {
+                        e.addEventListener("click", function () {
+                            localStorage.setItem("searchStringValue", this.innerHTML)
+                            searchInput.value = this.innerHTML
+                            searchBtnSubmit()
+                        })
+                    })
+                }else{
+                    parent.querySelector('.searchOptions').classList.remove("borders")
+                }
+                if(searchValue!==searchString){
+                    searchTimeout(500)
+                }
             })
-        })
-
     }else{
         parent.querySelector('.searchOptions').classList.remove("borders")
     }
+    timeoutIndex = ''
+    console.log('data sent')
 }
-searchBtn.addEventListener("click", function (e) {
+function searchBtnSubmit(){
     if(searchBtn.getAttribute("data-width")==null){
-        console.log('hh')
-        e.preventDefault()
         const searchValue = searchInput.value.trim();
         let bool = true;
         if (searchValue === "") {
@@ -336,12 +348,16 @@ searchBtn.addEventListener("click", function (e) {
             }
         }
         if (bool) {
-            localStorage.setItem("status", 'search')
+            localStorage.setItem("currentCategory", 'search')
             window.open('category.html', '_self')
         }
     }else{
         searchBtn.removeAttribute("data-width")
     }
+}
+searchBtn.addEventListener("click", function (e) {
+    e.preventDefault()
+    searchBtnSubmit()
 })
 header.addEventListener("click", function (e) {
     const status = +menuHover.getAttribute("data-id");

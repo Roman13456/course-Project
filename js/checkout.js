@@ -226,7 +226,7 @@ function responseHandler(){
                 ordersList.insertAdjacentHTML("beforeend",`
                 <div class="justify-content-between d-flex align-items-center orderExample">
                     <div class="d-flex align-items-center imgAndName">
-                        <img src="${fullObj[0].imgSource}" alt="blazer">
+                        <img src="${fullObj[0].imgsGallery[0]}" alt="blazer">
                         <p class="mb-0">${e.productName}</p>
                     </div>
                     <div class="quantityAndPrice">

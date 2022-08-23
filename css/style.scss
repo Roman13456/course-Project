@@ -160,10 +160,12 @@ header {
             width: 100%;
             background: #ffffff;
             position: absolute;
-
-            a {
+            z-index: 5;
+            p {
+                margin-bottom: 0;
                 padding: 5px 14px;
                 gap: 10px;
+                cursor: pointer;
                 background: #ffffff;
                 font-family: $mainFont;
                 font-style: normal;

@@ -12653,11 +12653,14 @@ header div.inputSearch .searchOptions {
   width: 100%;
   background: #ffffff;
   position: absolute;
+  z-index: 5;
 }
 
-header div.inputSearch .searchOptions a {
+header div.inputSearch .searchOptions p {
+  margin-bottom: 0;
   padding: 5px 14px;
   gap: 10px;
+  cursor: pointer;
   background: #ffffff;
   font-family: "Montserrat";
   font-style: normal;
