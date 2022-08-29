@@ -3,7 +3,9 @@
 $mainFont: "Montserrat";
 $mainFontWeight: 500;
 $mainFontSize: 18px;
-
+.lightSliderContainer{
+    width: 164px;
+}
 form input {
     border-color: #ECECEC;
 }
@@ -883,6 +885,14 @@ header {
         .paginatePrevBtn,
         .paginateNextBtn,
         .paginateBtn {
+            &.paginatePrevBtn
+            {
+                margin-right: 10px;
+            }
+            &.paginateNextBtn
+            {
+                margin-left: 10px;
+            }
             font-family: $mainFont;
             font-style: normal;
             font-weight: $mainFontWeight;
@@ -900,14 +910,14 @@ header {
             text-align: center;
         }
 
-        .paginateBtn {
-            padding: 10px;
-            margin-right: 10px;
+        // .paginateBtn {
+        //     padding: 10px;
+        //     margin-right: 10px;
 
-            &:nth-child(2) {
-                margin-left: 10px;
-            }
-        }
+        //     &:nth-child(2) {
+        //         margin-left: 10px;
+        //     }
+        // }
 
         .paginateBtn.active {
             background: #00FFD1;

@@ -12485,6 +12485,10 @@ fieldset:disabled .btn {
   }
 }
 
+.lightSliderContainer {
+  width: 164px;
+}
+
 form input {
   border-color: #ECECEC;
 }
@@ -13395,12 +13399,19 @@ header div.inputSearch input:focus {
   text-align: center;
 }
 
-.productsOnHomepage .pagination .paginateBtn, .forRemoval .pagination .paginateBtn {
-  padding: 10px;
+.productsOnHomepage .pagination .paginatePrevBtn.paginatePrevBtn,
+.productsOnHomepage .pagination .paginateNextBtn.paginatePrevBtn,
+.productsOnHomepage .pagination .paginateBtn.paginatePrevBtn, .forRemoval .pagination .paginatePrevBtn.paginatePrevBtn,
+.forRemoval .pagination .paginateNextBtn.paginatePrevBtn,
+.forRemoval .pagination .paginateBtn.paginatePrevBtn {
   margin-right: 10px;
 }
 
-.productsOnHomepage .pagination .paginateBtn:nth-child(2), .forRemoval .pagination .paginateBtn:nth-child(2) {
+.productsOnHomepage .pagination .paginatePrevBtn.paginateNextBtn,
+.productsOnHomepage .pagination .paginateNextBtn.paginateNextBtn,
+.productsOnHomepage .pagination .paginateBtn.paginateNextBtn, .forRemoval .pagination .paginatePrevBtn.paginateNextBtn,
+.forRemoval .pagination .paginateNextBtn.paginateNextBtn,
+.forRemoval .pagination .paginateBtn.paginateNextBtn {
   margin-left: 10px;
 }
 

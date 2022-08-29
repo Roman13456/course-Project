@@ -215,66 +215,6 @@ function renderCategory() {
 }
 renderCategory()
 setListenersOnLinks()
-// httpRequest.onreadystatechange = () => {
-//     if (httpRequest.readyState === 4) {
-//         if (httpRequest.status === 200) {
-//             productsArray = httpRequest.response
-//             sortedArray = productsArray
-//             const category = localStorage.getItem("currentCategory")
-//             const status = localStorage.getItem("status")
-//             const categoryName = document.querySelector('.categoryName')
-//             if (status !== 'search') {
-//                 sortedArray = sortedArray.filter((e) => e.category === category)
-//                 beforeAnySortingArray = [...sortedArray]
-//                 categoryName.innerHTML = category.charAt(0).toUpperCase() + category.slice(1)
-//                 sortBy.value !== '' ? localStorage.setItem('sortedBy', sortBy.value) : console.log('empty')
-//                 sortByOptions(sortedArray)
-//                 paginationArr = pagination(sortedArray)
-//                 sortAndSetPrice(paginationArr[0], "min", "max")
-//                 if (localStorage.getItem('searchStringValue') !== "") {
-//                     searchInput.value = localStorage.getItem('searchStringValue')
-//                 }
-//             } else {
-//                 localStorage.removeItem("status")
-//                 const conditionString = localStorage.getItem("searchString")
-//                 if (localStorage.getItem('searchStringValue') !== "") {
-//                     searchInput.value = localStorage.getItem('searchStringValue')
-//                 }
-//                 sortedArray = productsArray.filter((e) => eval(conditionString))
-//                 beforeAnySortingArray = [...sortedArray]
-//                 sortBy.value !== '' ? localStorage.setItem('sortedBy', sortBy.value) : console.log('empty')
-//                 sortByOptions(sortedArray)
-//                 paginationArr = pagination(sortedArray)
-//                 sortAndSetPrice(paginationArr[0], "min", "max")
-//                 const productsList = document.querySelector(".productsList")
-//                 categoryName.innerHTML = 'Search'
-//                 productsList.insertAdjacentHTML("afterbegin", `
-//                         <p class='searchResults'>Search results: ${beforeAnySortingArray.length}</p>
-//                     `)
-//             }
-//             setListenersOnLinks()
-//             // const productsHomePage = document.querySelectorAll(".productsOnHomepage")
-//             // productsHomePage.forEach((e)=>{
-//             //     e.addEventListener("click",function(e){
-//             //         if(e.target.tagName === "A"){
-//             //             localStorage.setItem("currentItem",e.target.parentElement.getAttribute("data-id"))
-
-//             //         }else if(e.target.tagName === "IMG"){
-//             //             localStorage.setItem("currentItem",e.target.parentElement.parentElement.getAttribute("data-id"))
-//             //         }
-//             //     })
-//             // })
-
-//         }
-//     }
-// };
-
-
-httpRequest.open("GET", "https://62d575ef15ad24cbf2c7a034.mockapi.io/products")
-httpRequest.responseType = "json"
-httpRequest.send()
-
-
 function clearEmptySpaces(array) {
     let localArr = array
     return localArr.filter((e) => e !== "()")
@@ -295,29 +235,6 @@ function sort(str, array) {
     }
 
 }
-// function sortUniversal(child,arr,str){
-//     let array = arr
-//     if (child.getAttribute("checked") === null) {
-//         array = array.filter((e) => e !== str)
-//         allAtOnce.filter((e,index)=>{
-//             if(e.indexOf(str)!==-1){
-//                 allAtOnce[index] = `(${array.join(" || ")})`
-//             }
-//         })
-//         allAtOnce = clearEmptySpaces(allAtOnce)
-//         return array
-//     } else {
-//         array.push(str)
-//         allAtOnce.filter((e,index)=>{
-//             if(e.indexOf(`${str}`)!==-1){
-//                 allAtOnce.splice(index,1)
-//             }
-//         })
-//         allAtOnce.push(`(${array.join(" || ")})`)
-//         allAtOnce = clearEmptySpaces(allAtOnce)
-//         return array
-//     }
-// }
 let filterOption = ''
 let filterValue = ''
 function dotsWidgetDuringChange(){
@@ -477,23 +394,6 @@ colorOption.addEventListener("click", function (e) {
         }
     }
 })
-// let data = new Date('Thu Aug 18 2022 13:04:13 GMT+0300').getTime()
-// let dateArr =[]
-// function randomDate(){
-//     for(let i= 0; i<64;i++){
-//         data+=86400000
-//         dateArr.push(new Date(data))
-//     }
-// }
-// function generateArray(){
-//     let newProductsArray = productsArray.map((e,index)=>{
-//         // e.date = dateArr[index]
-//         e.rating = 0
-//         return e
-//     })
-//     console.log(JSON.stringify(newProductsArray))
-// }
-
 function optionsAfterProcedure(array) {
     // sortedArray = []
     // sort(allAtOnce.join(" && "), beforeAnySortingArray)
@@ -524,7 +424,14 @@ const sortMenu = document.querySelector(".background")
 mobileSortBurger.addEventListener("click", function () {
     sortMenu.classList.toggle("visible")
 })
-// var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'].splice(2);
+let slider
+paginationNav.addEventListener('click',(e)=>{
+    console.log(e.target.classList.contains('paginateBtn'))
+    if(e.target.classList.contains('paginateBtn')){
+        const val = e.target.getAttribute('data-id')
+        slider.goToSlide(val)
+    }
+})
 function pagination(array) {
     let changableArray = [...array]
     let paginatedArray = []
@@ -533,15 +440,22 @@ function pagination(array) {
             paginatedArray.push(changableArray.slice(0, 9))
             changableArray.splice(0, 9)
             if (i === 0) {
-                paginationNav.querySelector(".paginateNextBtn").insertAdjacentHTML("beforebegin", `
-                <button class="paginateBtn active" data-id='${i}'>${i + 1}</button>
+                paginationNav.querySelector(".lightSlider").insertAdjacentHTML("beforeend", `
+                <li><button class="paginateBtn active" data-id='${i}'>${i + 1}</button></li>
             `)
             } else {
-                paginationNav.querySelector(".paginateNextBtn").insertAdjacentHTML("beforebegin", `
-                <button class="paginateBtn" data-id='${i}'>${i + 1}</button>
+                paginationNav.querySelector(".lightSlider").insertAdjacentHTML("beforeend", `
+                <li><button class="paginateBtn" data-id='${i}'>${i + 1}</button></li>
                 `)
             }
         }
+  $(document).ready(function() {
+    slider = $(".lightSlider").lightSlider({
+        item: 3,
+        slideEndAnimation:false,
+        pager:false
+    });
+  });
     }
     if (paginationNav.querySelectorAll(".paginateBtn").length === 0) {
         addBtns()
@@ -576,9 +490,11 @@ paginateNextBtn.addEventListener("click", function () {
         paginationBtns[index + 1].classList.add("active")
         const prevIndex = +activePage.getAttribute("data-id")
         paginationArr[prevIndex + 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+        slider.goToNextSlide()
     } else {
         paginationBtns[0].classList.add("active")
         paginationArr[0].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+        slider.goToSlide(0)
     }
 })
 paginatePrevBtn.addEventListener("click", function () {
@@ -590,10 +506,13 @@ paginatePrevBtn.addEventListener("click", function () {
         paginationBtns[index - 1].classList.add("active")
         const prevIndex = +activePage.getAttribute("data-id")
         paginationArr[prevIndex - 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+        slider.goToPrevSlide()
     } else {
         paginationBtns[paginationBtns.length - 1].classList.add("active")
         paginationArr[paginationBtns.length - 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+        slider.goToSlide(paginationBtns.length - 1)
     }
+    
 })
 sortBy.addEventListener('change', function () {
     localStorage.setItem('sortedBy', this.value)
