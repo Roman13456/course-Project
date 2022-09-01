@@ -23,7 +23,7 @@ function createProductClosure(loc,lg,xxl){
                     }
                 })()}
             </p>
-            <button data-id ='${element.id}' >Add to cart</button>
+            <button data-id ='${element.id}' class='buttonEvent'>Add to cart</button>
             </div>
         `)
         const buttons = Array.from(document.querySelectorAll('.productItemLink button')) 

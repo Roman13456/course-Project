@@ -21,19 +21,6 @@ function init() {
     }
     showCatalogBtn();
 }
-console.log(catalogBtn.querySelector("img"))
-catalogBtn.querySelector("img").addEventListener("hover", function () {
-    console.log('hhh')
-    // const categoriesList = document.querySelector(".categoriesList")
-    // console.log("categoriesList")
-    // categoriesList.addEventListener("click",function(e){
-    //     console.log(e.target)
-    //     if(e.target.tahName = 'A'){
-    //         console.log("hh")
-    //         // localStorage.setItem("currentCategory",this.querySelector("p").innerHTML)
-    //     }
-    // })
-})
 let userChosenProducts = [];
 getFromStorage();
 function calcGeneralPrice() {
@@ -114,13 +101,13 @@ function createChosenProductFromStorage(element) {
             </div>
             <div class="wrapper d-flex align-items-center">
                 <div class="counter d-flex align-items-center">
-                    <button class='deduction'><img class='deduction' src="images/minus.svg" alt="deduct item"></button>
+                    <button class='deduction'><div class='deduction'></div></button>
                     <p class=" mb-0">${element.quantity}</p>
-                    <button class='addition'><img class='addition' src="images/Add.svg" alt="add item"></button>
+                    <button class='addition'><div class='addition'></div></button>
                 </div>
                 <div class="d-flex align-items-center">
                     <p class="mb-0 price">$${element.price}</p>
-                    <button class='removeItem'  type="button"><img class='removeItem' src="images/Remove.svg" alt="remove item"></button>
+                    <button class='removeItem'><img class='removeItem' src="images/Remove.svg" alt="remove item"></button>
                 </div>
             </div>
             
@@ -169,16 +156,17 @@ function showCatalogBtn() {
     const catalogBtnArr = document.querySelectorAll("#catalogBtn");
     catalogBtnArr.forEach((e) => e.remove());
     const content = catalogBtn.outerHTML.match(catalogBtnRegex)[0].slice(7);
+    const innerContent = catalogBtn.innerHTML
     if (window.innerWidth < 768) {
         catalogBtn.remove();
         lowerCatalogBtnContainer.insertAdjacentHTML(
             "afterbegin",
-            `<button ${content}><img src="images/NaviconsCatalog.svg" alt="header catalog">Catalog</button>`
+            `<button ${content}>${innerContent}</button>`
         );
     } else {
         usualCatalogBtnContainer.insertAdjacentHTML(
             "afterbegin",
-            `<button ${content}><img src="images/NaviconsCatalog.svg" alt="header catalog">Catalog</button>`
+            `<button ${content}>${innerContent}</button>`
         );
     }
 }

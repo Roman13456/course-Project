@@ -47,8 +47,12 @@
                             </div>
                         </div>
                     </div>
-                    <button id="catalogBtn" type="button"><img src="images/NaviconsCatalog.svg"
-                            alt="header catalog">Catalog</button>
+                    <button id="catalogBtn" class="buttonEvent"  type="button"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="5" width="7" height="7" rx="1" stroke="white" stroke-width="2"/>
+                        <rect x="5" y="16" width="7" height="7" rx="1" stroke="white" stroke-width="2"/>
+                        <rect x="16" y="5" width="7" height="7" rx="1" stroke="white" stroke-width="2"/>
+                        <rect x="16" y="16" width="7" height="7" rx="1" stroke="white" stroke-width="2"/>
+                        </svg>Catalog</button>
                     <div class="position-relative w-100">
                         <input class="d-md-block w-100 d-none searchInput" placeholder="Search....">
                         <div class="searchOptions"></div>
@@ -85,18 +89,21 @@
                 <h3 class="categoryName mb-0">Fashion</h3>
             </div>
             <select class="sortBy" name="userColor">
+                <option value="desc">from high to low price</option>
+                <option value="asc">from low to high price</option>
                 <option value="newest">newest</option>
                 <option value="onSale">on sale</option>
                 <option value="rating" selected>most high rating</option>
             </select>
         </div>
     </div>
-    
+
     <section class="onSale container-xl position-relative ">
         <div class="row d-flex justify-content-between align-items-start position-relative">
             <div class="sortPanel col-xxl-3 col-lg-4 col-12 col-md-2 ">
                 <div class="col-12 mobileMenuHolder">
-                    <button class="mobileSortMenu "><img src="images/mobileSortMenu.png" alt="mobile Sort Menu"></button>
+                    <button class="mobileSortMenu "><img src="images/mobileSortMenu.png"
+                            alt="mobile Sort Menu"></button>
                 </div>
                 <div class="background">
                     <div class="priceOption position-relative">
@@ -105,10 +112,16 @@
                             <div class="shaft mb-0 position-absolute"></div>
                             <div class="mb-0 fill d-flex position-absolute">
                                 <div class="dot position-absolute">
-                                    <img src="images/dotBlue.svg" alt="dot">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="16" height="16" rx="9" fill="#00C2FF" stroke="#FAFAFA" stroke-width="2"/>
+<rect x="6" y="6" width="4" height="4" rx="2" fill="white"/>
+</svg>
                                 </div>
                                 <div class="dot position-absolute">
-                                    <img src="images/dotBlue.svg" alt="dot">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="16" height="16" rx="9" fill="#00C2FF" stroke="#FAFAFA" stroke-width="2"/>
+<rect x="6" y="6" width="4" height="4" rx="2" fill="white"/>
+</svg>
                                 </div>
                             </div>
                         </div>
@@ -117,44 +130,66 @@
                             <p> — </p>
                             <p class="maxPrice mb-0">$710</p>
                         </div>
-                        
+
                     </div>
                     <div class="colorOption position-relative">
                         <h5>Color</h5>
                         <div class="row buttons">
-                            <button class="col-12" id="blue">
-                                Blue
-                            </button>
-                            <button class="col-12" id="grey">
-                                Grey
-                            </button>
-                            <button class="col-12" id="green">
-                                Green
-                            </button>
-                            <button class="col-12" id="red">
-                                Red
-                            </button>
-                            <button class="col-12" id="yellow">
-                                Yellow
-                            </button>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="blue" data-option="color">
+                                    <p class="mb-0 d-inline-block">Blue</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="grey" data-option="color">
+                                    <p class="mb-0 d-inline-block">Grey</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="green" data-option="color">
+                                    <p class="mb-0 d-inline-block">Green</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="red" data-option="color">
+                                    <p class="mb-0 d-inline-block">Red</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="yellow" data-option="color">
+                                    <p class="mb-0 d-inline-block">Yellow</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
                         </div>
-                        
+
                     </div>
                     <div class="sizeOption position-relative">
                         <h5>Size</h5>
                         <div class="row buttons">
-                            <button class="col-12" id="S">
-                                S
-                            </button>
-                            <button class="col-12" id="M">
-                                M
-                            </button>
-                            <button class="col-12" id="L">
-                                L
-                            </button>
-                            <button class="col-12" id="XL">
-                                XL
-                            </button>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12 position-relative" id="S" data-option="size">
+                                    <p class="mb-0 d-inline-block">S</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="M" data-option="size">
+                                    <p class="mb-0 d-inline-block">M</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="L" data-option="size">
+                                    <p class="mb-0 d-inline-block">L</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+                            <div class="ps-0 d-flex align-items-center justify-content-between">
+                                <button class="col-12" id="XL" data-option="size">
+                                    <p class="mb-0 d-inline-block">XL</p><span class="optionsAvailable mb-0 position-absolute"></span>
+                                </button>
+                            </div>
+
+
+
+
                         </div>
                     </div>
                 </div>

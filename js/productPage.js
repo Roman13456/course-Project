@@ -203,7 +203,7 @@ const makeUniq = (arr) => {//стягнув з інета, доволі хоро
     return result;
 };
 let images = ['images/Bag.jpg', 'images/Blazer.jpg', 'images/girlsTShirt.jpg', 'images/PrintedBlazer.jpg', 'images/printableTShirt.jpg']
-let sizes = ['sizeXL','sizeL','sizeS','sizeM','sizeXXL']
+let sizes = ['xl','l','s','m','xxl']
 let colors = ['blue','grey','green','red','yellow']
 let categs = ['accessories','fashion','gadgets']
 function getRandomIntInclusive(min, max) {
@@ -218,7 +218,7 @@ function randomGallery() {
         for (let i = 0; i < quantity; i++) {
             const randomIndex = getRandomIntInclusive(0, 4)
             // arr.push(images[randomIndex])
-            arr.push(colors[randomIndex])
+            arr.push(sizes[randomIndex])
         }
         
         gallery.push(makeUniq(arr))
@@ -230,13 +230,13 @@ async function generateArray() {
     const parsedArray = await array.json()
     let newProductsArray = parsedArray.map((e, index) => {
         // e.category = categs[getRandomIntInclusive(0, 2)]
-        // e.color = gallery[index]
-        delete e.imgSource
+        // e.size = gallery[index]
+        // delete e.imgSource
         // e.date = dateArr[index]
         // const obj = {
         //     name: e.name,
         // }
-        // e.rating = 0
+        e.rating = 0
         // e.imgsGallery = gallery[index]
         return e
         // return obj
@@ -318,7 +318,7 @@ function setProductPage() {
                         <p class="mb-0">Size</p>
                         <select name="userSize" size="1" required="">
                             <!-- <option value=""></option> -->
-                            ${createSelectOptions(productPageObject.size.map((e)=>e=e.slice(4)))}
+                            ${createSelectOptions(productPageObject.size.map((e)=>e.toUpperCase()))}
                         </select>
                     </div>
                 </div>

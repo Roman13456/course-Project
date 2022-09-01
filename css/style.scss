@@ -3,8 +3,48 @@
 $mainFont: "Montserrat";
 $mainFontWeight: 500;
 $mainFontSize: 18px;
-.lightSliderContainer{
-    width: 164px;
+button.deduction,button.addition
+ {
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    &.deduction{
+        div{
+            background: url(../images/minus.svg) no-repeat;
+        }
+    }
+    &.addition{
+        div{
+            background: url(../images/Add.svg) no-repeat;
+        }
+    }
+    // position: relative;
+    // top: 0;
+    // left: 0;
+    border-radius: 12px;
+    &:hover {
+        background: #d6f5ff;
+        border-radius: 12px;
+        // border: 1px solid #00FFD1;
+    }
+
+    &:active {
+        background: #AAE9FD;
+        border-radius: 12px;
+    }
+    &:focus {
+        outline: none;
+        div{
+            background-position: -1px -2px;
+        }
+        border: 1px solid #00FFD1;
+        border-radius: 12px;
+    }
+
+    &:disabled {
+        background: #d6f5ff;
+        border-radius: 12px;
+    }
 }
 form input {
     border-color: #ECECEC;
@@ -16,13 +56,77 @@ form input {
     box-sizing: border-box;
 }
 
+.buttonEvent {
+    justify-content: center;
+    height: 48px;
+    text-align: center;
+    width: 100%;
+    font-family: $mainFont;
+    font-style: normal;
+    font-weight: $mainFontWeight;
+    font-size: $mainFontSize;
+    line-height: 22px;
+    color: #ffffff;
+    padding: 10px 14px 10px 10px;
+    background: #00c2ff;
+    border: 1px solid #00c2ff;
+    border-radius: 6px;
+    margin-right: 18px;
+    display: flex;
+    align-items: center;
+    &#catalogBtn{
+        @media (max-width:767px) {
+        justify-content: flex-start;
+    }}
+    svg {
+        margin-right: 10px;
+    }
+
+    &:focus {
+        border: 1px solid #00FFD1;
+        outline: none;
+    }
+
+    &:hover {
+        background: #2FDAFF;
+        border: 1px solid #2FDAFF;
+    }
+
+    &:active {
+        background: #00ACE2;
+        border: 1px solid #00ACE2;
+    }
+
+    &:disabled {
+        // text-indent: 38px;
+        background: #ECECEC;
+        border: 1px solid #ECECEC;
+        color: #BABABA;
+
+        rect {
+            stroke: #BABABA;
+        }
+
+        // &::before {
+        //     content: '';
+        //     position: absolute;
+        //     top: 10px;
+        //     left: 10px;
+        //     width: 28px;
+        //     height: 28px;
+        //     background-image: url('../images/NaviconsCatalogDisabled.svg');
+        // }
+    }
+}
+
 header {
     .centralContainer {
         max-width: 1296px;
         margin: auto;
-        .lowerCatalogBtn{
+
+        .lowerCatalogBtn {
             position: relative;
-        } 
+        }
     }
 
     position: absolute;
@@ -37,61 +141,9 @@ header {
         }
     }
 
-    #catalogBtn {
-        height: 48px;
-        text-align: left;
-        width: 100%;
-        font-family: $mainFont;
-        font-style: normal;
-        font-weight: $mainFontWeight;
-        font-size: $mainFontSize;
-        line-height: 22px;
-        color: #ffffff;
-        padding: 10px 14px 10px 10px;
-        background: #00c2ff;
-        border: 1px solid #00c2ff;
-        border-radius: 6px;
-        margin-right: 18px;
-        display: flex;
-        align-items: center;
-        img {
-            margin-right: 10px;
-        }
-        &:focus {
-            border: 1px solid #00FFD1;
-            outline: none;
-        }
+    // #catalogBtn {
 
-        &:hover {
-            background: #2FDAFF;
-            border: 1px solid #2FDAFF;
-        }
-
-        &:active {
-            background: #00ACE2;
-            border: 1px solid #00ACE2;
-        }
-
-        &:disabled {
-            text-indent: 38px;
-            background: #ECECEC;
-            border: 1px solid #ECECEC;
-            color: #BABABA;
-            img {
-                display: none;
-            }
-
-            &::before {
-                content: '';
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                width: 28px;
-                height: 28px;
-                background-image: url('../images/NaviconsCatalogDisabled.svg');
-            }
-        }
-    }
+    // }
 
     .closeBusketBtn {
         padding: 0;
@@ -163,6 +215,7 @@ header {
             background: #ffffff;
             position: absolute;
             z-index: 5;
+
             p {
                 margin-bottom: 0;
                 padding: 5px 14px;
@@ -275,29 +328,24 @@ header {
                                 text-align: center;
                                 color: #000000;
                             }
-
-                            button {
-                                padding: 0;
-                            }
-
-                            img {
-                                &:hover {
-                                    background: #d6f5ff;
-                                    border-radius: 24px;
-                                }
-
-                                width: 24px;
-                                height: 24px;
-                            }
-
+                            
                             div {
                                 &.counter {
                                     width: 68px;
                                     height: 24px;
+                                    justify-content: space-between;
                                     background: #fafafa;
                                     border-radius: 24px;
                                     margin-right: 10px;
                                     margin-bottom: 0;
+                                    img{
+                                        // object-position: 0 -3px;
+                                    }
+                                    p{
+                                        &:nth-child(2){
+                                            width: auto;
+                                        }
+                                    }
                                 }
 
                                 &:last-child {
@@ -454,10 +502,8 @@ header {
         max-width: 846px;
         width: 100%;
 
-        #catalogBtn {
+        .buttonEvent {
             max-width: 135px;
-
-            
         }
 
         div {
@@ -495,7 +541,8 @@ header {
 }
 
 .onSale .productItemLink .saleIndicator,
-.productItemLink .saleIndicator,.saleIndicator {
+.productItemLink .saleIndicator,
+.saleIndicator {
     top: 10px;
     left: 22px;
     padding: 6px;
@@ -543,7 +590,7 @@ header {
             font-size: 16px;
             line-height: 20px;
             color: #00bf9d;
-            margin-bottom: 0;
+            margin-bottom: 10px;
 
             &:first-child {
                 font-family: $mainFont;
@@ -571,20 +618,6 @@ header {
 
         button {
             display: none;
-            margin-top: 10px;
-            padding: 13px;
-            width: 100%;
-            background: #00C2FF;
-            border: 1px solid #00C2FF;
-            border-radius: 6px;
-            color: white;
-            font-family: $mainFont;
-            font-style: normal;
-            font-weight: $mainFontWeight;
-            font-size: $mainFontSize;
-            line-height: 22px;
-            text-align: center;
-            color: #FFFFFF;
 
             &.animationAddToCartBtn {
                 display: block;
@@ -878,21 +911,54 @@ header {
     }
 }
 
-.productsOnHomepage,.forRemoval  {
-    align-items: flex-end;
-    .pagination {
+.paginatePrevBtn,
+.paginateNextBtn {
+    &.paginatePrevBtn {
+        margin-right: 10px;
+    }
 
-        .paginatePrevBtn,
-        .paginateNextBtn,
+    &.paginateNextBtn {
+        margin-left: 10px;
+    }
+
+    font-family: $mainFont;
+    font-style: normal;
+    font-weight: $mainFontWeight;
+    font-size: calc(#{$mainFontSize} - 4px);
+    line-height: 22px;
+    text-align: center;
+    color: #00C2FF;
+    padding: 10px 14px 10px 10px;
+    gap: 10px;
+    width: 48px;
+    height: 48px;
+    background: #D6F5FF;
+    border: 1px solid #D6F5FF;
+    border-radius: 6px;
+    text-align: center;
+
+    &:focus {
+        border: 1px solid #00FFD1;
+        outline: none;
+    }
+
+    &:hover {
+        background: #E7F9FF;
+        border: 1px solid #E7F9FF;
+    }
+
+    &:active {
+        background: #AAE9FD;
+        border: 1px solid #AAE9FD;
+    }
+}
+
+.productsOnHomepage,
+.forRemoval {
+    align-items: flex-end;
+
+    .pagination {
         .paginateBtn {
-            &.paginatePrevBtn
-            {
-                margin-right: 10px;
-            }
-            &.paginateNextBtn
-            {
-                margin-left: 10px;
-            }
             font-family: $mainFont;
             font-style: normal;
             font-weight: $mainFontWeight;
@@ -1492,7 +1558,13 @@ header {
 
                         .dot {
                             top: -12px;
-
+                            &:active{
+                                rect{
+                                    &:first-child{
+                                        fill: #00ACE2;
+                                    }
+                                }
+                            }
                             &:first-child {
                                 left: 0;
                             }
@@ -1515,6 +1587,17 @@ header {
                 div.buttons {
                     margin-left: 0;
 
+                    .optionsAvailable {
+                        right: 5px;
+                        font-family: $mainFont;
+                        font-style: normal;
+                        font-weight: $mainFontWeight;
+                        font-size: calc(#{$mainFontSize} - 4px);
+                        line-height: 17px;
+                        color: #BABABA;
+
+                    }
+
                     button {
                         font-family: $mainFont;
                         font-style: normal;
@@ -1527,10 +1610,15 @@ header {
                         background: none;
                         border: none;
                         text-align: left;
+                        &:hover{
+                            background: #ECECEC;
+border-radius: 6px;
+                        }
                     }
 
                     button.checked {
-                        background-color: pink;
+                        background: #00FFD1;
+border-radius: 6px;
                     }
                 }
 
