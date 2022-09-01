@@ -33,7 +33,6 @@ function showQuantityOfOptions(arr,bool){
     }
     for(let i = 0; i<options.length; i++){
         const value = options[i].querySelector('p').innerHTML.trim().toLowerCase()
-        console.log(arr,options[i].getAttribute('data-option'),value)
         options[i].querySelector('.optionsAvailable').innerHTML = checkIfElementContainsOption(arr,options[i].getAttribute('data-option'),value).length 
     }
     if(bool===undefined){
@@ -86,7 +85,6 @@ function widthElement(element, coord, order) {
                 const percent = (1 - (minPrice / maxPrice))
                 const localCoef = minPrice / maxPrice
                 const cut = localCoef * width / percent
-                console.log(localCoef)
                 // minPriceCoef = ((coord - start) / (+(width)+(+width*localCoef)))+localCoef
                 minPriceCoef = (coord - start + (+cut)) / (width + (+cut))
             }
@@ -214,6 +212,16 @@ function dotsWidgetDuringChange(){
     }
     optionsAfterProcedure(sortedArray)
 }
+dots[1].addEventListener('dragstart',function(e){
+    var img = new Image();
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    e.dataTransfer.setDragImage(img, 0, 0);
+})
+dots[0].addEventListener('dragstart',function(e){
+    var img = new Image();
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    e.dataTransfer.setDragImage(img, 0, 0);
+})
 dots[1].addEventListener("drag", function (e) {
     coord = (() => {
         if (e.pageX !== 0) {
@@ -377,7 +385,6 @@ function pagination(array) {
         
         // console.log(numberOfIterations*48+(numberOfIterations-1)*10)
         lightSliderContainer.style.width=`${val*48+(val-1)*10}px`
-        console.log(numberOfIterations)
   $(document).ready(function() {
     slider = $(".lightSlider").lightSlider({
         item: val,

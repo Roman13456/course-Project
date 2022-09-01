@@ -1557,6 +1557,9 @@ header {
                         border-radius: 6px;
 
                         .dot {
+                            border: none;
+                            background: transparent;
+                            padding: 0;
                             top: -12px;
                             &:active{
                                 rect{

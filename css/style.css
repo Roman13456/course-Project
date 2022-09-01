@@ -14030,6 +14030,9 @@ header div.inputSearch input:focus {
 }
 
 .onSale div .sortPanel .priceOption .sortByPricePanel .fill .dot {
+  border: none;
+  background: transparent;
+  padding: 0;
   top: -12px;
 }
 
