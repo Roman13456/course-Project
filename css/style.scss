@@ -57,10 +57,11 @@ form input {
 }
 
 .buttonEvent {
+    position: absolute;
     justify-content: center;
     height: 48px;
     text-align: center;
-    width: 100%;
+    width: calc(100% - 40px);
     font-family: $mainFont;
     font-style: normal;
     font-weight: $mainFontWeight;
@@ -120,11 +121,17 @@ form input {
 }
 
 header {
+    z-index: 5;
+    height: 88px;
+    @media (max-width:767px) {
+        height: 141px;
+    }
     .centralContainer {
         max-width: 1296px;
         margin: auto;
 
         .lowerCatalogBtn {
+            margin-top: 15px;
             position: relative;
         }
     }
@@ -135,7 +142,7 @@ header {
 
     .logo {
         display: inline-block;
-
+        margin-right: 20px;
         &.hide {
             display: none;
         }
@@ -577,9 +584,38 @@ header {
     padding-top: 40px;
 
     .productItemLink {
+        .hoverProductItem{
+            width: 100%;
+            background-color: white;
+            padding-right: 20px;
+            padding-left: 20px;
+            position: absolute;
+            left: 0;
+            top: -20px;
+            padding-top: 20px;
+            display: none;
+            z-index: 3;
+            padding-bottom: 68px;
+            .saleIndicator {
+                top: 30px;
+            }
+        }
+        .usualProductItem{
+            padding-bottom: 0;
+        }
         &:hover {
+            .usualProductItem{
+                display: none;
+            }
+            .hoverProductItem{
+                display: block;
+                border: 1px solid #e9e9e9;
+                border-radius: 13px;
+            }
+            // padding-bottom: 58px;
             button {
                 display: block;
+                z-index: 3;
             }
         }
 
@@ -606,6 +642,9 @@ header {
 
             span {
                 padding-left: 10px;
+                @media (max-width:767px) {
+                    padding-left: 0;
+                }
                 font-family: $mainFont;
                 font-style: normal;
                 font-weight: $mainFontWeight;
@@ -736,7 +775,8 @@ header {
 
 .saleBanner {
     height: 100vh;
-    padding: 25vh 0 50px;
+    position: relative;
+    padding: 88px+50px 0 0px;
 
     @media (max-width: 376px) {
         height: 595px+170px;
@@ -755,8 +795,15 @@ header {
     .saleBannerContent {
         max-width: 1080px;
         margin: auto;
-
+        height: fit-content;
+        top:88px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        align-items: center;
         a {
+            display: inline-block;
             text-decoration: none;
             background: #00c2ff;
             border: 1px solid #00c2ff;
@@ -795,7 +842,7 @@ header {
                         font-size: 16px;
                         line-height: 24px;
                         color: #000000;
-                        margin-bottom: 33px;
+                        margin-bottom: 20px;
                     }
 
                     &:first-child {
@@ -955,7 +1002,7 @@ header {
 
 .productsOnHomepage,
 .forRemoval {
-    align-items: flex-end;
+    // align-items: flex-end;
 
     .pagination {
         .paginateBtn {
