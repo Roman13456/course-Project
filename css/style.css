@@ -14447,8 +14447,8 @@ footer img {
   margin-bottom: 10px;
 }
 
-.checkoutForm .yourOrders .orders .underline::after,
-.commentaryForm .yourOrders .orders .underline::after {
+.checkoutForm .yourOrders .orders .underline.notEmpty::after,
+.commentaryForm .yourOrders .orders .underline.notEmpty::after {
   position: absolute;
   content: "";
   height: 1px;

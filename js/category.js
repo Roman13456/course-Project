@@ -25,40 +25,42 @@ function duringResize() {
     start = sortByPricePanel.getBoundingClientRect().left
     width = sortByPricePanel.offsetWidth
 }
-function showQuantityOfOptions(arr,bool){
-    const options = Array.from(document.querySelectorAll('.buttons button')) 
-    const {prop1, prop2} = {
-        prop1:filterOption,
-        prop2:filterValue
+function showQuantityOfOptions(arr, bool) {
+    const options = Array.from(document.querySelectorAll('.buttons button'))
+    const { prop1, prop2 } = {
+        prop1: filterOption,
+        prop2: filterValue
     }
-    for(let i = 0; i<options.length; i++){
+    for (let i = 0; i < options.length; i++) {
         const value = options[i].querySelector('p').innerHTML.trim().toLowerCase()
-        options[i].querySelector('.optionsAvailable').innerHTML = checkIfElementContainsOption(arr,options[i].getAttribute('data-option'),value).length 
+        options[i].querySelector('.optionsAvailable').innerHTML = checkIfElementContainsOption(arr, options[i].getAttribute('data-option'), value).length
     }
-    if(bool===undefined){
+    if (bool === undefined) {
         filterOption = ''
         filterValue = ''
-    } else{
+    } else {
         filterOption = prop1
         filterValue = prop2
     }
 }
 window.addEventListener("resize", duringResize)
 let priceObj = {
-    min:0,
-    max:0
+    min: 0,
+    max: 0
 }
-function renderPage(array){
-    array.forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+function renderPage(array) {
+    if (array !== undefined) {
+        array.forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+    }
 }
 function setPrice(array) {
-        const sortedBubble = array.sort((a, b) => a.price - b.price)
-        maxPrice = sortedBubble[sortedBubble.length - 1].price
-        minPrice = sortedBubble[0].price
-        priceObj.min = +minPrice
-        priceObj.max = +maxPrice
-        minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)}`
-        minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice)}`
+    const sortedBubble = array.sort((a, b) => a.price - b.price)
+    maxPrice = sortedBubble[sortedBubble.length - 1].price
+    minPrice = sortedBubble[0].price
+    priceObj.min = +minPrice
+    priceObj.max = +maxPrice
+    minAndMaxPrice.querySelector(".minPrice").innerHTML = `$${Math.round(minPrice)}`
+    minAndMaxPrice.querySelector(".maxPrice").innerHTML = `$${Math.round(maxPrice)}`
 }
 function widthElement(element, coord, order) {
     if (order === "second") {
@@ -165,7 +167,7 @@ function renderCategory() {
             })
     } else {
         const searchValue = localStorage.getItem('searchStringValue')
-        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/products?name='+searchValue)
+        fetch('https://62d575ef15ad24cbf2c7a034.mockapi.io/products?name=' + searchValue)
             .then((data) => data.json())
             .then((products) => {
                 showQuantityOfOptions(products)
@@ -191,33 +193,33 @@ renderCategory()
 setListenersOnLinks()
 let filterOption = ''
 let filterValue = ''
-function changePrice(str){
+function changePrice(str) {
     price = minAndMaxPrice.querySelector(`.${str}Price`).innerHTML.replace("$", "")
     priceObj[str] = +price
     sortedArray = filterByPrice(productsArray)
     dotsWidgetDuringChange()
 }
-function filterByPrice(array){
-    return array.filter((e)=>e.price>=priceObj.min && e.price<=priceObj.max)
+function filterByPrice(array) {
+    return array.filter((e) => e.price >= priceObj.min && e.price <= priceObj.max)
 }
-function dotsWidgetDuringChange(){
-    if(filterOption!==""){
-        showQuantityOfOptions(sortedArray,true)
-        sortedArray = checkIfElementContainsOption(sortedArray,filterOption,filterValue)
-    }else{
-        showQuantityOfOptions(sortedArray,true)
+function dotsWidgetDuringChange() {
+    if (filterOption !== "") {
+        showQuantityOfOptions(sortedArray, true)
+        sortedArray = checkIfElementContainsOption(sortedArray, filterOption, filterValue)
+    } else {
+        showQuantityOfOptions(sortedArray, true)
     }
-    if(document.querySelector('.searchResults')!==null){
+    if (document.querySelector('.searchResults') !== null) {
         document.querySelector('.searchResults').innerHTML = `Search results: ${sortedArray.length}`
     }
     optionsAfterProcedure(sortedArray)
 }
-dots[1].addEventListener('dragstart',function(e){
+dots[1].addEventListener('dragstart', function (e) {
     var img = new Image();
     img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
     e.dataTransfer.setDragImage(img, 0, 0);
 })
-dots[0].addEventListener('dragstart',function(e){
+dots[0].addEventListener('dragstart', function (e) {
     var img = new Image();
     img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
     e.dataTransfer.setDragImage(img, 0, 0);
@@ -278,27 +280,27 @@ dots[0].addEventListener("touchmove", (e) => {
         }
     })()}`
 })
-function checkIfElementContainsOption(array0,option,val){
-    return array0.filter((e)=>{
-        if(e[option].find((b)=>b===val)!==undefined){
+function checkIfElementContainsOption(array0, option, val) {
+    return array0.filter((e) => {
+        if (e[option].find((b) => b === val) !== undefined) {
             filterOption = option
             filterValue = val
             return true
-        }else{
+        } else {
             return false
         }
     })
 }
-function filterProducts(data,option,val) {
-    document.querySelectorAll('.buttons button').forEach((b)=>b.classList.remove('checked'))
-    if(data===''){
-        sortedArray = productsArray.filter((e)=>e.price>=priceObj.min && e.price<=priceObj.max)
+function filterProducts(data, option, val) {
+    document.querySelectorAll('.buttons button').forEach((b) => b.classList.remove('checked'))
+    if (data === '') {
+        sortedArray = productsArray.filter((e) => e.price >= priceObj.min && e.price <= priceObj.max)
         filterOption = ""
         filterValue = ""
-    }else{
-        sortedArray = checkIfElementContainsOption(productsArray.filter((e)=>e.price>=priceObj.min && e.price<=priceObj.max),option,val)
+    } else {
+        sortedArray = checkIfElementContainsOption(productsArray.filter((e) => e.price >= priceObj.min && e.price <= priceObj.max), option, val)
     }
-    if(document.querySelector('.searchResults')!==null){
+    if (document.querySelector('.searchResults') !== null) {
         document.querySelector('.searchResults').innerHTML = `Search results: ${sortedArray.length}`
     }
     optionsAfterProcedure(sortedArray)
@@ -306,14 +308,14 @@ function filterProducts(data,option,val) {
 colorOption.addEventListener("click", function (e) {
     // inputListener(target)
     if (e.target.tagName === "BUTTON") {
-        if(e.target.classList.contains('checked')){
+        if (e.target.classList.contains('checked')) {
             e.target.classList.remove('checked')
             sortedArray = filterByPrice(productsArray)
             filterProducts('')
-        }else{
+        } else {
             const child = e.target.getAttribute("id")
             sortedArray = filterByPrice(productsArray)
-            filterProducts(`color=${child}`,"color",child)
+            filterProducts(`color=${child}`, "color", child)
             e.target.classList.add("checked")
         }
     }
@@ -327,14 +329,14 @@ function optionsAfterProcedure(array) {
 }
 sizeOption.addEventListener("click", function (e) {
     if (e.target.tagName === "BUTTON") {
-        if(e.target.classList.contains('checked')){
+        if (e.target.classList.contains('checked')) {
             e.target.classList.remove('checked')
             sortedArray = filterByPrice(productsArray)
             filterProducts('')
-        }else{
+        } else {
             const child = e.target.getAttribute("id")
             sortedArray = filterByPrice(productsArray)
-            filterProducts(`size=${child}`,"size",child.toLowerCase())
+            filterProducts(`size=${child}`, "size", child.toLowerCase())
             e.target.classList.add("checked")
         }
     }
@@ -349,26 +351,78 @@ mobileSortBurger.addEventListener("click", function () {
     sortMenu.classList.toggle("visible")
 })
 let slider
-paginationNav.addEventListener('click',(e)=>{
-    console.log(e.target.classList.contains('paginateBtn'))
-    if(e.target.classList.contains('paginateBtn')){
-        const val = e.target.getAttribute('data-id')
+paginationNav.addEventListener('click', (e) => {
+    const target = e.target
+    if (target.classList.contains('paginateBtn')) {
+        const val = target.getAttribute('data-id')
         slider.goToSlide(val)
+    } else if (target.classList.contains('paginatePrevBtn') || target.classList.contains('prevBtn')) {
+        const activePage = document.querySelector(".paginateBtn.active")
+        const index = Array.from(paginationBtns).findIndex((e) => e === activePage)
+        activePage.classList.remove("active")
+        clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+        if (index > 0) {
+            paginationBtns[index - 1].classList.add("active")
+            const prevIndex = +activePage.getAttribute("data-id")
+            paginationArr[prevIndex - 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+            slider.goToPrevSlide()
+        } else {
+            paginationBtns[paginationBtns.length - 1].classList.add("active")
+            paginationArr[paginationBtns.length - 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+            slider.goToSlide(paginationBtns.length - 1)
+        }
+    } else if (target.classList.contains('paginateNextBtn') || target.classList.contains('nextBtn')) {
+        const activePage = document.querySelector(".paginateBtn.active")
+        const index = Array.from(paginationBtns).findIndex((e) => e === activePage)
+        activePage.classList.remove("active")
+        clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
+        if (paginationBtns.length - 1 > index) {
+            paginationBtns[index + 1].classList.add("active")
+            const prevIndex = +activePage.getAttribute("data-id")
+            paginationArr[prevIndex + 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+            slider.goToNextSlide()
+        } else {
+            paginationBtns[0].classList.add("active")
+            paginationArr[0].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
+            slider.goToSlide(0)
+        }
     }
 })
+function removeNextAndPrevPagination(){
+    if (document.querySelector('.paginatePrevBtn')) {
+        document.querySelector('.paginatePrevBtn').remove()
+    }
+    if (document.querySelector('.paginateNextBtn')) {
+        document.querySelector('.paginateNextBtn').remove()
+    }
+}
+function createNextAndPrevPagination(){
+    if (!document.querySelector('.paginatePrevBtn')) {
+        paginationNav.insertAdjacentHTML('afterbegin', `
+        <button class="paginatePrevBtn"><img  class="prevBtn" src="images/prevIcon.png"></button>
+        `)
+    }
+    if (!document.querySelector('.paginateNextBtn')) {
+        paginationNav.insertAdjacentHTML('beforeend', `
+        <button class="paginateNextBtn"><img  class="nextBtn" src="images/nextIcon.png"></button>
+    `)
+    }
+}
 const lightSliderContainer = document.querySelector('.lightSliderContainer')
 function pagination(array) {
     let changableArray = [...array]
     let paginatedArray = []
     const numberOfIterations = Math.ceil(array.length / 9)
-    const val = (function (){
-        if(numberOfIterations<3){
+    const val = (function () {
+        if (numberOfIterations < 3) {
             return numberOfIterations
-        }else{
+        } else {
             return 3
         }
     })()
+
     function addBtns() {
+        
         for (let i = 0; i < numberOfIterations; i++) {
             paginatedArray.push(changableArray.slice(0, 9))
             changableArray.splice(0, 9)
@@ -382,22 +436,34 @@ function pagination(array) {
                 `)
             }
         }
-        
+
         // console.log(numberOfIterations*48+(numberOfIterations-1)*10)
-        lightSliderContainer.style.width=`${val*48+(val-1)*10}px`
-  $(document).ready(function() {
-    slider = $(".lightSlider").lightSlider({
-        item: val,
-        slideEndAnimation:false,
-        pager:false
-    });
-  });
+        lightSliderContainer.style.width = `${val * 48 + (val - 1) * 10}px`
+        $(document).ready(function () {
+            slider = $(".lightSlider").lightSlider({
+                item: val,
+                slideEndAnimation: false,
+                pager: false
+            });
+        });
     }
     if (paginationNav.querySelectorAll(".paginateBtn").length === 0) {
         addBtns()
+        if(paginatedArray.length){
+            createNextAndPrevPagination()
+        }else{
+            productsOnHomepage.querySelector('.forRemoval').innerHTML='no goods'
+            removeNextAndPrevPagination()
+        }
     } else {
         paginationNav.querySelectorAll(".lightSlider li").forEach((e) => e.remove())
         addBtns()
+        if(paginatedArray.length){
+            createNextAndPrevPagination()
+        }else{
+            productsOnHomepage.querySelector('.forRemoval').innerHTML='no goods'
+            removeNextAndPrevPagination()
+        }
     }
     // console.log(Math.ceil(array.length/9))
 
@@ -417,42 +483,16 @@ function pagination(array) {
     })
     return paginatedArray
 }
-paginateNextBtn.addEventListener("click", function () {
-    const activePage = document.querySelector(".paginateBtn.active")
-    const index = Array.from(paginationBtns).findIndex((e) => e === activePage)
-    activePage.classList.remove("active")
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    if (paginationBtns.length - 1 > index) {
-        paginationBtns[index + 1].classList.add("active")
-        const prevIndex = +activePage.getAttribute("data-id")
-        paginationArr[prevIndex + 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
-        slider.goToNextSlide()
-    } else {
-        paginationBtns[0].classList.add("active")
-        paginationArr[0].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
-        slider.goToSlide(0)
-    }
-})
-paginatePrevBtn.addEventListener("click", function () {
-    const activePage = document.querySelector(".paginateBtn.active")
-    const index = Array.from(paginationBtns).findIndex((e) => e === activePage)
-    activePage.classList.remove("active")
-    clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)
-    if (index > 0) {
-        paginationBtns[index - 1].classList.add("active")
-        const prevIndex = +activePage.getAttribute("data-id")
-        paginationArr[prevIndex - 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
-        slider.goToPrevSlide()
-    } else {
-        paginationBtns[paginationBtns.length - 1].classList.add("active")
-        paginationArr[paginationBtns.length - 1].forEach(createProductClosure(productsOnHomepage.querySelector('.forRemoval'), 4, 4))
-        slider.goToSlide(paginationBtns.length - 1)
-    }
-    
-})
+// paginateNextBtn.addEventListener("click", function () {
+
+// })
+// paginatePrevBtn.addEventListener("click", function () {
+
+
+// })
 sortBy.addEventListener('change', function () {
     localStorage.setItem('sortedBy', this.value)
-    sortByOptions(sortedArray,true)
+    sortByOptions(sortedArray, true)
 })
 function sortByOptions(array, bool) {
     // debugger
@@ -465,12 +505,12 @@ function sortByOptions(array, bool) {
             localArray = localArray.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         }
         else if (option === 'desc') {
-            localArray = localArray.sort((a, b) => b.price-a.price)
-        }else if (option === 'asc') {
-            localArray = localArray.sort((a, b) => a.price-b.price)
+            localArray = localArray.sort((a, b) => b.price - a.price)
+        } else if (option === 'asc') {
+            localArray = localArray.sort((a, b) => a.price - b.price)
         }
         else if (option === "onSale") {
-            localArray = localArray.sort((a, b) => b.isSale-a.isSale)
+            localArray = localArray.sort((a, b) => b.isSale - a.isSale)
         }
         if (bool !== undefined) {
             clearPage(productsOnHomepage.querySelector('.forRemoval'), productsOnHomepage)

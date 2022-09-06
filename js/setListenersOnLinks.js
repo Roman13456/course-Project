@@ -3,10 +3,14 @@ function setListenersOnLinks(){
     productsHomePage.forEach((e)=>{
         e.addEventListener("click",function(e){
             if(e.target.tagName === "A"){
-                localStorage.setItem("currentItem",e.target.parentElement.getAttribute("data-id"))
+                localStorage.setItem("currentItem",e.target.closest('.productItemLink').getAttribute("data-id"))
         
             }else if(e.target.tagName === "IMG"){
-                localStorage.setItem("currentItem",e.target.parentElement.parentElement.getAttribute("data-id"))
+                const target = e.target.closest('.productItemLink')
+                // console.log(target)
+                if(target!==null){
+                    localStorage.setItem("currentItem",e.target.closest('.productItemLink').getAttribute("data-id"))
+                }
             }
         })
     })

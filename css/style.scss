@@ -1934,7 +1934,7 @@ footer {
             border: 1px solid #ECECEC;
             border-radius: 6px;
 
-            .underline {
+            .underline.notEmpty {
                 &::after {
                     position: absolute;
                     content: "";

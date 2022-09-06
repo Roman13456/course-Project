@@ -103,7 +103,7 @@ function validateStreet(bool){
         setError(inputStreet,"вулиця не введена")
         return false
     }else if(!regexStreet.test(inputStreetValue)){
-        setError(inputStreet,"не вірний формат вулиці")
+        setError(inputStreet,"вулиця повинна бути типу: Київський Шлях 2а")
         return false
     }else{
         setSuccess(inputStreet)
@@ -221,6 +221,9 @@ function responseHandler(){
             productsArray = httpRequest.response;
             const total = document.querySelector(".total")
             document.querySelector(".totalPrice").innerHTML=`${total.innerHTML}`
+            if(busketItems.length){
+                ordersList.classList.add('notEmpty')
+            }
             busketItems.forEach((e)=>{
                 const fullObj = productsArray.filter((b)=>b.id ===e.id)
                 ordersList.insertAdjacentHTML("beforeend",`

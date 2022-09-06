@@ -10,20 +10,15 @@ httpRequest.onreadystatechange = responseHandler
 httpRequest.open("GET",productsUrl)
 httpRequest.responseType = "json"
 httpRequest.send()
-productsHomePage.forEach((e)=>{
-    e.addEventListener("click",function(e){
-        if(e.target.tagName === "A"){
-            localStorage.setItem("currentItem",e.target.parentElement.getAttribute("data-id"))
-    
-        }else if(e.target.tagName === "IMG"){
-            localStorage.setItem("currentItem",e.target.parentElement.parentElement.getAttribute("data-id"))
-        }
-    })
-})
 productLinks.querySelectorAll('a').forEach((element)=>{
     element.addEventListener("click",()=>{
         localStorage.setItem("currentCategory", element.closest("div").querySelector('a').getAttribute("data-info"))
     })   
+})
+const shopNow = document.querySelector('.shopNow')
+shopNow.addEventListener('click',function(){
+    localStorage.setItem("currentCategory", 'fashion')
+    window.open('category.html','_self')
 })
 function responseHandler(){
     if(httpRequest.readyState === 4){
