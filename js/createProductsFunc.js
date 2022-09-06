@@ -24,7 +24,6 @@ function createProductClosure(loc,lg,xxl){
                         }
                     })()}
                 </p>
-                <button data-id ='${element.id}' class='buttonEvent'>Add to cart</button>
             </div>
             <div class='hoverProductItem'>
                 <a href="products_page.html" class=" d-block">

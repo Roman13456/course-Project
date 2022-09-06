@@ -12535,13 +12535,12 @@ form input {
 }
 
 .buttonEvent {
-  position: absolute;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   height: 48px;
   text-align: center;
-  width: calc(100% - 40px);
+  width: 100%;
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
@@ -13075,7 +13074,7 @@ header div.inputSearch input:focus {
   padding-top: 20px;
   display: none;
   z-index: 3;
-  padding-bottom: 68px;
+  padding-bottom: 20px;
 }
 
 .onSale .productItemLink .hoverProductItem .saleIndicator {
@@ -13256,15 +13255,17 @@ header div.inputSearch input:focus {
   background: #dafff8;
 }
 
-@media (max-width: 376px) {
+@media (max-width: 991px) {
   .saleBanner {
-    height: 765px;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
   }
 }
 
-@media (max-width: 374px) {
+@media (max-width: 991px) {
   .saleBanner {
-    padding: 35vh 0 50px;
+    padding: 156px 0 15px;
   }
 }
 
@@ -13288,6 +13289,12 @@ header div.inputSearch input:focus {
           align-items: center;
 }
 
+@media (max-width: 991px) {
+  .saleBanner .saleBannerContent {
+    position: static;
+  }
+}
+
 .saleBanner .saleBannerContent a {
   display: inline-block;
   text-decoration: none;
@@ -13304,7 +13311,7 @@ header div.inputSearch input:focus {
   color: #ffffff;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .saleBanner .saleBannerContent div:first-child {
     -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;

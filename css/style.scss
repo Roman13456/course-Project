@@ -57,11 +57,10 @@ form input {
 }
 
 .buttonEvent {
-    position: absolute;
     justify-content: center;
     height: 48px;
     text-align: center;
-    width: calc(100% - 40px);
+    width: 100%;
     font-family: $mainFont;
     font-style: normal;
     font-weight: $mainFontWeight;
@@ -595,7 +594,7 @@ header {
             padding-top: 20px;
             display: none;
             z-index: 3;
-            padding-bottom: 68px;
+            padding-bottom: 20px;
             .saleIndicator {
                 top: 30px;
             }
@@ -775,17 +774,14 @@ header {
 
 .saleBanner {
     height: 100vh;
+    @media (max-width:991px) {
+        height: fit-content;
+    }
     position: relative;
     padding: 88px+50px 0 0px;
-
-    @media (max-width: 376px) {
-        height: 595px+170px;
+    @media (max-width:991px) {
+        padding: 141px+15px 0 15px;
     }
-
-    @media (max-width: 374px) {
-        padding: 35vh 0 50px;
-    }
-
     background: #dafff8;
 
     img {
@@ -798,6 +794,9 @@ header {
         height: fit-content;
         top:88px;
         position: absolute;
+        @media (max-width:991px) {
+            position:static
+        }
         left: 0;
         right: 0;
         bottom: 0;
@@ -820,7 +819,7 @@ header {
 
         div {
             &:first-child {
-                @media (max-width: 767px) {
+                @media (max-width: 991px) {
                     order: 1;
                 }
 
